@@ -1,3 +1,7 @@
+title: My phone setup
+date: 26-03-2020
+---
+
 <h2 class="page-title">My phone setup</h2>
 
 I use iPhone. No specific reason. It just does the job for me, and it is a pretty decent upgrade from my previous phone (which has already been in a terrible condition). My phone is admittedly distractive, and I can get distracted easily. I want less distraction. First, I move all app icons to the second screen. Then I disable the second screen so it is inaccessible on left-swipe. Fortunately I don't install many apps, and it didn't take too much time.

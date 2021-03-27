@@ -1,6 +1,6 @@
-
-
-<h2 class="page-title">Deep learning is not really the future of AI</h2>
+title: Deep learning is not really the future of AI
+date: 21-01-2020
+---
 
 Deep learning—people mention it everywhere. They boasted as if it is the future of AI. Oftentimes, it is placed as the definition of AI. 
 
