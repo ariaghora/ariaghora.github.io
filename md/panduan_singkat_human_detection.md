@@ -139,9 +139,6 @@ Jika berhasil, seharusnya akan muncul jendela seperti ditunjukkan gambar pertama
 model = cv2.dnn.readNetFromTensorflow('frozen_inference_graph.pb',
                                       'ssd_mobilenet_v1_ppn_coco.pbtxt')
 
-with open('coco_classes.txt', 'r') as f:
-    label_dict = f.read().split('\n')
-
 image = cv2.imread('people.jpg')
 
 W = image.shape[1]
