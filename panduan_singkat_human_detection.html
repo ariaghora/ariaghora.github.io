@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="default.css">
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.7.2/highlight.min.js"></script>
+    <script src="highlight.pack.js"></script>
+</head>
+
+<body>
+    <div class="navigation">
+        <a href="index.html">home</a> / <a href="about.html">about</a> / <a href="thoughts.html">thoughts</a>
+    </div>
+
+    <h2 class="page-title">Panduan singkat membuat pendeteksi manusia pada gambar</h2>
+<p>Iya. Dengan deep learning dan OpenCV. Saya mengasumsikan kamu familiar atau pernah dengar keduanya. Kalau tidak, tidak apa-apa. Silakan ikuti saja. Kita akan menggunakan bahasa pemrograman python.</p>
+
+<h3 class="page-section-title">Goal</h3>
+
+<p>Diberikan input berupa suatu gambar. Kita diminta mendeteksi dan menandai area-area yang di dalamnya terdapat objek manusia.</p>
+
+<p><img src="human_detection.png" alt="goal" /></p>
+
+<p>Saya random saja pinjam gambar dari <a href="https://sdotblog.seattle.gov/2020/07/23/weve-completed-pedestrian-first-crosswalk-safety-goal-six-months-early-and-are-advancing-a-new-policy-to-create-more-automatic-walk-signals-and-give-people-more-time-to-cross-the-street/">sini</a>.</p>
+
+<h3 class="page-section-title">MobileNet sebagai model pendeteksi (detector)</h3>
+
+<p>Detector kita berbasis model deep learning. Lebih spesifiknya, kita akan menggunakan model dengan arsitektur MobileNet, yaitu deep neural network yang relatif ringan namun cukup akurat. Sesuai namanya, model ini didesain Google untuk digunakan di perangkat mobile.</p>
+
+<p>Buka editor teks-mu, pastikan OpenCV dengan versi &gt;= 3.1. sudah terpasang. Sejak versi 3.1., OpenCV memungkinkan kita untuk menggunakan deep learning untuk mengolah citra. Ini berarti, siapapun semakin mudah mengakses model terkini.</p>
+
+<p>Pertama, import OpenCV, kemudian inisialisasi modelnya sebagai berikut.</p>
+
+<pre>
+<code class="python">import cv2
+
+model = cv2.dnn.readNetFromTensorflow('frozen_inference_graph.pb',
+                                      'ssd_mobilenet_v1_ppn_coco.pbtxt')
+</code>
+</pre>
+
+<p>Kode di atas berarti kita akan membuat model MobileNet yang bobot-bobotnya sudah optimal. Artinya, sudah ada orang baik di komunitas computer vision yang melatih modelnya. Artinya, kita tinggal pakai saja. Untuk eksperimen ini, model yang akan digunakan dibuat dengan Tensorflow. Karena itu kita memanggil fungsi <code>readNetFromTensorflow</code>. </p>
+
+<p>Bobot-bobot dan konfigurasi model yang dibuat dengan tensorflow akan disimpan dalam file <code>*.pb</code> dan <code>*.pbtxt</code>. Untuk MobileNet sendiri kita harus punya file <code>frozen_inference_graph.pb</code> (berisi seonggok bobot yang sudah optimal) serta <code>ssd_mobilenet_v1_ppn_coco.pbtxt</code> (yang berisi konfigurasi MobileNet). Keduanya bisa diperoleh dari <a href="https://github.com/opencv/opencv/wiki/TensorFlow-Object-Detection-API#use-existing-config-file-for-your-model">tautan ini</a> (saya menggunakan MobileNet-SSD v1 PPN). Kedua file itu saja yang kita butuhkan.</p>
+
+<p>(Sebetulnya kita bisa saja menggunakan model yang dilatih dengan framework lain, seperti caffe atau darknet, tapi cara memuat bobot-bobotnya akan sedikit berbeda. Jadi, gk dulu.)</p>
+
+<p>Kemudian kita bisa load gambar uji coba. Silakan sediakan sendiri gambar yang berisi sekumpulan manusia. Bebas. Simpan dengan nama "<code>people.jpg</code>", atau apapun, silakan sesuaikan. Standar saja, seperti biasanya kita load gambar dengan OpenCV. Jangan lupa tampung ukurannya di variabel <code>W</code> (width) dan <code>H</code> (height).</p>
+
+<pre>
+<code class="python">image = cv2.imread('people.jpg')  # sesuaikan nama file-nya
+
+W = image.shape[1]
+H = image.shape[0]
+</code>
+</pre>
+
+<p>Sebagai catatan, <code>cv2.imread()</code> secara default akan mengembalikan image dalam bentuk array 3D (<code>numpy.ndarray</code>) dengan ukuran <code>(W, H, C)</code>, di mana <code>C</code> adalah jumlah channel warna, dan <code>C=3</code>. Kenapa 3? Karena ada 3 channel warna, RGB 🤷🏻‍♂️. </p>
+
+<h3 class="page-section-title">Melakukan pendeteksian</h3>
+
+<p>Gambar sudah dimuat. Sekarang kita bisa melakukan pendeteksian, dengan alur sebagai berikut.</p>
+
+<pre>
+<code class="python">blob = cv2.dnn.blobFromImage(image,
+                             size=(300, 300),
+                             mean=(127.5, 127.5, 127.5),
+                             swapRB=True)
+model.setInput(blob)
+output = model.forward()
+</code>
+</pre>
+
+<p>Model tidak bisa langsung menggunakan <code>image</code> sebagai input. Kita harus mengonversi <code>image</code> menjadi blob. Entah kenapa demikian 🤷🏻‍♂️.
+Mudahnya, anggaplah blob sebagai <code>image</code> yang sudah di-preprocess, dengan cara di-resize ke ukuran <code>(300, 300)</code>, dinormalisasi tiap-tiap channel-nya dengan mean <code>(127.5, 127.5, 127.5)</code>, dan diubah susunan channel-nya dari RGB menjadi BGR (iya, MobileNet di OpenCV butuh input BGR).</p>
+
+<p>Setelah itu, kita perintahkan model untuk menggunakan <code>blob</code> sebagai input melalui <code>model.setInput(blob)</code>. Untuk mendapatkan output, kita perintahkan model untuk melakukan forward propagation, <code>model.forward()</code>.</p>
+
+<p>Variabel <code>output</code> adalah array 4D dengan ukuran <code>(1, 1, 100, 7)</code>. Fokus saja pada ukuran dua dimensi terakhir, 100 dan 7. Ini berarti, MobileNet memprediksi informasi dari 100 kandidat bounding box (persegi yang menandai masing-masing orang di gambar). Di masing-masing informasi bounding box, ada 7 nilai yang merepresentasikan <code>(image_id, label, conf, x_min, y_min, x_max, y_max)</code>:</p>
+
+<ul>
+<li><code>image_id</code>: indeks image dalam batch. Ingat, sebetulnya dalam sekali prediksi kita bisa menggunakan beberapa image sekaligus (prediksi dalam batch). Di contoh ini, kita hanya menggunakan 1 image (ukuran batch=1). Jadi <code>image_id</code> selalu bernilai 0.</li>
+<li><code>label</code>: prediksi class ID, [1 .. 91]. MobileNet yang kita gunakan dilatih dengan dataset COCO-91. Label 1 berarti <code>person</code>, label 2 berarti <code>bicycle</code>, dst. Daftar lengkap label dataset COCO-91 dapat dilihat di <a href="https://github.com/openvinotoolkit/open_model_zoo/blob/master/data/dataset_classes/coco_91cl.txt">sini</a>.</li>
+<li><code>conf</code>: tingkat keyakinan (confidence) hasil prediksi.</li>
+<li><code>(x_min, y_min)</code>: koordinat pojok kiri-atas bounding box. Koordinat dalam format ternormalisasi, dengan range [0, 1].</li>
+<li><code>(x_max, y_max)</code>: koordinat pojok kanan-bawah bounding box. Koordinat dalam format ternormalisasi, dengan range [0, 1].</li>
+</ul>
+
+<p>Ingat, MobileNet dapat memprediksi maksimal 100 bounding box dalam 1 image. Namun kita tidak akan selalu menggunakan semuanya. Kita hanya akan menggunakan bounding box yang memiliki confidence "cukup tinggi". Katakanlah, minimal 0.4. Kita dapat menampung informasi bounding box yang layak pakai dalam suatu list (<code>final_detection</code>):</p>
+
+<pre>
+<code class="python">final_detection = []
+for detection in output[0, 0, :, :]:
+    confidence = detection[2]
+    if confidence >= 0.4:
+        final_detection.append(detection)
+</code>
+</pre>
+
+<p>Menggunakan confidence terlalu rendah mengakibatkan banyak noise yang ditampilkan. Maksudnya, bounding box tetap ditampilkan untuk menandai sesuatu, walaupun bisa saja bukan manusia (false positive). Saya yakin kamu tidak suka yang horor-horor 🤷🏻‍♂️.</p>
+
+<h3 class="page-section-title">Menggambar bounding box yang terdeteksi</h3>
+
+<p>Untuk setiap informasi bounding box pada list <code>final_detection</code>, jika <code>class_id == 1</code> (jika kelas bounding box tersebut terdeteksi sebagai <code>person</code>), maka gambar dia.</p>
+
+<pre>
+<code class="python">for detection in final_detection:
+    class_id = detection[1]
+
+    if class_id == 1:
+        x1, y1 = detection[3], detection[4]
+        x2, y2 = detection[5], detection[6]
+
+        x1 = int(x1 * W)
+        x2 = int(x2 * W)
+        y1 = int(y1 * H)
+        y2 = int(y2 * H)
+
+        top_left = (x1, y1)
+        bottom_right = (x2, y2)
+        color = (0, 255, 0)  # RGB color
+        thickness = 2
+        cv2.rectangle(image, top_left, bottom_right, color, thickness)
+</code>
+</pre>
+
+<p>Ingat kembali bahwa koordinat masih dalam format ternormalisasi dalam range [0, 1]. Untuk mengembalikan koordinat dalam unit pixel, tinggal kalikan saja dengan dimensi asal. Untuk koordinat <code>x</code>, kalikan dengan <code>W</code>, dan untuk koordinat <code>y</code>, kalikan dengan <code>H</code>. Jangan lupa bulatkan koordinatnya (typecast menjadi <code>int</code>), karena sistem drawing OpenCV tidak menerima pixel berupa angka desimal. </p>
+
+<p>Kemudian kita bisa menggambar masing-masing bounding box: <code>cv2.rectangle(image, top_left, bottom_right, color, thickness)</code>. Untuk perintah ini, sepertinya cukup self-explanatory: gambarkan rectangle di atas <code>image</code> (gambar original) dari koordinat <code>top_left</code> ke <code>bottom_right</code>, dengan warna <code>color</code>, dan ketebalan border 2 pixel.</p>
+
+<p>Akhirnya, tampilkan hasil akhir dengan baris kode berikut:</p>
+
+<pre>
+<code class="python">for detection in final_detection:
+cv2.imshow('Human detection', image)
+cv2.waitKey()
+</code>
+</pre>
+
+<p>Jika berhasil, seharusnya akan muncul jendela seperti ditunjukkan gambar pertama di atas.</p>
+
+<h3 class="page-section-title">Kode selengkapnya</h3>
+
+<pre>
+<code class="python">import cv2
+
+
+model = cv2.dnn.readNetFromTensorflow('frozen_inference_graph.pb',
+                                      'ssd_mobilenet_v1_ppn_coco.pbtxt')
+
+with open('coco_classes.txt', 'r') as f:
+    label_dict = f.read().split('\n')
+
+image = cv2.imread('people.jpg')
+
+W = image.shape[1]
+H = image.shape[0]
+
+blob = cv2.dnn.blobFromImage(image,
+                             size=(300, 300),
+                             mean=[127.5, 127.5, 127.5],
+                             swapRB=True)
+model.setInput(blob)
+output = model.forward()
+
+final_detection = []
+for detection in output[0, 0, :, :]:
+    confidence = detection[2]
+    if confidence > 0.4:
+        final_detection.append(detection)
+
+for detection in final_detection:
+    class_id = detection[1]
+
+    if class_id == 1:
+        x1, y1 = detection[3], detection[4]
+        x2, y2 = detection[5], detection[6]
+
+        x1 = int(x1 * W)
+        x2 = int(x2 * W)
+        y1 = int(y1 * H)
+        y2 = int(y2 * H)
+
+        top_left = (x1, y1)
+        bottom_right = (x2, y2)
+        color = (0, 255, 0)  # RGB color
+        thickness = 2
+        cv2.rectangle(image, top_left, bottom_right, color, thickness)
+
+cv2.imshow('Human detection', image)
+cv2.waitKey()
+</code>
+</pre>
+
+<h3 class="page-section-title">Pengembangan lanjutan</h3>
+
+<ul>
+<li>MobileNet tidak hanya bisa mendeteksi manusia saja. Kamu bisa memodifikasi kondisi pendeteksian untuk menangkap objek selain manusia, misalnya mobil, sepeda motor, dsb.</li>
+<li>Input tidak selalu harus gambar. Kalau kamu mau eksplorasi, silakan pertimbangkan untuk gunakan webcam sebagai input. MobileNet cukup ringan, dan seharusnya kamu bisa memperoleh FPS yang tinggi.</li>
+<li>Pasang klasifikasi lanjutan. Misal, jika menemui orang dengan karakteristik tertentu (kerudung merah), munculkan notifikasi "kerudung merah jangan sampai lepas...".</li>
+</ul>
+
+
+    
+    <script>hljs.highlightAll();</script>
+</body>
+
+</html>

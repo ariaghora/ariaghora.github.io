@@ -45,10 +45,10 @@ def compile_md(filename: str):
     return blog_output
 
 
-fn = md_filenames[0]
-out_filename = os.path.join(
-    dirname, os.path.basename(fn).rstrip('.md') + '.html')
+for fn in md_filenames:
+    out_filename = os.path.join(
+        dirname, os.path.basename(fn).rstrip('.md') + '.html')
 
-with open(out_filename, 'w') as f:
-    out_html = compile_md(fn)
-    f.write(out_html)
+    with open(out_filename, 'w') as f:
+        out_html = compile_md(fn)
+        f.write(out_html)
