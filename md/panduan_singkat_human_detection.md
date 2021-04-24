@@ -14,7 +14,9 @@ Saya random saja pinjam gambar dari [sini](https://sdotblog.seattle.gov/2020/07/
 
 <h3 class="page-section-title">MobileNet sebagai model pendeteksi (detector)</h3>
 
-Detector kita berbasis model deep learning. Lebih spesifiknya, kita akan menggunakan model dengan arsitektur MobileNet, yaitu deep neural network yang relatif ringan namun cukup akurat. Sesuai namanya, model ini didesain Google untuk digunakan di perangkat mobile.
+Detector kita berbasis model deep learning. Lebih spesifiknya, kita akan menggunakan model dengan arsitektur MobileNet, yaitu deep neural network yang relatif ringan namun cukup akurat. Sesuai namanya, model ini [didesain Google](https://ai.googleblog.com/2018/04/mobilenetv2-next-generation-of-on.html) untuk digunakan di perangkat mobile, dan ia dapat melakukan 3 hal sekaligus: segmentasi, deteksi, klasifikasi.
+
+![Overview MobileNet](https://1.bp.blogspot.com/-M8UvZJWNW4E/WsKk-tbzp8I/AAAAAAAAChw/OqxBVPbDygMIQWGug4ZnHNDvuyK5FBMcQCLcBGAs/s640/image5.png)
 
 Buka editor teks-mu, pastikan OpenCV dengan versi >= 3.1. sudah terpasang. Sejak versi 3.1., OpenCV memungkinkan kita untuk menggunakan deep learning untuk mengolah citra. Ini berarti, siapapun semakin mudah mengakses model terkini.
 
@@ -186,3 +188,5 @@ cv2.waitKey()
 - MobileNet tidak hanya bisa mendeteksi manusia saja. Kamu bisa memodifikasi kondisi pendeteksian untuk menangkap objek selain manusia, misalnya mobil, sepeda motor, dsb.
 - Input tidak selalu harus gambar. Kalau kamu mau eksplorasi, silakan pertimbangkan untuk gunakan webcam sebagai input. MobileNet cukup ringan, dan seharusnya kamu bisa memperoleh FPS yang tinggi.
 - Pasang klasifikasi lanjutan. Misal, jika menemui orang dengan karakteristik tertentu (kerudung merah), munculkan notifikasi "kerudung merah jangan sampai lepas...".
+
+Jika ada yang ingin didiskusikan, silakan email atau sapa saya di twitter.
