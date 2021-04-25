@@ -122,8 +122,7 @@ Kemudian kita bisa menggambar masing-masing bounding box: `cv2.rectangle(image, 
 Akhirnya, tampilkan hasil akhir dengan baris kode berikut:
 
 <pre>
-<code class="python">for detection in final_detection:
-cv2.imshow('Human detection', image)
+<code class="python">cv2.imshow('Human detection', image)
 cv2.waitKey()
 </code>
 </pre>
