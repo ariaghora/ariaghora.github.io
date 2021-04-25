@@ -182,8 +182,12 @@ cv2.waitKey()
 
 <h3 class="page-section-title">Pengembangan lanjutan</h3>
 
-- MobileNet tidak hanya bisa mendeteksi manusia saja. Kamu bisa memodifikasi kondisi pendeteksian untuk menangkap objek selain manusia, misalnya mobil, sepeda motor, dsb.
+- MobileNet tidak hanya bisa mendeteksi manusia saja. Kamu bisa memodifikasi kondisi pendeteksian untuk menangkap objek selain manusia, misalnya mobil, sepeda motor, kucing, dsb.
 - Input tidak selalu harus gambar. Kalau kamu mau eksplorasi, silakan pertimbangkan untuk gunakan webcam sebagai input. MobileNet cukup ringan, dan seharusnya kamu bisa memperoleh FPS yang tinggi.
 - Pasang klasifikasi lanjutan. Misal, jika menemui orang dengan karakteristik tertentu (kerudung merah), munculkan notifikasi "kerudung merah jangan sampai lepas...".
+
+<p align="center">
+<img src="kocheng.png" style="width:400px">
+</p]>
 
 Jika ada yang ingin didiskusikan, silakan email atau sapa saya di twitter.
