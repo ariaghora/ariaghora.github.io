@@ -2,7 +2,7 @@ title: Panduan singkat membuat pendeteksi manusia pada gambar
 date: 25-04-2021
 ---
 
-Iya. Dengan deep learning dan OpenCV. Saya mengasumsikan kamu familiar atau pernah dengar keduanya. Kalau tidak, tidak apa-apa. Silakan ikuti saja. Kita akan menggunakan bahasa pemrograman python.
+Iya. Dengan deep learning dan OpenCV. Saya mengasumsikan kamu familiar atau pernah dengar keduanya. Kalau tidak, tidak apa-apa. Silakan ikuti saja. Kita akan menggunakan bahasa pemrograman python. Tulisan ini mencoba menunjukkan bahwa walaupun di baliknya terdapat bejibun konsep fafifu wasweswos, perangkat deep learning kini sudah dibingkis rapi dan lebih mudah diakses untuk awam.
 
 <h3 class="page-section-title">Goal</h3>
 
