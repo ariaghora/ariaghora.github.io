@@ -14,7 +14,7 @@ Saya random saja pinjam gambar dari [sini](https://sdotblog.seattle.gov/2020/07/
 
 <h3 class="page-section-title">MobileNet sebagai model pendeteksi (detector)</h3>
 
-Detector kita berbasis model deep learning. Lebih spesifiknya, kita akan menggunakan model dengan arsitektur MobileNet, yaitu deep neural network yang relatif ringan namun cukup akurat. Sesuai namanya, model ini [didesain Google](https://ai.googleblog.com/2018/04/mobilenetv2-next-generation-of-on.html) untuk digunakan di perangkat mobile, dan ia dapat melakukan 3 hal sekaligus: segmentasi, deteksi, klasifikasi.
+Detector kita berbasis model deep learning. Lebih spesifiknya, kita akan menggunakan model dengan arsitektur MobileNet, yaitu deep neural network yang relatif ringan (dibandingkan arsitektur populer sejenis seperti YOLO dan RCNN) namun cukup akurat. Pas untuk laptopmu yang medioker itu. Sesuai namanya, model ini [didesain Google](https://ai.googleblog.com/2018/04/mobilenetv2-next-generation-of-on.html) untuk digunakan di perangkat mobile, dan ia dapat melakukan 3 hal sekaligus: segmentasi, deteksi, klasifikasi.
 
 ![Overview MobileNet](https://1.bp.blogspot.com/-M8UvZJWNW4E/WsKk-tbzp8I/AAAAAAAAChw/OqxBVPbDygMIQWGug4ZnHNDvuyK5FBMcQCLcBGAs/s640/image5.png)
 
