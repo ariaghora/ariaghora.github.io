@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <!-- <a href="/views.html">Views</a> - -->
+            <a href="/views.html">Others</a> -
+            <a href="#">My Friends</a>
+        </div>
+
+        <div class="content"><h1>Wirth's law</h1>
+<p><a href="https://en.wikipedia.org/wiki/Gordon_Moore">Gordon Moore</a> mempopulerkan <em>Moore's law</em>:</p>
+<blockquote>
+<p>&quot;Jumlah transistor pada <em>integrated circuit</em> (IC) berlipat ganda, kurang-lebih, tiap dua tahun&quot;</p>
+</blockquote>
+<p>Ini barangkali tidak asing bagi yang berkecimpung di dunia ilmu komputer.
+Ini bukan <em>law</em> seperti pada <a href="https://en.wikipedia.org/wiki/Scientific_law"><em>scientific law</em></a>, tapi hanya mengacu pada pengamatan empiris Moore dari tahun ke tahun.
+Konsekuensinya, performa komputer kita (seharusnya) akan selalu meningkat seiring berjalannya waktu.</p>
+<p>Bagaimana realitanya? Memang, sejauh saya lihat, selalu ada peningkatan kualitas (dan kuantitas) hardware pada produk-produk komputer.
+Ambillah contoh laptop apapun merknya.
+Kapasitas RAM selalu meningkat dari 2GB, menjadi 4GB, kemudian 8GB, kemudian 16GB, dan seterusnya.
+Begitu juga kapasitas penyimpanan file.</p>
+<p>Sayang sekali, dunia software berlawanan dengan dunia hardware.
+Yang saya rasa, alih-alih bertambah cepat, software malah bertambah lambat.
+Contoh terdekat: sistem operasi.
+Mana ada sistem operasi (mayor) yang tidak bertambah kebutuhan minimal hardware-nya?
+Cobalah pasang windows 10 di komputer era awal 2000-an kemudian kerja dengan itu.
+Ya... Kalaupun anda pingin kena mental atau mati muda.</p>
+<p>Ternyata bukan cuma saya saja yang gemes.
+<a href="https://en.wikipedia.org/wiki/Niklaus_Wirth">Niklaus Wirth</a>, living legend dunia ilmu komputer, sampai memperkenalkan <em>Wirth's law</em> (juga bukan <em>law</em> seperti dalam <em>law of science</em>):</p>
+<blockquote>
+<p>&quot;<em>software is getting slower more rapidly than hardware is becoming faster</em>&quot;</p>
+</blockquote>
+<p>Alias, <strong>laju software menjadi lambat</strong> lebih cepat daripada <strong>laju hardware menjadi lambat</strong>.
+Alias, software makin lama bukannya makin cepat, tapi makin lambat dan bloated di tiap versinya.
+Ada juga variasi lelucon dari Wirth's law:</p>
+<blockquote>
+<p>&quot;What Intel giveth, Microsoft taketh away&quot;</p>
+</blockquote>
+<p><code>¯\_(ツ)_/¯</code></p>
+<p>Komplain utama Wirth sebenarnya adalah abainya pengguna software dalam membedakan mana <strong>fitur yang esensial</strong> dan mana fitur yang <strong>bersifat <em>nice-to-have</em> saja</strong>.
+Hasilnya, sumberdaya hardware yang tinggi itu dipenuhi dengan fitur-fitur yang tidak terlalu penting.</p>
+<blockquote>
+<p>Tapi, kan, seiring dengan perubahan zaman, bukannya memang akan banyak kebutuhan yang baru?</p>
+</blockquote>
+<p><em>Fair enough</em>.
+Tapi biarkan saya tanya balik sebagai reality check:
+Apakah anda yakin itu memang kebutuhan? Bagaimana kalau itu bukan kebutuhan, tapi anda dibuat merasa butuh (secara tak sadar dan tersistem), padahal kalau tidak ada itu anda masih baik-baik saja?</p>
+<p>Saya berani bertaruh, di tahun 2021, di Windows 11, walaupun hanya dengan MS Word 2007 (seandainya masih didukung), kebanyakan mahasiswa atau pegawai kantoran masih bisa beraktivitas ketik-mengetik dan mencetak seperti biasa, dengan produktivitas yang kurang lebih sama saja.</p>
+<hr>
+<p><strong><em>Key takeaway</em></strong>: selalu perhatikan mana yang menjadi kebutuhan dan mana yang menjadi keinginan, agar sumberdaya kita tidak habis oleh hal yang tidak terlalu penting</p>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2022 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+</body>
+
+</html>

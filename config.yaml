@@ -1,0 +1,4 @@
+input_dir: src
+output_dir: docs
+header: header.html
+footer: footer.html

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <!-- <a href="/views.html">Views</a> - -->
+            <a href="/views.html">Others</a> -
+            <a href="#">My Friends</a>
+        </div>
+
+        <div class="content"><h1>Sudah ada NumPy, kenapa pakai Pandas?</h1>
+<p>Pemula di ranah ilmu data, <em>machine learning</em> (ML), dan sejenisnya, seringkali kebingungan dengan banyakanya perkakas dan pustsaka yang akan dipelajari.
+Paling sering saya temui adalah mereka yang kebingungan menentukan kapan harus menggunakan NumPy, kapan harus menggunakan Pandas.
+Apalagi keduanya sama-sama bisa dipakai sebagai input untu pustaka seperti scikit-learn (sklearn).
+Tutorial ML sklearn yang menggunakan NumPy tidak kalah banyaknya dengan yang menggunakan Pandas.</p>
+<h1>NumPy</h1>
+<div class="col col-30">
+<img src="https://numpy.org/images/logo.svg" width="200px"/>
+</div>
+<div class="col col-70">
+<p>Fitur utama dari NumPy (yang kepanjangannya adalah <em>numerical python</em>) adalah n-dimensional array (ndarray).
+NumPy diimplementasikan dalam bahasa C dengan optimasi yang <a href="https://numpy.org/doc/stable/user/whatisnumpy.html#why-is-numpy-fast">sangat intensif</a>, sehingga memiliki performa yang baik.
+NumPy didesain untuk memenuhi kebutuhan pemrosesan data numerik (walau tetap bisa menyimpan data non numerik).
+NumPy dibundel dengan banyak fungsi-fungsi aritmatika untuk ndarray, termasuk aljabar linear, trigonometri, optimasi, dan sebagainya.
+Oleh karena itu, NumPy cocok digunakan saat kita memiliki data numerik dan homogen.</p>
+</div>
+<h1>Pandas</h1>
+<div class="col col-30">
+<img src="https://pandas.pydata.org/static/img/pandas_white.svg" width="200px" style="background-color:#130754; padding: 10px 10px"/>
+</div>
+<div class="col col-70">
+<p>Struktur data yang merupakan punggawa dari Pandas adalah dataframe &amp; series.
+Dataframe terhimpun dari kumpulan series (kolom).
+Pandas banyak digunakan saat data berbentuk tabular dengan tipe data yang heterogen.
+Jadi, ia sangat ramah tidak hanya pada data integer dan float, namun juga string dan tipe lainnya.
+Pandas dibuat di atas NumPy.
+Pada suatu dataframe Pandas <code>x</code>, jika kita memanggil <code>x.values</code>, maka kita akan memperoleh nilai-nilainya saja dalam bentuk ndarray NumPy 2 dimensi.</p>
+</div>
+<h1>Kapan yang satu lebih baik dari lainnya?</h1>
+<blockquote>
+<p>Tentu saja, menurut saya.</p>
+</blockquote>
+<h2>NumPy</h2>
+<ul>
+<li>Saat membutuhkan array dengan dimensi yang fleksibel dan jenis data homogen (bayangkan, anda bekerja dengan vektor, matriks, dan tensor berisi angka-angka)</li>
+<li>Saat membutuhkan operasi aritmatik yang melibatkan array (terlebih untuk yang berdimensi lebih dari 2): <em>fourier transform</em>, perkalian matriks, <em>eigendecomposition</em>, dsb.</li>
+</ul>
+<h2>Pandas</h2>
+<ul>
+<li>Saat data berorientasi tabel dan jenis datanya heterogen (bayangkan, anda bekerja dengan tabel-tabel seperti pada SQL yang berisi <em>field-field</em> dengan tipe data berbeda)</li>
+<li>Saat membutuhkan operasi tabular yang intensif: <em>joining</em>, <em>merging</em>, manipulasi index dan kolom, pembersihan data, transformasi data, dsb.</li>
+<li>Saat menginginkan indeks dan nama kolom yang tidak harus integer%</li>
+</ul>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2022 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+</body>
+
+</html>

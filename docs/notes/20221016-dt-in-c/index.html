@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <!-- <a href="/views.html">Views</a> - -->
+            <a href="/views.html">Others</a> -
+            <a href="#">My Friends</a>
+        </div>
+
+        <div class="content"><h1>Programming decision tree classifier in C (and wrapping it in golang)</h1>
+<p>I've been recently:</p>
+<ul>
+<li>learning golang for a machine learning project in our company</li>
+<li>interested in single-header-file C library style, like ones of Sean Barett's <a href="https://github.com/nothings/stb">stb</a>.
+For some reasons, I think they are so elegant: simple APIs; little-to-no dependencies.</li>
+</ul>
+<p>For the sake of recreational programming (and refreshing my decision tree knowledge), I decided to implement a decision tree classifier library in pure C.
+Here's the list of requirements:</p>
+<ul>
+<li>The library should be pure C, header only, adhering c99 standard.</li>
+<li>It should be able to be wrapped by the other languages.
+In this case, I will use golang as the wrapper.</li>
+</ul>
+<hr>
+<h2>The <code>libdtree</code></h2>
+<p>The so-called <code>libdtree</code> single-header-file only C library is already implemented and it can be accessed <a href="https://github.com/ariaghora/libdtree">here</a>.
+To avoid overcomplication, only 4 APIs are exposed:</p>
+<ul>
+<li><code>dtree_fit</code> and <code>dtree_fit_with_param</code> to fit a tree classifier</li>
+<li><code>dtree_predict</code> and <code>dtree_predict_single</code> to make predictions in bulk or per sample respectively</li>
+</ul>
+<p>Using it in C is pretty straightforward.
+For example, this is a program to grow a decision tree classifier on XOR dataset.</p>
+<pre><code class="language-C">#include &lt;stdio.h&gt;
+#include &quot;libdtree.h&quot;
+
+int main()
+{
+    // features
+    float data[8] = {
+        1, 1,
+        0, 1,
+        1, 0,
+        0, 0};
+
+    // targets
+    float target[4] = {0, 1, 1, 0};
+
+    int nrow = 4;
+    int ncol = 2;
+    Tree *tree = dtree_fit(data, target, ncol, nrow);
+
+    /*
+        make bulk predictions on the original data (which is expected to
+        reproduce the original target)
+    */
+    // allocate prediction output buffer
+    float predictions[nrow];
+    dtree_predict(tree, data, ncol, nrow, predictions);
+
+    for (int i = 0; i &lt; nrow; i++)
+    {
+        printf(&quot;result %d: %.2f\n&quot;, i, predictions[i]);
+    }
+
+    /*
+        make a single class prediction
+    */
+    float test[2] = {1, 0};
+    float class = dtree_predict_single(tree, test);
+
+    printf(&quot;result single: %.2f\n&quot;, class); // should print 1.00
+
+    dtree_free(tree);
+    return 0;
+}
+</code></pre>
+<p>Commonly, such kind of libraries are designed to be used as a low-level tool.
+Preprocessing, IO, postprocessing are the responsibility of the user.
+The libraries just do the number crunching.</p>
+<p>For example, <code>dtree</code> only accepts numerical values, grows tree, and make predictions.
+No data loader, no model serialization.</p>
+<p>I think this is indeed, their sole purpose: to be used as it is by the users like a spartan; or to wrapped in other programming languages.
+In fact, C is loved by the other languages since it is easy to interface with!</p>
+<h2>Wrapping <code>libdtree</code> in golang</h2>
+<p>Little did I know that it is really easy to include C header file <strong>as it is (!)</strong>.
+What we need to do is just:</p>
+<pre><code class="language-go">package packagename
+
+// #include &lt;stdio.h&gt;
+// #include &quot;libdtree.h&quot;
+import &quot;C&quot;
+
+// ... rest of your code
+</code></pre>
+<p>Now we can access all defined symbols in the imported headers.
+For example, if you have this function in <code>someheader.h</code></p>
+<pre><code class="language-C">void greet() {
+    printf(&quot;Hello world!\n&quot;);
+}
+</code></pre>
+<p>you'll be able to access it in go, for example as follows.</p>
+<pre><code class="language-go">package main
+
+// #include &quot;someheader.h&quot;
+import &quot;C&quot;
+
+func main() {
+    C.greet()
+}
+</code></pre>
+<p>The rest that I need to care about is the type compatibility.
+The <code>libdtree</code> accepts arrays as a float pointer, but we <strong>cannot</strong> directly use golang's <code>[]float32</code> slice.
+First of all, I need to prepare helper functions to convert golang slice to C float pointer, and vice versa.
+Here's how I did it:</p>
+<pre><code class="language-go">// converting []float32 to *C.float
+func FSliceToCFloatPtr(slice []float32) *C.float {
+	return (*C.float)(&amp;slice[0])
+}
+
+// converting *C.float to []float32
+func CFloatPtrToFSlice(arr *C.float, len int) []float32 {
+	unsafePtr := unsafe.Pointer(arr)
+
+    // lol even I don't know what I wrote
+	arrPtr := (*[1&lt;&lt;32 - 1]C.float)(unsafePtr)
+
+	// slice of type []C.float that we need to convert to slice of type
+	// []float32
+	cSlice := arrPtr[:len:len]
+	slice := []float32{}
+	for i := range cSlice {
+		slice = append(slice, float32(cSlice[i]))
+	}
+
+	return slice
+}
+</code></pre>
+<p>Then I define a struct for the decision tree classifier.
+Scikit-learn is an example of the outstanding ML library.
+I will follow their estimator class design.
+Accordingly, the struct will implement two methods: <code>fit(x, y)</code> and <code>predict(x)</code>.</p>
+<pre><code class="language-go">// Our main decision tree struct
+type DecisionTreeClassifier struct {
+	param C.TreeParam
+	root  *C.Tree
+}
+
+// Creating decision tree with specified parameters
+func NewDecisionTreeClassifier(
+    maxDepth int, minSampleSplit int,
+) *DecisionTreeClassifier {
+	return &amp;DecisionTreeClassifier{
+		param: C.TreeParam{
+			maxdepth:         C.int(maxDepth),
+			min_sample_split: C.int(minSampleSplit),
+		},
+	}
+}
+
+// Creating decision tree with the default parameters
+func NewDefaultDecisionTreeClassifier() *DecisionTreeClassifier {
+	return NewDecisionTreeClassifier(5, 1)
+}
+
+// fit takes x as a 2d slice just to make it nicer
+func (dt *DecisionTreeClassifier) Fit(
+    x [][]float32, y []float32,
+) *DecisionTreeClassifier {
+    // libdtree uses 1d flatten array, so we flatten `x`
+	xFlat := []float32{}
+	for _, row := range x {
+		xFlat = append(xFlat, row...)
+	}
+
+	nRows := len(x)
+	nCols := len(x[0])
+
+    // Here we actually invoke the training API from libdtree. The resulted
+    // `Tree` is assigned to `dt.root`.
+	dt.root = C.dtree_grow_with_param(
+		FSliceToCFloatPtr(xFlat),
+        FSliceToCFloatPtr(y),
+        C.int(nCols),
+        C.int(nRows),
+        dt.param,
+	)
+	return dt
+}
+
+func (dt *DecisionTreeClassifier) Predict(x [][]float32) []float32 {
+	xFlat := []float32{}
+	for _, row := range x {
+		xFlat = append(xFlat, row...)
+	}
+	nRows := len(x)
+	nCols := len(x[0])
+
+    // Prepare a buffer to hold prediction result
+	yPred := make([]float32, nRows)
+	C.dtree_predict(
+        dt.root,
+        FSliceToCFloatPtr(xFlat),
+        C.int(nCols),
+        C.int(nRows),
+        FSliceToCFloatPtr(yPred),
+    )
+
+	return yPred
+}
+</code></pre>
+<p>Now we proceed with the driver code.
+The dataset that I used is <a href="https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(diagnostic)">Wisconsin breast cancer dataset</a>.
+I also prepared data loader function and model accuracy calculation function.</p>
+<blockquote>
+<p>I prepared the cleaned version (removing ID and converting all values to numerical) <a href="cancer_clean.csv">here</a>.</p>
+</blockquote>
+<pre><code class="language-go">package main
+
+// #cgo CFLAGS: -O3
+// #include &quot;../libdtree/libdtree.h&quot;
+import &quot;C&quot;
+import (
+	&quot;encoding/csv&quot;
+	&quot;fmt&quot;
+	&quot;os&quot;
+	&quot;strconv&quot;
+	&quot;time&quot;
+	&quot;unsafe&quot;
+)
+
+// ...
+// ...
+
+// ... decision tree implementation codes here
+
+// ...
+// ...
+
+// Read data from a CSV file. The data will be loaded as features and targets
+// for training ML models. We assume all data are already in a numerical format.
+// This function assumes that there is only a single target column, and it is
+// given as an argument.
+func ReadNumericCSV(path string, idxTarget int) ([][]float32, []float32) {
+	f, err := os.Open(path)
+	if err != nil {
+		panic(err)
+	}
+	defer f.Close()
+
+	csv, err := csv.NewReader(f).ReadAll()
+	if err != nil {
+		panic(err)
+	}
+
+	if len(csv) == 0 {
+		panic(&quot;empty dataset&quot;)
+	}
+
+	nRows := len(csv)
+	nCols := len(csv[0])
+	data := [][]float32{}
+	target := []float32{}
+	for i := 0; i &lt; nRows; i += 1 {
+		row := []float32{}
+		for j := 0; j &lt; nCols; j += 1 {
+			if j != idxTarget {
+				v, err := strconv.ParseFloat(csv[i][j], 32)
+				if err != nil {
+					panic(err)
+				}
+				row = append(row, float32(v))
+			}
+		}
+		data = append(data, row)
+		v, err := strconv.ParseFloat(csv[i][idxTarget], 32)
+		if err != nil {
+			panic(err)
+		}
+		target = append(target, float32(v))
+	}
+	return data, target
+}
+
+// Simply calculate the count of correct predictions divided by the total
+// number of samples.
+func AccuracyScore(predicted []float32, expected []float32) float32 {
+	res := 0.0
+	for i := 0; i &lt; len(predicted); i += 1 {
+		if expected[i] == predicted[i] {
+			res += 1
+		}
+	}
+	return float32(res / float64(len(predicted)))
+}
+
+// Mimicking scikit-learn's train_test_split
+func TrainTestSplit(
+	x [][]float32, y []float32, trainSize float32, shuffle bool,
+) ([][]float32, [][]float32, []float32, []float32) {
+	indices := []int{}
+	for i := 0; i &lt; len(x); i += 1 {
+		indices = append(indices, i)
+	}
+
+	if shuffle {
+		rand.Seed(time.Now().UnixNano())
+		rand.Shuffle(
+			len(indices), func(i, j int) { indices[i], indices[j] = indices[j], indices[i] },
+		)
+	}
+
+	xTrain := [][]float32{}
+	xTest := [][]float32{}
+	yTrain := []float32{}
+	yTest := []float32{}
+	nTrain := int(trainSize * float32(len(x)))
+	for i := 0; i &lt; len(x); i += 1 {
+		if i &lt; nTrain {
+			xTrain = append(xTrain, x[i])
+			yTrain = append(yTrain, y[i])
+		} else {
+			xTest = append(xTest, x[i])
+			yTest = append(yTest, y[i])
+		}
+	}
+	return xTrain, xTest, yTrain, yTest
+}
+
+func main() {
+	data, target := ReadNumericCSV(&quot;cancer_clean.csv&quot;, 0)
+	xTrain, xTest, yTrain, yTest := TrainTestSplit(data, target, 0.8, true)
+
+	// track time before training
+	then := time.Now()
+
+	clf := NewDefaultDecisionTreeClassifier()
+	clf.Fit(xTrain, yTrain)
+
+	// get the training time
+	processingTime := (time.Since(then))
+
+	pred := clf.Predict(xTest)
+
+	fmt.Printf(&quot;Data shape    : (%d, %d)\n&quot;, len(data), len(data[0]))
+	fmt.Printf(&quot;Training time : %.2f seconds\n&quot;, processingTime.Seconds())
+	fmt.Printf(&quot;Test accuracy : %.2f%%\n&quot;, AccuracyScore(pred, yTest)*100)
+
+}
+
+</code></pre>
+<p>When I run the code, this is the result.</p>
+<p><img src="result.png" alt=""></p>
+<p>For an unoptimized <code>libdtree</code>, this is Not bad, eh?</p>
+<h2>Lessons learned</h2>
+<ul>
+<li>Developing single-header-file only library is very fun and daunting at the same time.
+One needs to be very disciplined about memory management.
+To debug memory errors, I heavily used <strong>valgrind</strong>.</li>
+<li>People say that rust can solve this memory issue.
+I agree. I tried programming in rust and the result was parsimoneous.
+That aside, I think learning rust (and dealing with it's asian-parent-level strictness) made me a better C programmer.
+And the more I use rust, the more comfortable I use C 😜.</li>
+<li>It is very tempting to keep adding more features, but developing this tiny library in a limited space constantly reminded myself about self-control</li>
+</ul>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2022 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+</body>
+
+</html>
