@@ -63,3 +63,5 @@ This is one of the caveats of Chatterjee's xi-score.
 Chatterjee himself put a remark:
 
 > "(9) If there are no ties among the $Y_i$'s, the maximum possible value of $\xi_n(X, Y)$ is $(n -2) / (n + 1)$, which is attained if $Y_i = X_i$ for all $i$. This can be noticeably less than 1 for small $n$."
+
+All in all, I think Chatterjee's coefficient is a good addition to our toolbox.

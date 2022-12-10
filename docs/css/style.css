@@ -66,10 +66,12 @@ h1:first-child:before {
 
 h1:before {
     content: var(--h1-content-before);
+    color: var(--accent-color-1);
 }
 
 h2:before {
     content: var(--h2-content-before);
+    color: var(--accent-color-2);
 }
 
 h3:before {

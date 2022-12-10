@@ -49,4 +49,4 @@ Pada suatu dataframe Pandas `x`, jika kita memanggil `x.values`, maka kita akan 
 ## Pandas
 - Saat data berorientasi tabel dan jenis datanya heterogen (bayangkan, anda bekerja dengan tabel-tabel seperti pada SQL yang berisi _field-field_ dengan tipe data berbeda)
 - Saat membutuhkan operasi tabular yang intensif: _joining_, _merging_, manipulasi index dan kolom, pembersihan data, transformasi data, dsb.
-- Saat menginginkan indeks dan nama kolom yang tidak harus integer%
+- Saat menginginkan indeks dan nama kolom yang tidak harus integer.
