@@ -14,7 +14,7 @@
     --std-font-size: 14px;
     --h1-content-before: "> ";
     --h2-content-before: ">> ";
-    --h3-content-before: "➤ ";
+    --h3-content-before: ">>> ";
 }
 
 * {
@@ -34,14 +34,22 @@ body {
 blockquote {
     margin: 20px 0px;
     padding: 5px 10px;
-    border-left: 5px solid var(--accent-color-2);
+    border: #b6b6b6 1px solid;
+    border-left: 7px solid var(--accent-color-2);
     background-color: var(--accent-color-5);
     color: var(--font-color-emp-less);
     font-style: italic;
+    border-radius: 5px;
 }
 
 blockquote p {
     margin-bottom: 0px;
+}
+
+code {
+    margin-bottom: 20px;
+    border-radius: 5px;
+    border: #b6b6b6 1px solid;
 }
 
 a {
@@ -125,6 +133,10 @@ code {
 
 code.hljs {
     background-color: var(--accent-color-5);
+}
+
+table {
+    border-collapse: collapse;
 }
 
 
@@ -230,4 +242,8 @@ code.hljs {
 
 .katex {
     color: black;
+}
+
+.mermaid {
+    text-align: center;
 }

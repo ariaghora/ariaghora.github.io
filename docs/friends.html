@@ -21,6 +21,9 @@
         hljs.highlightAll();
     </script>
 
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
     <!-- The loading of KaTeX is deferred to speed up page rendering -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
@@ -62,7 +65,7 @@
             <a href="/now.html">Now</a> -
             <a href="/notes/">Notes</a> -
             <a href="/about.html">About</a> -
-            <a href="/others.html">Others</a> -
+            <!-- <a href="/others.html">Others</a> - -->
             <a href="/friends.html">My Friends</a>
         </div>
 
@@ -87,6 +90,10 @@ Feel free to visit them and say hi!</p>
 </div>
 
 </div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
 
 </body>
 

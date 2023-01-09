@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js" integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <a href="/about.html">About</a> -
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content"><h1>Communication between programs (in any languages) with named pipes</h1>
+<p>Imagine you are building a system to monitor the temperature in a warehouse.
+You have multiple sensors scattered throughout the warehouse that are constantly measuring the temperature, and you want to display the temperature data on a dashboard.
+One way you could do this is by using the publish-subscribe pattern: each sensor would publish its temperature data to a <em>message broker</em>, which would then forward the data to the dashboard program.
+The dashboard program would be subscribed to the message broker and would receive the temperature data when it is forwarded.</p>
+<pre class="mermaid">
+    graph LR 
+        A[Publisher] --> B[Message broker]
+        B --> C[Subscriber] 
+</pre>
+<p>This allows the sensor programs and the dashboard program to operate independently and asynchronously, making the system more efficient and scalable.
+This pattern is common in distributed systems, where the publisher and subscriber may be running on different machines.</p>
+<blockquote>
+<p>Now, what if you want to implement this pattern in a local system, where the publisher and subscriber are running on the same machine?</p>
+</blockquote>
+<h2>Local communication with named pipes</h2>
+<p>It is not counterintuitive to use a message broker in this case.
+In fact, it is pretty common to use a message broker in a local system.
+Especially when the publisher and subscriber are written in different languages, it is easier to use a message broker to communicate between them.
+In this case, the message broker can be implemented using a <em>named pipe</em>.</p>
+<p>Named pipe can be created using the <code>mkfifo</code> command:</p>
+<pre><code class="language-bash">$ mkfifo /tmp/mypipe
+</code></pre>
+<p>The <code>/tmp/mypipe</code> pipe will be created.
+Note that it looks like a file, but it is <strong>actually</strong> not a file: it is a <em>pseudo-file</em>.
+We can find pseudo-files in unix systems like <code>/dev/null</code>, <code>/proc</code>, or <code>/sys</code> (<a href="https://en.wikipedia.org/wiki/Synthetic_file_system#Examples">more example</a>).</p>
+<p>Consider following example, where left pane is the publisher and right pane is the subscriber.
+The publisher writes to the named pipe (using <code>echo</code>) and the subscriber reads from the named pipe (using <code>cat</code>).</p>
+<div id="player1"></div>
+<p>Named pipe is a standard, and most of programming languages support it, so we can use it programmaticaly.</p>
+<p>Next, we will look at how to implement a publisher and subscriber using Go and Python.
+Named pipe will serve as the message broker in this case.</p>
+<blockquote>
+<p><strong>Objective:</strong> implement the publisher in Go and the subscriber in Python. The publisher can accept user input and write it to the named pipe. The subscriber can read from the named pipe and print the message to the console. When the user enters the word &quot;exit&quot;, the subscriber should end its process.</p>
+</blockquote>
+<h2>Go program as the publisher</h2>
+<p>We will use Go as the publisher.
+A publisher writes messages to a named pipe and a subscriber that reads messages from the same named pipe.
+To begin, let's take a look at the Go program that acts as the publisher.
+This program prompts the user for a message and then writes the message to a named pipe:</p>
+<pre><code class="language-go">package main
+
+import (
+	&quot;bufio&quot;
+	&quot;fmt&quot;
+	&quot;os&quot;
+	&quot;syscall&quot;
+)
+
+const pipeName = &quot;/tmp/mypipe&quot;
+
+func WriteMessage(message, pipeName string) error {
+	// check if the named pipe exists. If not, create it. Otherwise, assume
+	// it's already created beforehand.
+	_, err := os.Stat(pipeName)
+	if err != nil {
+		if os.IsNotExist(err) {
+			err = syscall.Mkfifo(pipeName, 0666)
+			if err != nil {
+				return err
+			}
+		} else {
+			return err
+		}
+	}
+
+	// open the named pipe for writing
+	pipe, err := os.OpenFile(pipeName, os.O_WRONLY, 0666)
+	if err != nil {
+		panic(err)
+	}
+	defer pipe.Close()
+
+	// write the message to the named pipe
+	_, err = pipe.WriteString(message)
+
+	return err
+}
+
+func main() {
+	for {
+		// Get user input
+		fmt.Print(&quot;Enter message to send: &quot;)
+		reader := bufio.NewReader(os.Stdin)
+		message, _ := reader.ReadString('\n')
+		message = message[:len(message)-1] // trim trailing newline
+
+		// send the message to the named pipe
+		if err := WriteMessage(message, pipeName); err != nil {
+			panic(err)
+		}
+	}
+}
+</code></pre>
+<p>The <code>WriteMessage</code> function is responsible for writing the message to the named pipe.
+It first checks if the named pipe exists and creates it if it does not. It then opens the named pipe for writing and writes the message to it using the <code>WriteString</code> method.</p>
+<p>In the main function, the program enters an infinite loop that prompts the user for a message and then writes the message to the named pipe using the WriteMessage function.
+The program will continue to run until it is interrupted or terminated.</p>
+<h2>Python program as the subscriber</h2>
+<p>Now, let's take a look at the Python program that acts as the subscriber. This program reads messages from the named pipe and processes them:</p>
+<pre><code class="language-python">PIPE_NAME = &quot;/tmp/mypipe&quot;
+
+def handle_message(message: str) -&gt; None:
+    if message == &quot;exit&quot;:
+        print(&quot;Exiting...&quot;)
+        exit(0)
+    print(f&quot;Received: {data}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    while True:
+        with open(PIPE_NAME, &quot;r&quot;) as pipe:
+            # Read data from the pipe
+            data = pipe.read().strip()
+
+            # Print the data from the pipe
+            if data:
+                handle_message(data)
+</code></pre>
+<p>This is the result:</p>
+<div id="player2"></div>
+<h3>Named pipes vs regular files</h3>
+<ul>
+<li>Like regular files, named pipes have a name and are stored on the file system. However, they have some differences from regular files. One key difference is that named pipes have a &quot;buffer&quot; that stores the data being exchanged between processes. When a process writes data to a named pipe, the data is stored in the buffer until another process reads it.</li>
+<li>Another difference between named pipes and regular files is that named pipes can only be opened for reading or writing, not both. This means that a process that opens a named pipe for writing can only write to the pipe, and a process that opens the pipe for reading can only read from it.</li>
+</ul>
+<blockquote>
+<p>You might ask, &quot;why should I use named pipes instead of regular files?&quot;</p>
+</blockquote>
+<p>Regular files are slower than named pipes for interprocess communication because they are not optimized for messaging purpose.
+When data is written to a regular file, it is stored on the file system and the file system must update its metadata to reflect the new data.
+This can be slower than using a named pipe's buffer, especially if the data is being written to the file system frequently.</p>
+<p>In addition, regular files have a more complex API than named pipes, as they can be opened for reading, writing, or both.
+This can make them slower to use in certain situations, as more code may be required to perform file operations.</p>
+<script>
+AsciinemaPlayer.create(
+	'/casts/named-pipe-example.cast',
+	document.getElementById('player1'),
+	{ cols: 110, rows: 30, theme: 'monokai' }
+);
+
+AsciinemaPlayer.create(
+	'/casts/named-pipe-result.cast',
+	document.getElementById('player2'),
+	{ cols: 110, rows: 20, theme: 'monokai' }
+);
+</script>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2022 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>

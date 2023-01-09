@@ -17,12 +17,17 @@ With a passion for AI and a background in both research and software engineering
 
 ## Highlighted Projects
 
-- [Villard](//github.com/ariaghora/villard): A pipeline framework for Python data science projects
-- [Noe](//github.com/ariaghora/noe): a neural network framework with autograd in written in ObjectPascal
-- [Minitensor](//github.com/ariaghora/minitensor): a smol tensor manipulation library written in C
-- [Robust Period](//github.com/ariaghora/robust-period): Unofficial Implementation of "RobustPeriod: Time-Frequency Mining for Robust Multiple Periodicities Detection"
+|  |  |
+| --- | --- |
+| [Villard](//github.com/ariaghora/villard) | A pipeline framework for Python data science projects |
+| [Noe](//github.com/ariaghora/noe) | A neural network framework with autograd in written in ObjectPascal |
+| [Minitensor](//github.com/ariaghora/minitensor) | A smol tensor manipulation library written in C |
+| [Robust Period](//github.com/ariaghora/robust-period) | Unofficial Implementation of "RobustPeriod: Time-Frequency Mining for Robust Multiple Periodicities Detection" |
+| [Libdtree](https://github.com/ariaghora/libdtree)| A single-file-header-only library to build decision tree, written in C |
+| [Zmol](//github.com/ariaghora/zmol) | A zmol toy programming language written in Go, designed to abuse font ligatures |
 
-<span class="faded">Due to the nature of my work, I cannot share all of my projects publicly</span>
+> Due to the nature of my work, I cannot share all of my projects publicly
+
 
 ## Quick links
 

@@ -21,6 +21,9 @@
         hljs.highlightAll();
     </script>
 
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css" integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
     <!-- The loading of KaTeX is deferred to speed up page rendering -->
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js" integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4" crossorigin="anonymous"></script>
@@ -62,7 +65,7 @@
             <a href="/now.html">Now</a> -
             <a href="/notes/">Notes</a> -
             <a href="/about.html">About</a> -
-            <a href="/others.html">Others</a> -
+            <!-- <a href="/others.html">Others</a> - -->
             <a href="/friends.html">My Friends</a>
         </div>
 
@@ -79,13 +82,43 @@
 <div class="col col-80">
 <p>With a passion for AI and a background in both research and software engineering, I am excited to be working as an R&amp;D engineer at <a href="//eaglys.co.jp">EAGLYS株式会社</a>, Tokyo.</p>
 <h2>Highlighted Projects</h2>
-<ul>
-<li><a href="//github.com/ariaghora/villard">Villard</a>: A pipeline framework for Python data science projects</li>
-<li><a href="//github.com/ariaghora/noe">Noe</a>: a neural network framework with autograd in written in ObjectPascal</li>
-<li><a href="//github.com/ariaghora/minitensor">Minitensor</a>: a smol tensor manipulation library written in C</li>
-<li><a href="//github.com/ariaghora/robust-period">Robust Period</a>: Unofficial Implementation of &quot;RobustPeriod: Time-Frequency Mining for Robust Multiple Periodicities Detection&quot;</li>
-</ul>
-<p><span class="faded">Due to the nature of my work, I cannot share all of my projects publicly</span></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="//github.com/ariaghora/villard">Villard</a></td>
+<td>A pipeline framework for Python data science projects</td>
+</tr>
+<tr>
+<td><a href="//github.com/ariaghora/noe">Noe</a></td>
+<td>A neural network framework with autograd in written in ObjectPascal</td>
+</tr>
+<tr>
+<td><a href="//github.com/ariaghora/minitensor">Minitensor</a></td>
+<td>A smol tensor manipulation library written in C</td>
+</tr>
+<tr>
+<td><a href="//github.com/ariaghora/robust-period">Robust Period</a></td>
+<td>Unofficial Implementation of &quot;RobustPeriod: Time-Frequency Mining for Robust Multiple Periodicities Detection&quot;</td>
+</tr>
+<tr>
+<td><a href="https://github.com/ariaghora/libdtree">Libdtree</a></td>
+<td>A single-file-header-only library to build decision tree, written in C</td>
+</tr>
+<tr>
+<td><a href="//github.com/ariaghora/zmol">Zmol</a></td>
+<td>A zmol toy programming language written in Go, designed to abuse font ligatures</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Due to the nature of my work, I cannot share all of my projects publicly</p>
+</blockquote>
 <h2>Quick links</h2>
 <ul>
 <li><a href="//github.com/ariaghora">Github</a></li>
@@ -110,6 +143,10 @@
 </div>
 
 </div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
 
 </body>
 
