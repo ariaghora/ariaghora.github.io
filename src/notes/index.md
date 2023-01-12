@@ -1,5 +1,6 @@
 # Notes
 
+- [20230113](20230113-markov-chebyshev) On Markov's and Chebyshev's inequality
 - [20230108](20230108-ipc-named-pipe) Communication between programs (in any languages) with named pipes
 - [20221016](20221016-dt-in-c) Programming decision tree classifier in C (and wrapping it in golang)
 - [20220120](20220120-np-vs-pd) [🇮🇩] Sudah ada NumPy, kenapa pakai Pandas?
