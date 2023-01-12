@@ -12,7 +12,7 @@
 
 <div class="col col-80">
 
-With a passion for AI and a background in both research and software engineering, I am excited to be working as an R&D engineer at [EAGLYS株式会社](//eaglys.co.jp), Tokyo.
+With a passion for AI and a background in both research and software engineering, I am excited to be working as an AI research engineer at [EAGLYS株式会社](//eaglys.co.jp), Tokyo.
 
 
 ## Highlighted Projects
