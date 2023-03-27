@@ -8,4 +8,4 @@ Feel free to visit them and say hi!
 - [Raufan](https://www.muhraufan.com/), software engineer
 - [Reza](https://reza.nurfachmi.com), software engineer
 - [Roberto](https://robertotambunan.id/), software engineer
-- [Ryan](https://www.baghaskoro.my.id/), product designer 
+- [Ryan](https://www.baghaskoro.my.id/), software engineer
