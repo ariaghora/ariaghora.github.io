@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <a href="/about.html">About</a> -
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content">
+<h1>I learn rust</h1>
+<p>I will be sharing my first attempt of learning rust as I develop a simple program.
+I hope that this will be an interesting and enlightening one, at least for me (🤞).</p>
+<p>I want to challenge myself and truly understand the language, so I refrain from using any AI-assistive tools (such as copilot and ChatGPT), to ensure that I am fully immersed in the process.</p>
+<blockquote>
+<p>As a side note:
+I have prior knowledge in other programming languages, and I have knowledge in memory management or languages with memory management like C.
+I also did some basic rust tutorial (especially on borrow checking and basic language constructs) before writing this article.</p>
+</blockquote>
+<h2>Weather forecast app</h2>
+<p>I will start by creating a weather forecast app that fetches data from a provider.
+This app will be a Command Line Interface (CLI) program that accepts input for latitude and longitude.
+It will then use that information to fetch the forecast from an existing forecast API provider.
+The app will be designed to get daily forecast (date and foreasted temperature), which will be displayed to the user.
+I want to learn how to work with APIs (especially HTTP request) and how to handle user input in rust.
+It will also be a good opportunity to work with rust's powerful error handling capabilities.</p>
+<p>Roughly, this is the result I expected:</p>
+<p>
+<img src="img/design.png" width=420/>
+</p>
+<h2>Implementation</h2>
+<p>Recently, while browsing through hackernews' front page, I came across a website called <a href="https://pirateweather.net/">pirateweather</a>.
+This website provides a simple API that allows developers to access weather forecast data.
+I was intrigued by the service, so I decided to check it out.
+After taking a closer look, I was pleased to find that the API is quite simple to use.
+All I need to do is sign up for an API key, and I will be able to access the forecast data via HTTP request.</p>
+<p>However, the first question is...</p>
+<h4>How to make HTTP request in rust?</h4>
+<p>When it came to making HTTP requests in rust, I initially had no idea where to start.
+I did some google search and found that many developers suggested using libraries such as <code>tokio</code> and <code>reqwest</code>.
+However, I didn't want to install too many libraries for such a simple task such as HTTP GET request.
+My gut feeling was that these libraries might be overkill for what I needed.</p>
+<p>Fortunately, I stumbled across a reddit discussion that mentioned <code>ureq</code> by the author himself.</p>
+<p><img src="img/reddit.png" alt=""></p>
+<p>After taking a closer look at the library, I found that it is very simple and easy to use.
+I decided to give it a try.</p>
+<p>Long story short, This is my current starter code.</p>
+<pre><code class="language-rust">use ureq;
+
+struct WeatherApp {
+    api_key: String,
+}
+
+impl WeatherApp {
+    fn new(api_key: String) -&gt; Self {
+        Self { api_key }
+    }
+
+    fn fetch(self, lat: f64, long: f64) -&gt; Result&lt;String, ureq::Error&gt; {
+        // TODO: return a proper result. Should be an array of struct of frecast result (or
+        // something else deemed proper)
+        let body: String = ureq::get(&quot;https://www.example.com&quot;).call()?.into_string()?;
+        Ok(body)
+    }
+}
+
+fn main() {
+    let api_key: String;
+
+    // I don't want to censor every single snippet ;)
+    match std::env::var(&quot;API_KEY&quot;) {
+        Ok(result) =&gt; api_key = result,
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+    let app = WeatherApp::new(api_key);
+    let result = app.fetch(0.0, 0.0);
+    match result {
+        Ok(result) =&gt; println!(&quot;{}&quot;, result),
+        Err(err) =&gt; println!(&quot;{}&quot;, err),
+    }
+}
+</code></pre>
+<p>The code wraps the main app as a struct, which has a method called <code>fetch</code> that accepts latitude and longitude as inputs.
+For now, this method practically does nothing other than fetching the website <a href="www.example.com">www.example.com</a> and returning the response as a string.
+Not useful at all, I know, but it's a good starting point to build upon.</p>
+<p>Fixing the link to the proper API endpoint is as easy as it is mentioned in the API documentation.
+I decided to keep the API key as an environment variable, but the latitude and longitude should be user-defined.</p>
+<p>The next question arises ...</p>
+<h4>How to get user input?</h4>
+<p>It turns out that getting user input in rust is quite easy.
+First, I declared <code>String</code> variable to hold the latitude and longitude values.
+Then, I instantiated <code>io::stdin</code> with which I can invoke the <code>read_line()</code> method to accept string input from the user.
+This method allows me to read user input and store it in the String variable.
+Now, I have a way to get user input and I can use it in my fetch method to get the forecast data for the location specified by the user.</p>
+<pre><code class="language-rust">...
+
+    let stdin = io::stdin();
+    let mut lat = String::new();
+    match stdin.read_line(&amp;mut lat) {
+        Ok(_) =&gt; (),
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+    let mut long = String::new();
+    match stdin.read_line(&amp;mut long) {
+        Ok(_) =&gt; (),
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+...
+
+</code></pre>
+<p>I immediately found that no need to use floating number for latitude and longitude as the <code>fetch()</code> arguments.
+I also refactor the code to reduce repetition.
+Now, following is the updated code:</p>
+<div class="toggle">
+<pre><code class="language-rust">use std::io::{self, Write};
+
+use ureq;
+
+struct WeatherApp {
+    api_key: String,
+}
+
+impl WeatherApp {
+    fn new(api_key: String) -&gt; Self {
+        Self { api_key }
+    }
+
+    fn fetch(self, lat: String, long: String) -&gt; Result&lt;String, ureq::Error&gt; {
+        let url = format!(
+            &quot;https://api.pirateweather.net/forecast/{}/{},{}&quot;,
+            self.api_key, lat, long
+        );
+        let body: String = ureq::get(&amp;url).call()?.into_string()?;
+        Ok(body)
+    }
+}
+
+// Ask for user input for latitude and longitude
+fn input_latilong() -&gt; (String, String) {
+    let mut lati: String = &quot;&quot;.to_owned();
+    let mut long: String = &quot;&quot;.to_owned();
+
+    print!(&quot;Enter latitude: &quot;);
+    io::stdout().flush().unwrap();
+    let stdin = io::stdin();
+    match stdin.read_line(&amp;mut lati) {
+        Ok(_) =&gt; (),
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+    print!(&quot;Enter longitude: &quot;);
+    io::stdout().flush().unwrap();
+    match stdin.read_line(&amp;mut long) {
+        Ok(_) =&gt; (),
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+    (lati, long)
+}
+
+
+// Helper to get environment variable. Return empty string on failure.
+fn get_env(key: &amp;str) -&gt; String {
+    match std::env::var(key) {
+        Ok(result) =&gt; result,
+        Err(_) =&gt; &quot;&quot;.to_owned(),
+    }
+}
+
+fn main() {
+    let api_key: String;
+
+    // I don't want to censor every single snippet, and API_KEY seems better to be an os
+    // environment variable. Must panic when it is not set.
+    match std::env::var(&quot;API_KEY&quot;) {
+        Ok(result) =&gt; api_key = result,
+        Err(err) =&gt; panic!(&quot;{}&quot;, err),
+    }
+
+    // I also don't want to input over and over during testing, so I also utilize environment
+    // variables
+    let mut lati = get_env(&quot;LATI&quot;);
+    let mut long = get_env(&quot;LONG&quot;);
+
+    // If lati or long is not set then ask for user input
+    if lati == &quot;&quot; || long == &quot;&quot; {
+        (lati, long) = input_latilong();
+    }
+
+    let app = WeatherApp::new(api_key);
+
+    let fetch_result = app.fetch(lati, long);
+    match fetch_result {
+        Ok(result) =&gt; println!(&quot;{}&quot;, result),
+        Err(err) =&gt; println!(&quot;{}&quot;, err),
+    }
+}
+</code></pre>
+</div>
+<p>I learned that <code>to_string()</code> is a generic conversion to a String from any type implementing the <code>ToString</code> trait.
+In most cases, we can just use <code>to_owned()</code> on a string to keep it alive, rather than <code>to_string()</code>.</p>
+<p>And this is what I get when running the program.</p>
+<p><img src="img/result1.png" alt=""></p>
+<p>Nice.</p>
+<p>Suppose that string is decoded into a JSON object <code>obj</code>, then what I need to do is extracting a list of forecast in <code>obj[&quot;daily&quot;][&quot;data&quot;]</code>.
+To do that, what I need to do is to decode that JSON string, and get the object that I want.</p>
+<p>Next question is...</p>
+<h4>How to decode JSON string?</h4>
+<p>First google search result directed me to a library called <code>serde-json</code>.
+It seems pretty popular.
+This is how I used <code>serde-json</code> to decode HTTP response from <code>ureq</code>.</p>
+<pre><code class="language-rust">...
+        let body: String = ureq::get(&amp;url).call()?.into_string()?;
+        let v: Value = serde_json::from_str(&amp;body).expect(&quot;Error parsing forecast JSON format&quot;);
+...
+</code></pre>
+<p>he second line is using the <code>from_str()</code> method provided by the <code>serde_json</code> library to parse the string into a Value struct from the <code>serde_json</code> library which is able to hold any JSON value.
+This struct can be queried for fields using the [] operator.</p>
+<p>It is worth mentioning that the <code>expect(&quot;Error parsing forecast JSON format&quot;)</code> method is used to handle the error that may occur during parsing the json string, it will panic and print the error message passed to it in case of failure.
+It is a bit crude as it is not a recommended way for handling errors in rust, but I will get back to this later.</p>
+<p>At this point, I can return the forecast results as a vector of <code>Forecast</code> struct.
+I refactored the code as follows.</p>
+<div class="toggle">
+<pre><code class="language-rust">...
+
+struct Forecast {
+    time: u64,
+    temperature_high: f64,
+    temperature_low: f64,
+}
+
+...
+
+impl WeatherApp {
+
+    ...
+
+    fn fetch(self, lat: String, long: String) -&gt; Result&lt;Vec&lt;Forecast&gt;, ureq::Error&gt; {
+        let url = format!(
+            &quot;https://api.pirateweather.net/forecast/{}/{},{}?units=si&quot;,
+            self.api_key, lat, long
+        );
+        let body: String = ureq::get(&amp;url).call()?.into_string()?;
+        let v: Value = serde_json::from_str(&amp;body).expect(&quot;Error parsing forecast JSON format&quot;);
+
+        let mut result: Vec&lt;Forecast&gt; = Vec::new();
+        if let Some(forecasts) = v[&quot;daily&quot;][&quot;data&quot;].as_array() {
+            for forecast in forecasts {
+                result.push(Forecast {
+                    time: forecast[&quot;time&quot;].as_u64().expect(&quot;cannot parse `time`&quot;),
+                    temperature_low: forecast[&quot;temperatureLow&quot;]
+                        .as_f64()
+                        .expect(&quot;cannot parse `temperatureLow`&quot;),
+                    temperature_high: forecast[&quot;temperatureHigh&quot;]
+                        .as_f64()
+                        .expect(&quot;cannot parse `temperatureHigh`&quot;),
+                })
+            }
+        }
+
+        Ok(result)
+    }
+}
+</code></pre>
+</div>
+<p>Yep. Seems we are in the right direction, except that according to the documentation, the time is in UNIX timestamp format.
+I want it as a human-readable date format.</p>
+<p>The problem is...</p>
+<h4>How to parse date and time from a UNIX timestamp?</h4>
+<h3>Returning a &quot;list&quot; of forecast? In what?</h3>
+<p>Naturally, I know that I want to use something like array.
+I found that rust also has <code>Vector</code>, i.e., &quot;dynamic&quot;/&quot;growable&quot; array.</p>
+<h2>Recap</h2>
+<p>In this session, I learned several things:</p>
+<ul>
+<li>Performing HTTP request</li>
+<li>Getting user inputs</li>
+<li>Deserializing JSON string</li>
+<li>Parsing date and time</li>
+</ul>
+<h2>Impression</h2>
+<p>Rust is a nicely designed language and I have been enjoying working with it.
+As soon as I deal with borrow checker successfully (and gracefully), I become more confident that my program will run correctly.
+However, I still feel like there is more to learn, as many concepts in Rust are still not covered, such as lifetime, concurrency, macros, unsafe rust, and more advanced data types.
+While this is just a simple program, I know that rust has a lot more to offer.
+I am looking forward to trying more complex case studies in the future, to get a better understanding of the language and its capabilities.</p>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2022 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>
