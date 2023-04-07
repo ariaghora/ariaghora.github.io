@@ -26,6 +26,8 @@ To avoid overcomplication, only 4 APIs are exposed:
 Using it in C is pretty straightforward.
 For example, this is a program to grow a decision tree classifier on XOR dataset.
 
+<div class="toggle">
+
 ```C
 #include <stdio.h>
 #include "libdtree.h"
@@ -71,6 +73,8 @@ int main()
     return 0;
 }
 ```
+
+</div>
 
 Commonly, such kind of libraries are designed to be used as a low-level tool.
 Preprocessing, IO, postprocessing are the responsibility of the user.
@@ -150,6 +154,8 @@ Scikit-learn is an example of the outstanding ML library.
 I will follow their estimator class design.
 Accordingly, the struct will implement two methods: `fit(x, y)` and `predict(x)`.
 
+<div class="toggle">
+
 ```go
 // Our main decision tree struct
 type DecisionTreeClassifier struct {
@@ -221,11 +227,15 @@ func (dt *DecisionTreeClassifier) Predict(x [][]float32) []float32 {
 }
 ```
 
+</div>
+
 Now we proceed with the driver code.
 The dataset that I used is [Wisconsin breast cancer dataset](https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(diagnostic)).
 I also prepared data loader function and model accuracy calculation function.
 
 > I prepared the cleaned version (removing ID and converting all values to numerical) [here](cancer_clean.csv).
+
+<div class="toggle">
 
 ```go
 package main
@@ -362,6 +372,8 @@ func main() {
 }
 
 ```
+
+</div>
 
 When I run the code, this is the result.
 

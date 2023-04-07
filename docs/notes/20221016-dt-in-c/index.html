@@ -104,6 +104,7 @@ To avoid overcomplication, only 4 APIs are exposed:</p>
 </ul>
 <p>Using it in C is pretty straightforward.
 For example, this is a program to grow a decision tree classifier on XOR dataset.</p>
+<div class="toggle">
 <pre><code class="language-C">#include &lt;stdio.h&gt;
 #include &quot;libdtree.h&quot;
 
@@ -148,6 +149,7 @@ int main()
     return 0;
 }
 </code></pre>
+</div>
 <p>Commonly, such kind of libraries are designed to be used as a low-level tool.
 Preprocessing, IO, postprocessing are the responsibility of the user.
 The libraries just do the number crunching.</p>
@@ -213,6 +215,7 @@ func CFloatPtrToFSlice(arr *C.float, len int) []float32 {
 Scikit-learn is an example of the outstanding ML library.
 I will follow their estimator class design.
 Accordingly, the struct will implement two methods: <code>fit(x, y)</code> and <code>predict(x)</code>.</p>
+<div class="toggle">
 <pre><code class="language-go">// Our main decision tree struct
 type DecisionTreeClassifier struct {
 	param C.TreeParam
@@ -282,12 +285,14 @@ func (dt *DecisionTreeClassifier) Predict(x [][]float32) []float32 {
 	return yPred
 }
 </code></pre>
+</div>
 <p>Now we proceed with the driver code.
 The dataset that I used is <a href="https://archive.ics.uci.edu/ml/datasets/breast+cancer+wisconsin+(diagnostic)">Wisconsin breast cancer dataset</a>.
 I also prepared data loader function and model accuracy calculation function.</p>
 <blockquote>
 <p>I prepared the cleaned version (removing ID and converting all values to numerical) <a href="cancer_clean.csv">here</a>.</p>
 </blockquote>
+<div class="toggle">
 <pre><code class="language-go">package main
 
 // #cgo CFLAGS: -O3
@@ -422,6 +427,7 @@ func main() {
 }
 
 </code></pre>
+</div>
 <p>When I run the code, this is the result.</p>
 <p><img src="result.png" alt=""></p>
 <p>For an unoptimized <code>libdtree</code>, this is Not bad, eh?</p>
