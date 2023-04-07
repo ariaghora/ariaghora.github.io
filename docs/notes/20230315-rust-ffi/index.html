@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <a href="/about.html">About</a> -
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content">
+<h1>An attempt to use Polars in Go</h1>
+<blockquote>
+<p>Or, my easy way to expose rust functions as a shared library</p>
+</blockquote>
+<p><a href="">Polars</a> is an aweseome dataframe library. It is very fast and feature-rich.</p>
+<p>Unfortunately, at the time this article is written, the official frontend language is limited to Python and Rust itself.</p>
+<h2>The plan</h2>
+<p>C has become the de facto <em>lingua franca</em> of programming due to its ability to compile to a shared library.
+Anything written in a language that compiles to C can be exposed to the outside world.</p>
+<pre><code class="language-mermaid">stateDiagram-v2 
+    direction LR
+    FFI --&gt; RustDyn: call
+    RustDyn --&gt; FFI: return
+    RustLib --&gt; RustDyn: compiles to
+</code></pre>
+<h2>Exposing a simple rust function</h2>
+<p><code>cargo init --lib .</code></p>
+<h3>Simple function</h3>
+<pre><code class="language-rust">#[no_mangle]
+pub extern &quot;C&quot; fn add(a: i32, b: i32) -&gt; i32 {
+    a + b
+}
+</code></pre>
+<p>After <code>cargo build -r</code>, inside directory <code>target/release/</code> we will see <code>libmylib.dylib</code> file (or <code>libmylib.so</code> or <code>libmylib.dll</code> if we're on linux or windows respectively).</p>
+<p>Go has its own FFI called <code>cgo</code> for interoperability with C.
+Below is how we call <code>add</code> function from Go.</p>
+<pre><code class="language-go">package main
+
+/*
+
+// Our rust library output after &quot;cargo build&quot; will be in ./target/release.
+// The &quot;-lmylib&quot; follows &quot;libmylib.{so, dylib}&quot; name.
+#cgo LDFLAGS: -L./target/release -lmylib
+
+int add(int a, int b);
+
+*/
+import &quot;C&quot;
+import (
+	&quot;fmt&quot;
+	&quot;unsafe&quot;
+)
+
+func main() {
+	result := C.add(C.int(2), C.int(3))
+	fmt.Println(result)
+}
+</code></pre>
+<h2>What about a more complex structure?</h2>
+<pre><code class="language-rust">pub struct Vec2d {
+    x: i32,
+    y: i32,
+}
+</code></pre>
+<p>We don't need to care about rust-to-C struct mapping, really.
+If we want to create a <code>Vec2d</code> in Go, we can just create a function in rust that returns a raw pointer to the newly created <code>Vec2d</code>, then call that function in Go.
+See below snippet.</p>
+<pre><code class="language-rust">// Just return a raw pointer on heap-allocated Vec2d
+#[no_mangle]
+pub extern &quot;C&quot; fn new_vec2d(x: i32, y: i32)-&gt;*mut Vec2d {
+    let v = Vec2d{x, y};
+    Box::into_raw(Box::new(v))
+}
+</code></pre>
+<p>We need to print string representation of <code>Vec2d</code>, so we implement <code>Display</code> trait for it.
+With this, we can make a function to &quot;convert&quot; <code>Vec2d</code> into a C-string representation.</p>
+<pre><code class="language-rust">impl Display for Vec2d {
+    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+        write!(f, &quot;Vec2(x: {}, y: {})&quot;, self.x, self.y)
+    }
+}
+
+#[no_mangle]
+pub extern &quot;C&quot; fn vec2d_to_cstring(v: *mut Vec2d) -&gt; *const c_char {
+    let v = unsafe { &amp;*(&amp;*v).borrow() };
+    let str = v.to_string();
+    CString::new(str).unwrap().into_raw()
+}
+</code></pre>
+<pre><code class="language-go">package main
+
+/*
+#cgo LDFLAGS: -L./target/release -lmylib
+
+void* new_vec2d(int x, int y);
+char* vec2d_to_cstring(void* v);
+*/
+import &quot;C&quot;
+import (
+	&quot;fmt&quot;
+)
+
+func main() {
+    // now v has a handle for Vec2d raw pointer, which is unsafe
+	v := C.new_vec2d(2, 3)
+	fmt.Println(C.GoString(C.vec2d_to_cstring(v)))
+}
+</code></pre>
+<p>My preferred way to deal with C-interop is to use <em>indirection</em>, i.e., wrapping unsafe codes inside safe abstraction.
+For example, we create a Go struct for <code>Vec2d</code> that holds attribute <code>data</code> pointing to the actual raw pointer.
+We also add a function to instantiate the <code>Vec2d</code> as well as to get string representation (i.e., for printing, etc.).</p>
+<pre><code class="language-go">/*
+#cgo LDFLAGS: -L./target/release -lmylib
+
+void* new_vec2d(int x, int y);
+char* vec2d_to_cstring(void* v);
+*/
+import &quot;C&quot;
+import (
+	&quot;fmt&quot;
+	&quot;unsafe&quot;
+)
+
+type Vec2 struct {
+	// storing pointer to rust's actual Vec2d struct
+	data unsafe.Pointer
+}
+
+func NewVec2D(x int, y int) Vec2 {
+	return Vec2{
+		data: C.new_vec2d(C.int(x), C.int(y)),
+	}
+}
+
+func (v Vec2) String() string {
+	return C.GoString(C.vec2d_to_cstring(v.data))
+}
+
+func main() {
+	v := NewVec2D(5, 6)
+	fmt.Println(v)
+}
+</code></pre>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>
