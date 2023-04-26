@@ -1,8 +1,8 @@
 # Now
 
-- I enjoy running after office hours. It is a nice way to explore my neighborhood.
-- Learning to actually implement clean architecture in my projects.
-- Honing my skills in C (and maybe Rust in the near future).
+- Grinding Rust skill
 - Writing a long article project about machine learning in Bahasa Indonesia
+- Trying to start running again (since the end of this winter)
+- Getting back to Ragnarok Online Mobile (Eternal Love)
 
-> Updated on 2022-12-10
+> Updated on 2023-04-27
