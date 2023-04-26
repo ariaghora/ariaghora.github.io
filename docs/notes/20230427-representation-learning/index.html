@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <a href="/about.html">About</a> -
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content">
+<h1>Tentang <em>representation learning</em> pada <em>neural network classifier</em></h1>
+<p>Layer terakhir <em>neural network</em> untuk klasifikasi biasanya berupa <em>sigmoid</em> (untuk <em>binary classification</em>) atau <em>softmax</em> (untuk <em>multi-class classification</em>). Keduanya adalah fungsi yang jika digunakan sebagai classifier, akan menghasilkan <em>linear decision boundary</em>.</p>
+<p>Maksudnya bagaimana?</p>
+<p>Misalkan kita memiliki sekumpulan data berdimensi dua (memiliki dua feature) dari dua kategori. Jika divisualisasikan sebagai titik-titik pada diagram kartesius terhadap sumbu $x$ dan $y$, akan nampak dua gerombolan. Titik-titik dengan kategori yang sama akan saling berdekatan. Titik-titik dengan kategori berbeda akan saling menjauh. <em>Classifier</em> dengan <em>linear decision boundary</em> akan memisahkan dua kelompok pada data-data tersebut berdasarkan dengan satu garis lurus.</p>
+<p style="text-align:center">
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Linearly_separable_red-blue_cropped_.svg/1200px-Linearly_separable_red-blue_cropped_.svg.png" width="40%" />
+<p class="caption">Data yang <i>linearly-separable</i> (<a href src="https://en.wikipedia.org/wiki/Linear_separability">sumber gambar</a>)</p>
+</p>
+<blockquote>
+<p>Jika data berdimensi 3 atau lebih, &quot;garis&quot; pemisah ini disebut <em>hyperplane</em>. Apabila dimensi data lebih dari 3, data dan hyperplane akan sulit divisualisasikan, namun konsep &quot;garis&quot; lurus pemisah tetap berlaku di dimensi tinggi.
+<img src="https://appliedmachinelearning.files.wordpress.com/2017/03/svm_logo1.png" width="35%"/></p>
+<p class="caption">linear separability pada data berdimensi 3 (<a href src="https://appliedmachinelearning.files.wordpress.com/2017/03/svm_logo1.png">sumber gambar</a>)</p>
+</blockquote>
+<p>Perlu kita ingat bahwa <em>neural network</em> termasyhur digunakan untuk mengklasifikasikan data yang kompleks (gambar, video, teks), berdimensi tinggi, dan tentunya, hubungan data-data baik dalam-kelas maupun antar-kelasnya <strong>sangat tidak linear</strong>. Lantas, bagaimana bisa fungsi seperti <em>sigmoid</em> atau <em>softmax</em> mampu mengklasifikasikan data yang tidak linear?</p>
+<h2><em>Neural network</em> adalah soal <em>representation learning</em></h2>
+<p>Isu utama dalam melatih <em>neural network</em> sebetulnya adalah soal bagaimana membuat ia bisa mempelajari <strong>representasi data</strong> dengan baik. Representasi data yang bagaimana? Dalam konteks klasifikasi, representasi data yang kategori elemen-elemennya dapat dipisahkan dengan mudah. Misalnya, dapat dipisahkan cukup dengan garis lurus.</p>
+<p>Pertama, mari kita membuat data sintetik yang tidak <em>linearly-separable</em>, misalnya dataset <code>moon</code>:</p>
+<pre><code class="language-python">from sklearn.datasets import make_moons
+
+x, y = make_moons(noise=.05)
+</code></pre>
+<p style="text-align:center">
+<img src="ori.png" width="60%" />
+</p>
+<p class="caption">Data demonstrasi, original</p>
+<p>Tidak ada garis lurus yang dengan baik memisahkan kedua kategori di atas.</p>
+<p>Kemudian kita mendefinisikan model <em>neural network</em> yang strukturnya sederhana saja: serangkaian <em>fully-connected layer</em> (<em>linear layer</em> yang diikuti oleh <em>nonlinear activation function</em>) dan berakhir dengan <em>classification layer</em>.</p>
+<p><img src="nn.png" alt=""></p>
+<p class="caption">Arsitektur neural network</p>
+<p>Untuk mempermudah demonstrasi, model kita pecah menjadi dua bagian: <em>encoder</em> dan <em>classifier</em>.
+Output dari encoder inilah yang kita maksud dengan representasi data yang (harapannya) <em>linearly-separable</em>. Seperti biasa, representasi ini akan dimasukkan ke <em>classifier</em> untuk proses klasifikasi.</p>
+<pre><code class="language-python">x = torch.FloatTensor(x)
+y = torch.FloatTensor(y.reshape(-1, 1))
+
+# Transformasi data dari dimensi 2 ke dimensi 10 -&gt; 5 -&gt; 2.
+# Dimensi 2 dipilih untuk mempermudah visualisasi saja.
+encoder = Sequential(
+    # Hidden layer 1
+    LazyLinear(10),
+    ReLU(),
+  
+    # Hidden layer 2
+    LazyLinear(5),
+    ReLU(),
+
+    # Hidden layer 3
+    LazyLinear(2),
+    ReLU(),
+)
+
+# Transformasi data ke dimensi 1 untuk binary classification
+classifier = Sequential(
+    LazyLinear(1),
+    Sigmoid()
+)
+</code></pre>
+<p>Kemudian kita latih model seperti biasa dengan menggunakan kriteria loss <em>binary cross-entropy</em>:</p>
+<pre><code class="language-python">opt = Adam([*encoder.parameters(), *classifier.parameters()], lr=0.01)
+loss_fn = BCELoss()
+
+for _ in range(300):
+  opt.zero_grad()
+
+  hidden = encoder(x)  # hidden layer 3, terakhir sebelum klasifikasi
+  y_pred = classifier(hidden)  # probability estimate
+
+  loss = loss_fn(y_pred, y)
+  loss.backward()
+
+  opt.step()
+</code></pre>
+<p>Mari kita coba <em>pass</em> data <code>x</code> ke encoder dan visualisasikan hasilnya.</p>
+<pre><code class="language-python">hidden = hidden.detach().numpy()
+y = y.detach().numpy().ravel()
+
+plt.scatter(*hidden[y==0].T, label=&quot;class 1&quot;)
+plt.scatter(*hidden[y==1].T, label=&quot;class 2&quot;)
+</code></pre>
+<p style="text-align:center">
+<img src="transformed.png" width="60%" />
+</p>
+<p class="caption">Transformasi oleh encoder yang sudah dilatih</p>
+<p>Sekarang, kita dapat dengan mudah menarik garis lurus yang memisahkan dua kategori di atas, dan mudah saja bagi classifier untuk membedakannya. Bagaimana bisa demikian?</p>
+<h2>Seperti memisahkan gumpalan dua kertas</h2>
+<p>Pada <em>neural network</em>, kita bisa menganalogikan persoalan <em>binary classfication</em> dengan memisahkan dua kertas (hitam dan putih) yang diremas-remas menjadi satu gumpalan. Kita akan mencoba secara berulang-ulang:</p>
+<ul>
+<li>Angkat, putar-putar gumpalannya, perhatikan berbagai sisi (analogi: <em>linear layer</em>). Kemudian coba buat tekukan-tekukan kecil (analogi: fungsi nonlinear ReLU) dengan harapan keduanya terlepas. Ternyata upaya pertama (analogi: <em>hidden layer</em> pertama) belum berhasil.</li>
+<li>Lakukan lagi: putar-putar, angkat, tekuk-tekuk (<em>linear layer</em> + ReLU yang kedua).</li>
+<li>Belum bisa dipisahkan? Coba lagi (<em>linear layer</em> + ReLU yang ketiga). Akhirnya keduanya bisa dipisahkan.</li>
+<li>Jika sekarang ada seseorang yang meminta kertas putih, kita tinggal ambil kertas putih yang sudah dipisahkan dan berikan pada orang itu (<em>classification layer</em>).</li>
+</ul>
+<p>Komponen penting dari proses ini adalah <em>nonlinear layer</em>. Dengan melibatkan <em>nonlinear layer</em>, kita bisa mentransformasikan data yang kompleks menjadi lebih sederhana (lebih dari sekadar translasi, rotasi, dan <em>scaling</em>). Sangat sulit, bahkan tidak mungkin, untuk memperoleh representasi sederhana hanya dengan bermodal <em>linear layer</em>. Pada analogi di atas, jika kita cuma mengangkat dan memutar-mutar saja, gumpalan tetaplah gumpalan, dan tidak ada upaya mengubah bentuk.</p>
+<h2>Kesimpulan</h2>
+<p>Input untuk <em>neural network</em> memang sering kali kompleks. Namun, <em>neural network</em> akan mencoba untuk mempelajari representasi melalui sederet transformasi linear dan nonlinear, sedemikian hingga hasil transformasi akan kian mudah digunakan untuk menyelesaikan persoalan (misalnya klasifikasi). Semakin ke belakang suatu hidden layer (mendekati <em>output layer</em>), semakin mudah ia digunakan oleh model. Tentu saja tidak ada layer yang berdiri sendiri. Seluruh bagian <em>neural network</em> bekerja sebagai satu kesatuan dalam hal <em>representation learning</em> ini.</p>
+<h2>Kode selengkapnya</h2>
+<div class="toggle">
+<pre><code class="language-python">import random
+
+import matplotlib.pyplot as plt
+import numpy as np
+import torch
+from sklearn.datasets import make_moons
+from torch.nn import BCELoss, LazyLinear, ReLU, Sequential, Sigmoid
+from torch.optim import Adam
+
+# Seed semuanya untuk reproducibility
+seed = 1
+random.seed(seed)
+np.random.seed(seed)
+torch.manual_seed(seed)
+
+
+x, y = make_moons(noise=0.05)
+
+plt.scatter(*x[y == 0].T, label=&quot;class 1&quot;)
+plt.scatter(*x[y == 1].T, label=&quot;class 2&quot;)
+plt.xlabel(&quot;feature 1&quot;)
+plt.ylabel(&quot;feature 2&quot;)
+plt.title(&quot;Data original&quot;)
+plt.legend()
+plt.show()
+
+
+x = torch.FloatTensor(x)
+y = torch.FloatTensor(y.reshape(-1, 1))
+
+# Transformasi data dari dimensi 2 ke dimensi 10 -&gt; 5 -&gt; 2.
+# Dimensi 2 dipilih untuk mempermudah visualisasi saja.
+encoder = Sequential(
+    LazyLinear(10),
+    ReLU(),
+    LazyLinear(5),
+    ReLU(),
+    LazyLinear(2),
+    ReLU(),
+)
+
+# Transformasi data ke dimensi 1 untuk binary classification
+classifier = Sequential(LazyLinear(1), Sigmoid())
+
+opt = Adam([*encoder.parameters(), *classifier.parameters()], lr=0.01)
+loss_fn = BCELoss()
+
+losses = []
+for _ in range(300):
+    opt.zero_grad()
+
+    hidden = encoder(x)  # full-connected terakhir, sebelum klasifikasi
+    y_pred = classifier(hidden)  # probability estimate
+
+    loss = loss_fn(y_pred, y)
+    loss.backward()
+
+    opt.step()
+    losses.append(loss.item())
+
+hidden = hidden.detach().numpy()
+x = x.detach().numpy()
+y = y.detach().numpy().ravel()
+
+
+plt.scatter(*hidden[y == 0].T, label=&quot;class 1&quot;)
+plt.scatter(*hidden[y == 1].T, label=&quot;class 2&quot;)
+plt.xlabel(&quot;feature 1&quot;)
+plt.ylabel(&quot;feature 2&quot;)
+plt.title(
+    &quot;Data setelah transformasi oleh model (ke dimensi 2),\nfully-connected layer sebelum classifier&quot;
+)
+plt.legend()
+plt.show()
+
+plt.plot(losses)
+plt.xlabel(&quot;iterasi&quot;)
+plt.ylabel(&quot;nilai loss (binary cross-entropy)&quot;)
+plt.show()
+</code></pre>
+</div></div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>
