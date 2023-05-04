@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/tomorrow.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a> -
+            <a href="/now.html">Now</a> -
+            <a href="/notes/">Notes</a> -
+            <a href="/about.html">About</a> -
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content">
+<h1><em>LLM</em>: pengetahuan kedaluarsa dan proses melupakan masa lalu</h1>
+<p><em>Large language model</em> (LLM) adalah sistem kecerdasan buatan berbasis <em>machine learning</em> untuk memahami, menghasilkan, dan memanipulasi bahasa manusia.
+Model-model LLM dilatih dengan data tekstual yang sangat besar.
+ChatGPT, misalnya, dilatih dengan data dari berbagai sumber seperti wikipedia, situs berita, publikasi ilmiah, media sosial, dsb., hingga September 2021 <sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.
+Jika ia ditanya hal yang ada setelah September 2021, dia tidak akan mampu menjawabnya. Kalaupun dia mencoba menjawab, mungkin akan berupa teks omong kosong saja.</p>
+<p><img src="rye.png" alt=""></p>
+<p>Konsekuensinya, beberapa tahun lagi LLM seperti ChatGPT tidak lagi relevan. Ketinggalan zaman.</p>
+<blockquote>
+<p>Tulisan ini akan lebih banyak membahas ChatGPT.</p>
+</blockquote>
+<h2>LLM perlu diperbarui berkala</h2>
+<p>Dalam satu bulan barangkali ada puluhan framework/<em>library</em> yang diluncurkan, baik yang benar-benar baru maupun yang bersifat revisi.
+Bukan tidak mungkin juga akan muncul bahasa pemrograman baru yang menghasilkan proyek-proyek baru.
+Jika LLM ingin memiliki wawasan tentang hal-hal tersebut, mau tidak mau pengetahuannya harus diperbarui.
+Cara paling kasat mata adalah dengan menerapkan <em>fine-tuning</em> dengan memberinya data-data baru.</p>
+<p>Pertanyaan selanjutnya, seberapa banyak informasi yang perlu digunakan untuk memperbarui model AI?
+Informasi baru di internet muncul dan bertambah secara eksponensial, sementara kapasitas model terbatas.
+Penyedia layanan model AI harus menyeleksi informasi apa yang dapat diberikan pada model, dan tugas apa saja yang dapat ia selesaikan dengan baik.
+Kapasitas model terbatas, sumberdaya komputasi juga terbatas. LLM tidak akan mampu mengakomodasi kebutuhan tiap kepala manusia di bumi.</p>
+<h2>Memperbarui parameter LLM membutuhkan waktu tersendiri dan tidak <em>real-time</em></h2>
+<p>Salah satu miskonsepsi adalah bahwa ChatGPT memperbarui pengetahuannya saat melakukan obrolan dengan pengguna.</p>
+<p>Tidak.</p>
+<p>Saat kita mengobrol dengan ChatGPT, dia tidak memperbarui parameternya saat itu juga.
+Yang terjadi sebenarnya adalah, ChatGPT menyimpan konteks sementara untuk satu sesi.
+Dia mungkin akan tetap <em>nyambung</em> dengan obrolan kita, namun dalam batasan tertentu.
+Hingga ChatGPT versi <em>engine</em> GPT-4, konteks yang dapat disimpan sementara dalam satu sesi adalah sekitar 4096 token <sup id="fnref1:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>.</p>
+<blockquote>
+<p>Satu token bisa berupa kata atau beberapa karakter dalam satu kata, tergantung jenis <em>tokenizer</em> yang digunakan.</p>
+</blockquote>
+<p>Artinya, jika percakapan atau teks sudah melebihi batas maksimal kapasitas konteks, dia akan <em>lost track</em> percakapan sebelumnya.
+Koherensi percakapan akan berkurang, akurasi jawaban juga berkurang, dan bisa saja tidak lagi terlalu relevan.</p>
+<p>Memang pada salah satu kalusul <em>terms and conditions</em> OpenAI merekam dan dapat menggunakan obrolan kita untuk memperbarui model.
+Namun seperti yang sudah disebutkan, akan ada sesi tersendiri untuk pembaruan itu.</p>
+<h2>AI juga bisa melupakan pengetahuan lama</h2>
+<p>Walau suatu model AI diperbarui, bukan tidak mungkin dia akan melupakan hal-hal yang dulu pernah dipelajari.
+Salah satu &quot;penyakit&quot; yang menjangkit model ML (termasuk LLM) adalah <em>catastrophic forgetting</em> <sup id="fnref:2"><a href="#fn:2" class="footnote-ref" role="doc-noteref">2</a></sup> <sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.
+<em>Catastrophic forgetting</em> adalah fenomena ketika model kehilangan kemampuan untuk melakukan tugas yang dulu pernah ia pelajari ketika ada tugas baru yang diperkenalkan.
+Ini disebabkan oleh model yang menyesuaikan parameternya terhadap data-data baru saat proses <em>training</em>.</p>
+<p>Sebagai contoh: suatu model pernah dilatih dengan <em>source-code</em> bahasa pemrograman, yang salah satunya adalah bahasa pemrograman lawas yang sekarang tidak terlalu populer sekarang (misalnya COBOL). OpenAI melakukan pembaruan model dan kebetulan tahun ini ada banyak bahasa baru yang populer. Bisa saja di versi selanjutnya, model akan secara total melupakan si bahasa lawas tersebut.
+Konsekuensinya, jika kita meminta LLM untuk melakukan, misalnya, <em>code completion</em> untuk bahasa COBOL, si model akan memberi solusi &quot;sampah&quot;.</p>
+<p>Kurang lebih, berikut ini faktor-faktor terjadinya <em>catastrophic forgetting</em>:</p>
+<ul>
+<li>
+<p><strong><em>Weight sharing</em></strong>: LLM adalah <em>neural network</em> yang terdiri dari <em>node-node</em> yang saling terkoneksi dengan bobot (parameter) yang dapat diperbarui. Bobot yang digunakan untuk menyelesaikan suatu tugas tertentu (misalnya, penerjemahan Bahasa Indonesia ke Bahasa Inggris) juga digunakan untuk menyelesaikan tugas lain (misal, melakukan tanya jawab dalam Bahasa Jepang). Saat model dilatih dengan data baru, bobot akan diperbarui, yang mungkin saja menyebabkan degradasi performa untuk menyelesaikan tugas-tugas lampau.</p>
+</li>
+<li>
+<p><strong><em>Interference</em></strong>: Saat suatu model mempelajari informasi baru, informasi lama dan baru dapat &quot;saling mengganggu&quot;. Setidaknya ada dua jenis <em>interference</em>:</p>
+<ul>
+<li><em>Retroactive interference</em>: informasi baru menyebabkan dilupakannya informasi yang sudah dipelajari dulu.</li>
+<li><em>Proactive interference</em>: informasi lama yang dipelajari membuat model kesulitan mempelajari informasi baru</li>
+</ul>
+</li>
+<li>
+<p><strong>Keterbatasan kapasitas</strong>: Model <em>machine learning</em> seperti LLM memiliki kapasitas terbatas. Saat ia mencapai batas kapasitasnya, mempelajari informasi baru bisa berarti menimpa informasi lama, yang berujung pada <em>catastrophic forgetting</em>.</p>
+</li>
+</ul>
+<blockquote>
+<p>Ada beberapa upaya untuk mengatasi <em>catastrophic forgetting</em>. Area riset yang sedang aktif untuk hal ini adalah <em>continual learning</em> dan <em>incremental learning</em>.
+Tidak dijamin bahwa ChatGPT menerapkan mekanisme semacam ini hingga tulisan ini dibuat.</p>
+</blockquote>
+<h2>Takeaways</h2>
+<ul>
+<li>Pahami bahwa LLM tidak sempurna dan kita tidak bisa secara buta mempercayai hasil kerja AI. Kenali cara kerja, batasan, dan kelemahan model AI agar kita bisa menggunakannya secara lebih efektif dan dengan ekspektasi yang realistis.</li>
+<li>Gunakan model AI untuk tugas-tugas yang sesuai dengan keahliannya dan pertimbangkan keandalan hasil yang dihasilkan. Jangan mengandalkan sepenuhnya pada AI tanpa pertimbangan atau verifikasi.</li>
+<li>Manfaatkan kombinasi keahlian manusia dan AI untuk mendapatkan hasil terbaik. Gunakan AI untuk membantu memecahkan masalah yang kompleks, tetapi jangan mengabaikan peran manusia dalam proses ini.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>https://cdn.openai.com/papers/gpt-4.pdf&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a>&#160;<a href="#fnref1:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:2">
+<p>French, R. M. (1999). Catastrophic forgetting in connectionist networks. Trends in cognitive sciences, 3(4), 128-135.&#160;<a href="#fnref:2" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+<li id="fn:3">
+<p>Ramasesh, V. V., Lewkowycz, A., &amp; Dyer, E. (2022). Effect of scale on catastrophic forgetting in neural networks. In International Conference on Learning Representations.&#160;<a href="#fnref:3" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>

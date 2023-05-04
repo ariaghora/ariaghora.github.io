@@ -238,6 +238,10 @@ table {
     color: var(--font-color-emp-less);
 }
 
+.footnotes p {
+    margin-bottom: 0px;
+}
+
 .hidden {
     display: none;
 }
@@ -250,7 +254,7 @@ table {
 .toggle-button {
     display: block;
     font-family: "Fira Code", monospace;
-    text-align: left; 
+    text-align: left;
     margin: 0 auto;
     margin-bottom: 20px;
     color: white;

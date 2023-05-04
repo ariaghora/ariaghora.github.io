@@ -1,5 +1,6 @@
 # Notes
 
+- [20230504](20230504-llm-pengetahuan-kedaluarsa) *LLM*: pengetahuan kedaluarsa dan proses melupakan masa lalu [🇮🇩]
 - [20230427](20230427-representation-learning) Tentang *representation learning* pada *neural network classifier* [🇮🇩] 
 - [20230113](20230113-markov-chebyshev) On Markov's and Chebyshev's inequality
 - [20230108](20230108-ipc-named-pipe) Communication between programs (in any languages) with named pipes

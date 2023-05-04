@@ -82,6 +82,7 @@ func CompileMarkdown(markdown string) (string, error) {
 	md := goldmark.New(
 		goldmark.WithExtensions(
 			extension.Table,
+			extension.Footnote,
 		),
 		goldmark.WithRendererOptions(
 			html.WithUnsafe(),
