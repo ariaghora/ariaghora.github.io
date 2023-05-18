@@ -1,18 +1,10 @@
 # Aria Ghora Prabono
 
-<div class="col col-20">
-    <div class="cpallet" style="width:80px;margin:0 auto;">
-        <div class="col col-20" style="background-color: var(--accent-color-1);height:20px;"></div>
-        <div class="col col-20" style="background-color: var(--accent-color-2);height:20px;"></div>
-        <div class="col col-20" style="background-color: var(--accent-color-3);height:20px;"></div>
-        <div class="col col-20" style="background-color: var(--accent-color-4);height:20px;"></div>
-        <div class="col col-20" style="background-color: var(--accent-color-5);height:20px;"></div>
-    </div>
-</div>
-
 <div class="col col-80">
 
 A guy with some background in both AI research and engineering, currently an AI research engineer at [EAGLYS株式会社](//eaglys.co.jp), Tokyo.
+
+---
 
 ## Highlighted Projects
 
@@ -27,12 +19,15 @@ A guy with some background in both AI research and engineering, currently an AI 
 
 > Due to the nature of my work, I cannot share all of my projects publicly
 
+---
 
 ## Quick links
 
 - [Github](//github.com/ariaghora)
 - [Twitter](//twitter.com/aria_ghora)
 - [Google Scholar](https://scholar.google.com/citations?user=1K4ynvMAAAAJ&hl=en&oi=ao)
+
+---
 
 ## Primary Toolkits
 - Python, Go, C (ML model and general development)
