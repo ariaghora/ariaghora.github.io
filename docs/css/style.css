@@ -39,7 +39,7 @@ blockquote {
     border: #b6b6b6 1px solid;
     border-left: 7px solid var(--accent-color-2);
     background-color: var(--accent-color-5);
-    color: var(--font-color-emp-less);
+    /* color: var(--font-color-emp-less); */
     font-style: italic;
     border-radius: 5px;
 }
@@ -55,7 +55,6 @@ body {
 p {
     line-height: 25px;
     font-size: var(--std-font-size);
-    text-align: justify;
     margin: 10px 0px;
 }
 
