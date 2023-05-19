@@ -37,7 +37,7 @@ A guy with some background in both AI research and engineering, currently an AI 
 
 ---
 
-Do you like my works, writings, and anything you see here? You can buy me a coffe~
+Do you like my works, writings, and anything you see here? You can buy me a coffee~
 
 <a href="https://www.buymeacoffee.com/ariaghora" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 160px !important;" ></a>
 </div>
