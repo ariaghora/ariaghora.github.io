@@ -16,8 +16,8 @@ I appreciate any help in making this website better.
 
 ## Language
 
-This website is written mostly in English, but I also write some articles in Indonesian (Bahasa Indonesia).
-Articles written in Indonesian are marked with [🇮🇩] sign.
+This website is written mostly in English, but I also write articles in Indonesian (Bahasa Indonesia).
+Articles written in English are marked with [🇬🇧] sign.
 I am not a native English speaker, but I will try my best.
 
 ## Website technical details

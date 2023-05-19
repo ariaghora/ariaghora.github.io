@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://iosevka-webfonts.github.io/iosevka/iosevka.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="navbar">
+            <a href="/index.html">Home</a>
+            <a href="/now.html">Now</a>
+            <a href="/notes/">Notes</a>
+            <a href="/about.html">About</a>
+            <!-- <a href="/others.html">Others</a> - -->
+            <a href="/friends.html">My Friends</a>
+        </div>
+
+        <div class="content"><h1>Tentang dekorator <code>@property</code> di Python</h1>
+<p>Pada paradigma pemrograman berorientasi objek (PBO), saat berurusan dengan atribut suatu <em>object</em>, jamak ditemui penggunaan <em>method getter</em> dan <em>setter</em> (kadang disebut <em>accessor</em> dan <em>mutator method</em><sup id="fnref:1"><a href="#fn:1" class="footnote-ref" role="doc-noteref">1</a></sup>).
+Khususnya, ini sering ditemui saat kita bekerja dengan <em>data class</em> (kelas yang hanya digunakan untuk menyimpan data saja dan minim fungsionalitas) dan membutuhkan validasi saat meng-<em>assign</em> nilai atribut.</p>
+<p>Misal, kita mempunyai kelas <code>Persegi</code> dengan atribut <code>panjang_sisi</code>. Kita perlu melakukan validasi saat user menentukan nilai <code>panjang_sisi</code> agar, misalnya, menghindari nilai negatif. Saat itulah <em>setter</em> (dan <em>getter</em>) dapat digunakan.</p>
+<h2>Kelas tanpa <em>getter</em> dan <em>setter</em></h2>
+<p>Berikut contoh kelas sederhana, tanpa <em>getter</em> dan <em>setter</em>, di mana atribut dapat diakses user secara langsung.</p>
+<pre><code class="language-python">class Persegi:
+    def __init__(self, panjang_sisi):
+        self.panjang_sisi = panjang_sisi
+
+    def hitung_luas(self):
+        return self._panjang_sisi**2
+
+
+persegi = Persegi(10)
+
+print(f&quot;Panjang sisi mula-mula: {persegi.panjang_sisi}&quot;)
+print(f&quot;Luas persegi mula-mula: {persegi.hitung_luas()}&quot;)
+</code></pre>
+<p>Di bagian kode lain, jika kita ingin memperbarui panjang sisi persegi, kemudian mencetak ulang luasnya.
+Mudah saja:</p>
+<pre><code class="language-python">persegi.panjang_sisi = 30
+
+print(f&quot;Panjang sisi sekarang: {persegi.panjang_sisi}&quot;)
+print(f&quot;Luas persegi sekarang: {persegi.hitung_luas()}&quot;)
+</code></pre>
+<p>Dari sisi sintaks, cara ini cukup menyenangkan mata karena sederhana.
+Namun, user bisa saja memasukkan nilai negatif untuk panjang sisi, sementara nilai negatif untuk panjang sisi tidaklah masuk akal.
+Sementara itu, dengan membiarkan akses langsung, kita tidak punya mekanisme validasi.
+Di program yang lebih kompleks, penentuan data yang tidak sesuai dengan harapan kelak dapat menimbulkan masalah tersendiri.</p>
+<p>Alih-alih mengizinkan user langsung mengakses atribut, kita bisa menyediakan <em>method setter</em> untuk memperbarui panjang sisi, namun disertai pengecekan untuk antisipasi nilai tak diinginkan.</p>
+<h2>Kelas dengan <em>getter</em> dan <em>setter</em></h2>
+<p>Modifikasi pertama adalah mengubah nama atribut <code>panjang_sisi</code> dengan membubuhkan <em>underscore</em> di awal nama.
+Pemberian <em>underscore</em> adalah konvensi komunitas Python untuk menunjukkan bahwa <code>_panjang_sisi</code> adalah <strong>atribut terproteksi (<em>protected attribute</em>)</strong>.
+Atribut tersebut hanya dapat diakses melalui perantara saja (dalam hal ini <em>setter</em> dan <em>getter</em>, bila ada).</p>
+<blockquote>
+<p>Atribut terproteksi (<em>protected attribute</em>) adalah atribut yang tidak untuk diakses/diubah dari luar kelas. Ini hanya kesepakatan saja. User tetap bisa mengakses <code>persegi._panjang_sisi</code> dan interpreter tidak akan memberi pesan error.</p>
+</blockquote>
+<p>Setelah itu, implementasikan <em>setter</em> (<code>set_panjang_sisi</code>) yang disertai pengecekan nilai negatif.
+Kita perlu juga mengimplementasikan <em>getter</em> (<code>get_panjang_sisi</code>) untuk mengizinkan user mengakses panjang sisi (karena atribut <code>_panjang_sisi</code> sekarang sudah protected, dan sesuai kesepakatan, tidak untuk diakses langsung).</p>
+<pre><code class="language-python">class Persegi:
+    def __init__(self, panjang_sisi):
+        self._panjang_sisi = panjang_sisi
+
+    def get_panjang_sisi(self):
+        return self._panjang_sisi
+
+    def set_panjang_sisi(self, panjang_sisi):
+        if panjang_sisi &lt; 0:
+            raise ValueError(&quot;Panjang sisi tidak boleh bernilai negatif&quot;)
+        self._panjang_sisi = panjang_sisi
+
+    def hitung_luas(self):
+        return self._panjang_sisi**2
+
+</code></pre>
+<p>Setelah kelas diperbarui, cara user memberi nilai sisi persegi juga berubah sebagai berikut:</p>
+<pre><code class="language-python">persegi.set_panjang_sisi(-10)
+
+print(f&quot;Panjang sisi sekarang: {persegi.get_panjang_sisi()}&quot;)
+print(f&quot;Luas persegi sekarang: {persegi.hitung_luas()}&quot;)
+</code></pre>
+<p>Dengan demikian, saat nilai negatif digunakan sebagai argumen untuk setter, <code>ValueError</code> <em>exception</em> akan dibangkitkan.</p>
+<blockquote>
+<p>Sebagian dari kita (termasuk saya) tidak menyukai pola <em>getter</em> dan <em>setter</em> yang digunakan secara eksplisit.
+Keduanya membuat kode menjadi &quot;berisik&quot;, tidak idiomatik, tidak <em>pythonic</em>, <a href="https://www.yegor256.com/2014/09/16/getters-and-setters-are-evil.html">dan jahat jika digunakan tidak pada tempatnya</a>.</p>
+</blockquote>
+<h2>Solusi: dekorator <code>@property</code></h2>
+<p>Python menyediakan dekorator <code>@property</code>. Dengan dekorator ini, kita bisa melakukan validasi saat set nilai suatu atribut, dan melakukan format/kalkulasi (jika dibutuhkan) saat mengakses nilai atribut tersebut.
+Ini mirip dengan penggunaan <em>setter</em> dan <em>getter</em>, namun lebih &quot;alami&quot; karena kita seolah-olah langsung berinteraksi dengan atribut tersebut.</p>
+<p>Berikut ini pembaruan kelas dengan melibatkan property.</p>
+<pre><code class="language-python">class Persegi:
+    def __init__(self, panjang_sisi):
+        self._panjang_sisi = panjang_sisi
+
+    @property
+    def panjang_sisi(self):
+        return self._panjang_sisi
+
+    @panjang_sisi.setter
+    def panjang_sisi(self, panjang_sisi):
+        if panjang_sisi &lt; 0:
+            raise ValueError(&quot;Panjang sisi tidak boleh bernilai negatif&quot;)
+        self._panjang_sisi = panjang_sisi
+
+    def hitung_luas(self):
+        return self._panjang_sisi**2
+</code></pre>
+<p>Kemudian, berikut ini cara menggunakannya:</p>
+<pre><code class="language-python"># memanggil method setter persegi.panjang_sisi(30) di balik layar.
+# Seolah melakukan assignment biasa, padahal di balik layar terjadi
+# proses pengecekan nilai.
+persegi.panjang_sisi = 30  
+
+print(f&quot;Panjang sisi: {persegi.panjang_sisi}&quot;)
+print(f&quot;Luas persegi: {persegi.hitung_luas()}&quot;)
+
+print()
+
+# memanggil method setter persegi.panjang_sisi(-10). Karena negatif,
+# maka exception akan dibangkitkan.
+persegi.panjang_sisi = -10  
+
+print(f&quot;Panjang sisi: {persegi.panjang_sisi}&quot;)
+print(f&quot;Luas persegi: {persegi.hitung_luas()}&quot;)
+</code></pre>
+<p>Secara personal, saya menyukai pendekatan ini karena setidaknya dua hal:</p>
+<ul>
+<li><strong><em>Readability</em></strong>: Sintaks akan menjadi relatif lebih bersih.</li>
+<li><strong><em>Simplicity</em></strong>: Kita dapat mengakses atribut layaknya sebuah atribut seperti biasanya, tanpa memanggil getter dan setter secara eksplisit. Kita cukup secara alami menetapkan (via operator <em>assignment</em> (&quot;=&quot;)) atau mengambil sebuah nilai (akses langsung dengan operator dot (<code>&quot;.&quot;</code>)), sekaligus dapat membubuhkan logika tambahan saat menentukan dan mengakses nilai.</li>
+</ul>
+<div class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn:1">
+<p>https://en.wikipedia.org/wiki/Method_(computer_programming)#Accessor,_mutator_and_manager_methods&#160;<a href="#fnref:1" class="footnote-backref" role="doc-backlink">&#x21a9;&#xfe0e;</a></p>
+</li>
+</ol>
+</div>
+</div>
+
+<div>
+    <hr>
+    <p class="footer">
+        Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>

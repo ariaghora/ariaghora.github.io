@@ -8,14 +8,14 @@ A guy with some background in both AI research and engineering, currently an AI 
 
 ## Highlighted Projects
 
-|  |  |
-| --- | --- |
-| [Villard](//github.com/ariaghora/villard) | A pipeline framework for Python data science projects |
-| [Noe](//github.com/ariaghora/noe) | A neural network framework with autograd in written in ObjectPascal |
-| [Minitensor](//github.com/ariaghora/minitensor) | A smol tensor manipulation library written in C |
+|                                                       |                                                                                                                |
+| ----------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [Villard](//github.com/ariaghora/villard)             | A pipeline framework for Python data science projects                                                          |
+| [Noe](//github.com/ariaghora/noe)                     | A neural network framework with autograd in written in ObjectPascal                                            |
+| [Minitensor](//github.com/ariaghora/minitensor)       | A smol tensor manipulation library written in C                                                                |
 | [Robust Period](//github.com/ariaghora/robust-period) | Unofficial Implementation of "RobustPeriod: Time-Frequency Mining for Robust Multiple Periodicities Detection" |
-| [Libdtree](https://github.com/ariaghora/libdtree)| A single-file-header-only library to build decision tree, written in C |
-| [Zmol](//github.com/ariaghora/zmol) | A zmol toy programming language written in Go, designed to abuse font ligatures |
+| [Libdtree](https://github.com/ariaghora/libdtree)     | A single-file-header-only library to build decision tree, written in C                                         |
+| [Zmol](//github.com/ariaghora/zmol)                   | A zmol toy programming language written in Go, designed to abuse font ligatures                                |
 
 > Due to the nature of my work, I cannot share all of my projects publicly
 
@@ -35,6 +35,11 @@ A guy with some background in both AI research and engineering, currently an AI 
 - Cloud native (few services of AWS and Azure for Ops)
 - Version control system, *nix tools, and other CI/CD tools
 
+---
+
+Do you like my works, writings, and anything you see here? You can buy me a coffe~
+
+<a href="https://www.buymeacoffee.com/ariaghora" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 160px !important;" ></a>
 </div>
 
 
