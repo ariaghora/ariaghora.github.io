@@ -4,7 +4,6 @@
 
 A guy with some background in both AI research and engineering, currently an AI research engineer at [EAGLYS株式会社](//eaglys.co.jp), Tokyo.
 
----
 
 ## Highlighted Projects
 
@@ -17,9 +16,7 @@ A guy with some background in both AI research and engineering, currently an AI 
 | [Libdtree](https://github.com/ariaghora/libdtree)     | A single-file-header-only library to build decision tree, written in C                                         |
 | [Zmol](//github.com/ariaghora/zmol)                   | A zmol toy programming language written in Go, designed to abuse font ligatures                                |
 
-> Due to the nature of my work, I cannot share all of my projects publicly
 
----
 
 ## Quick links
 
@@ -27,7 +24,6 @@ A guy with some background in both AI research and engineering, currently an AI 
 - [Twitter](//twitter.com/aria_ghora)
 - [Google Scholar](https://scholar.google.com/citations?user=1K4ynvMAAAAJ&hl=en&oi=ao)
 
----
 
 ## Primary Toolkits
 - Python, Go, C (ML model and general development)
@@ -35,11 +31,11 @@ A guy with some background in both AI research and engineering, currently an AI 
 - Cloud native (few services of AWS and Azure for Ops)
 - Version control system, *nix tools, and other CI/CD tools
 
----
+<!-- --- -->
 
-Do you like my works, writings, and anything you see here? You can buy me a coffee~
+<!-- Do you like my works, writings, and anything you see here? You can buy me a coffee~
 
 <a href="https://www.buymeacoffee.com/ariaghora" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 40px !important;width: 160px !important;" ></a>
-</div>
+</div> -->
 
 
