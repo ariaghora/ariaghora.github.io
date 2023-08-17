@@ -1,5 +1,9 @@
 # Welcome
 
+<div class="portrait"> </div>
+
+<!-- ![](img/image.jpg) -->
+
 My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed in the world of AI research and engineering, I also enjoy exploring other specialities like algorithms, systems programming, and software development in general.
 
 ---
@@ -18,7 +22,7 @@ My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed i
 
 [Github](//github.com/ariaghora) / [Twitter](//twitter.com/aria_ghora) / [Google Scholar](https://scholar.google.com/citations?user=1K4ynvMAAAAJ&hl=en&oi=ao)
 
----
+<!-- ---
 
 ## Highlighted Projects
 
@@ -30,4 +34,4 @@ My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed i
 | [Villard](//github.com/ariaghora/villard)             | A pipeline framework for Python data science projects                                                          |
 | [Zmol](//github.com/ariaghora/zmol)                   | A zmol toy programming language written in Go, designed to abuse font ligatures                                |
 
-
+ -->

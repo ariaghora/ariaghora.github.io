@@ -173,7 +173,8 @@ plt.scatter(*hidden[y==1].T, label=&quot;class 2&quot;)
 <h2>Kesimpulan</h2>
 <p>Input untuk <em>neural network</em> memang sering kali kompleks. Namun, <em>neural network</em> akan mencoba untuk mempelajari representasi melalui sederet transformasi linear dan nonlinear, sedemikian hingga hasil transformasi akan kian mudah digunakan untuk menyelesaikan persoalan (misalnya klasifikasi). Semakin ke belakang suatu hidden layer (mendekati <em>output layer</em>), semakin mudah ia digunakan oleh model. Tentu saja tidak ada layer yang berdiri sendiri. Seluruh bagian <em>neural network</em> bekerja sebagai satu kesatuan dalam hal <em>representation learning</em> ini.</p>
 <h2>Kode selengkapnya</h2>
-<div class="toggle">
+<details>
+  <summary>Show/hide code</summary>
 <pre><code class="language-python">import random
 
 import matplotlib.pyplot as plt
@@ -254,7 +255,7 @@ plt.xlabel(&quot;iterasi&quot;)
 plt.ylabel(&quot;nilai loss (binary cross-entropy)&quot;)
 plt.show()
 </code></pre>
-</div>    <p class="footer">
+</details>    <p class="footer">
         Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
     </p>
 </div>

@@ -124,7 +124,8 @@ Input untuk *neural network* memang sering kali kompleks. Namun, *neural network
 
 ## Kode selengkapnya
 
-<div class="toggle">
+<details>
+  <summary>Show/hide code</summary>
 
 ```python
 import random
@@ -207,4 +208,5 @@ plt.xlabel("iterasi")
 plt.ylabel("nilai loss (binary cross-entropy)")
 plt.show()
 ```
-</div>
+
+</details>
