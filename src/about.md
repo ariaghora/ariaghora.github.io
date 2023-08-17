@@ -8,7 +8,7 @@ My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed i
 | ------------------------------------------------------- | ----------- |
 | AI Research Engineer @ [EAGLYS株式会社](//eaglys.co.jp) | 2022 - now  |
 | ML Engineer @ [NRI Indonesia](//nri.co.id)              | 2021 - 2022 |
-| PhD Research Fellow @ [한국외국어대학교](//nri.co.id)   | 2016 - 2021 |
+| Ph.D. Research Fellow @ [한국외국어대학교](//hufs.ac.kr)   | 2016 - 2021 |
 
 ## Other online presence
 
