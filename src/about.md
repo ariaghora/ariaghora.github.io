@@ -1,3 +1,21 @@
+# About me
+
+My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed in the world of AI research and engineering, I also enjoy exploring other specialities like algorithms, systems programming, and software development in general.
+
+## Experience
+
+|                                                         |             |
+| ------------------------------------------------------- | ----------- |
+| AI Research Engineer @ [EAGLYS株式会社](//eaglys.co.jp) | 2022 - now  |
+| ML Engineer @ [NRI Indonesia](//nri.co.id)              | 2021 - 2022 |
+| PhD Research Fellow @ [한국외국어대학교](//nri.co.id)   | 2016 - 2021 |
+
+## Other online presence
+
+[Github](//github.com/ariaghora) / [Twitter](//twitter.com/aria_ghora) / [Google Scholar](https://scholar.google.com/citations?user=1K4ynvMAAAAJ&hl=en&oi=ao)
+
+---
+
 # About this website
 
 This website is my personal website, where I write about my projects, my thoughts, and sometimes my life.
