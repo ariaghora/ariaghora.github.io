@@ -46,7 +46,7 @@ hr {
 }
 
 p {
-    text-align: justify;
+    /* text-align: justify; */
     font-size: var(--font-size-normal);
     margin-bottom: 10px;
 }
