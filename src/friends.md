@@ -13,4 +13,5 @@ Feel free to visit them and say hi!
 - [Ridho Febriansa](https://ridho.one/) web developer
 - [Roberto Tambunan](https://robertotambunan.id/), software engineer
 - [Ryandy Bhagaskoro](https://www.baghaskoro.my.id/), software engineer
-- [Yehezkiel Gunawan](https://yehezgun.com/) frontend engineer
+- [Yehezkiel Gunawan](https://yehezgun.com/), frontend engineer
+- [Zakiego](https://zakiego.com/friends), frontend engineer

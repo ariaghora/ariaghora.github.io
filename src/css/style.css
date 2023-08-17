@@ -1,5 +1,5 @@
 :root {
-    --font-size-normal: 17px;
+    --font-size-normal: 16px;
 }
 
 html {
@@ -31,13 +31,18 @@ a {
 }
 
 blockquote {
-    margin: 0px;
+    margin: 20px 0px;
     padding: 5px;
+    padding-left: 20px;
 }
 
 blockquote p {
     color: gray;
     font-style: italic;
+}
+
+hr {
+    margin: 30px 0px;
 }
 
 p {
@@ -46,12 +51,33 @@ p {
     margin-bottom: 10px;
 }
 
+.content details {
+    margin: 40px 0px;
+    margin-top: 10px;
+}
+
+.content details summary {
+    text-align: right;
+    font-weight: bold;
+    font-size: 12px;
+    color: #ea7087;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
 table tr td {
     padding-top: 5px;
     padding-bottom: 5px;
+    padding: 4px 10px;
 }
 
 table {
+    font-size: var(--font-size-normal);
+}
+
+td,
+th {
+    border: none;
     font-size: var(--font-size-normal);
 }
 
@@ -81,15 +107,17 @@ ul li {
 
 .content h1::before {
     content: "⌘ ";
+    margin-left: -30px;
 }
 
 .content h1 {
     font-weight: normal;
     text-transform: uppercase;
     letter-spacing: 3px;
-    font-size: 20px;
+    font-size: 22px;
     color: #899AA7;
     margin-bottom: 40px;
+    padding-left: 30px;
 }
 
 .content h1 code {
@@ -129,4 +157,24 @@ ul li {
     margin-top: 100px;
     font-size: 14px;
     color: #899AA7;
+}
+
+code, kbd {
+    padding: 2px 5px;
+}
+
+pre {
+    background: white;
+}
+
+pre code.hljs {
+    margin: 30px 0px;
+    padding: 20px;
+    line-height: 20px;
+
+    border-radius: 10px;
+    border-width: 1.5px;
+    border-color: rgb(85, 85, 85);
+    border-style: solid;
+    box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.2);
 }

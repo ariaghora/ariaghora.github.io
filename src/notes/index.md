@@ -3,7 +3,7 @@
 | Date                                              | Title                                                                     |
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
 | [2023/05/04](20230519-property)                   | Tentang dekorator `@property` di Python                                   |
-| [2023/05/04](20230504-llm-pengetahuan-kedaluarsa) | *LLM*: pengetahuan kedaluarsa dan proses melupakan masa lalu              |
+| [2023/05/04](20230504-llm-pengetahuan-kedaluarsa) | LLM: pengetahuan kedaluarsa dan proses melupakan masa lalu              |
 | [2023/04/27](20230427-representation-learning)    | Tentang *representation learning* pada *neural network classifier*        |
 | [2023/01/13](20230113-markov-chebyshev)           | On Markov's and Chebyshev's inequality [🇬🇧]                                |
 | [2023/01/08](20230108-ipc-named-pipe)             | Communication between programs (in any languages) with named pipes [🇬🇧]    |

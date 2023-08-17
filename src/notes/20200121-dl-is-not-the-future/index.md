@@ -10,6 +10,8 @@ Initially, we start with a stupid model: it will produce garbage predictions. Fo
 
 # Inability to explain its own decision
 
+> **update on 2023-08-17:** as the rise of AI model like ChatGPT, I think this point is losing its stance
+
 If you have ever watched Psycho-Pass anime (No? What are you doing? Go watch it!) you will see an example an idealized AI-assisted law enforcement system. A group of police officers are equipped with an AI-powered gun, called [the dominator](https://psychopass.fandom.com/wiki/The_Dominator).
 
 > When the Dominator is aimed at a target, it continuously reads and sends psychological data ‒ the individual's [Psycho-Pass](https://psychopass.fandom.com/wiki/Psycho-Pass) ‒ which it sends to the Sibyl System for calculation of their [Crime Coefficient](https://psychopass.fandom.com/wiki/Crime_Coefficient_(Index)). When this value exceeds a certain level, one indicating that the target is mentally unstable and likely to commit a violent crime, the gun will be operable. If the level does not exceed such levels, the muzzle will not open and a safety device will be activated to prevent the user from pulling the gun's trigger. ...
@@ -24,7 +26,7 @@ In the implementation, a deep learning model works by applying a sequence of tra
 
 I doubt we can expect anything from an AI that cannot explain its own decision. Especially, if we are talking about people's life. Imagine if an AI judge in a court accuse you as a level-5 criminal, and when you ask why, it says, "I don't know why. What I know is that I am good enough in predicting previous people's crime levels. Thus, you should trust me."
 
-# Very specific to one ore few tasks
+# Very specific to one or few tasks
 
 By current learning scheme, we will only get a very specific model. When we train a model to recognize objects based on images, it will solely work on that object recognition task. It is pretty much useless when we feed it emails in our inbox and ask it to distinguish which ones are spam and which ones aren't.
 
