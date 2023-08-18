@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria Ghora Prabono</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.2/pico.min.css"
+        integrity="sha512-3gFq2IXMVlAQaUyahzhjDRivv0yqyXTb7xiy6ivTaG5Uz4hKI54uYxpQefdomgDVQ11eJVUbXG0YdPMDISiGgg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Syntax highlighting -->
+    <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script>
+        hljs.highlightAll();
+    </script>
+
+    <script src="/js/asciinema-player.min.js"></script>
+    <link rel="stylesheet" href="/css/asciinema-player.css">
+
+    <!-- The loading of KaTeX is deferred to speed up page rendering -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+        integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+        crossorigin="anonymous"></script>
+    <!-- To automatically render math in text elements, include the auto-render extension: -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+        integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
+        onload="renderMathInElement(document.body);"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+        integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            renderMathInElement(document.body, {
+                // customised options
+                // • auto-render specific keys, e.g.:
+                delimiters: [{
+                    left: '$$',
+                    right: '$$',
+                    display: true
+                }, {
+                    left: '$',
+                    right: '$',
+                    display: false
+                }, {
+                    left: '\\(',
+                    right: '\\)',
+                    display: false
+                }, {
+                    left: '\\[',
+                    right: '\\]',
+                    display: true
+                }],
+                // • rendering keys, e.g.:
+                throwOnError: false,
+            });
+        });
+    </script>
+
+    <!-- Custom CSS and JS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="/js/main.js"></script>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="navbar">
+                <a href="/index.html">Home</a> /
+                <a href="/now.html">Now</a> /
+                <a href="/notes/">Notes</a> /
+                <a href="/about.html">About</a> /
+                <!-- <a href="/others.html">Others</a> - -->
+                <a href="/friends.html">Friends</a>
+            </div><h1>K-Means untuk ekstraksi palet warna otomatis</h1>
+<p>Di dunia <em>unsupervised learning</em>, K-Means cukup populer untuk mengelompokkan data dengan kemiripan.
+Data-data yang mirip akan memiliki label cluster yang sama.
+Pada K-Means, label cluster mewakili centroid, yaitu nilai yang berada di tengah-tengah data yang mirip (atau saling berdekatan berdasarkan <em>feature-feature</em>-nya).</p>
+<p>Anggap satu gambar adalah dataset itu sendiri, yang terdiri dari banyak <em>data points</em> berupa pixel-pixel.
+Masing-masing pixel mewakili satu sampel dengan 3 <em>feature</em>: komponen warna merah (R), hijau (G), dan biru (B).
+Maka, setelah kita menjalankan K-Means pada gambar tersebut, nilai-nilai <em>centroid</em> akan menjadi warna-warna yang dominan.
+Dengan kata lain, palet warna adalah warna-warna dominan pada suatu gambar, yang dalam hal ini direpresentasikan oleh nilai-nilai <em>centroid</em>.</p>
+<p><img src="ghost-ori.png" alt=""></p>
+<p class="caption">Gambar rujukan (<a href="https://assets.mubicdn.net/images/artworks/235968/images-original.png?1621568236">sumber</a>) </p>
+<p><img src="palet.png" alt=""></p>
+<p class="caption">Palet warna terekstraksi</p>
+<h2>Ekstraksi palet warna</h2>
+<p>Pertama, kita siapkan fungsi untuk memuat gambar.</p>
+<pre><code class="language-python">from io import BytesIO
+from typing import Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+from PIL import Image
+from sklearn.cluster import KMeans
+
+
+def load_image(path: str) -&gt; np.ndarray:
+    if path.startswith((&quot;http://&quot;, &quot;https://&quot;)):
+        response = requests.get(path)
+        img = Image.open(BytesIO(response.content))
+    else:
+        img = Image.open(path)
+    return img
+</code></pre>
+<p>Sebagai bonus, fungsi ini dapat memuat gambar baik dari <em>path</em> lokal maupun URL web.
+Jika <em>path</em> berupa URL, fungsi akan mengunduh gambar menggunakan pustaka <code>requests</code> dan membukanya dengan PIL.
+Jika <em>path</em> merujuk pada berkas lokal, ia akan langsung membuka file menggunakan PIL.</p>
+<p>Setelah gambar dimuat, kita bisa menganalisisnya untuk mengekstrak palet warna.</p>
+<pre><code class="language-python">def get_palette(
+    img: Image,
+    n_colors: int,
+    resize_shape: Tuple[int, int] = (100, 100)
+) -&gt; Tuple[np.ndarray, KMeans]:
+    img = np.asarray(img.resize(resize_shape)) / 255.0
+    h, w, c = img.shape
+    img_arr = img.reshape(h * w, c)
+
+    kmeans = KMeans(n_clusters=n_colors, n_init=&quot;auto&quot;).fit(img_arr)
+    palette = (kmeans.cluster_centers_ * 255).astype(int)
+
+    return palette, kmeans
+</code></pre>
+<p>Fungsi ini menerima objek gambar PIL, jumlah warna yang diinginkan dalam palet, dan ukuran gambar yang diubah (opsional).
+Jika gambar berukuran terlalu besar, waktu yang dibutuhkan untuk menjalankan K-Means akan lama.
+Oleh karena itu, pengubahan ukuran gambar dapat mempercepat proses tanpa mengurangi kualitas palet secara signifikan.</p>
+<p>Atribut <code>cluster_centers_</code> menyimpan pusat dari setiap kluster, yang pada konteks ini mewakili warna dominan dalam gambar.
+Warna-warna dominan inilah yang dimaksud dengan palet warna.
+Karena gambar diolah dalam skala 0 hingga 1, kita mengembalikannya ke range 0 hingga 255, yaitu range yang umum dalam representasi warna RGB dengan tipe integer.</p>
+<h2>Kuantifikasi warna gambar</h2>
+<p>Hal lain yang bisa kita lakukan jika sudah memiliki palet warna adalah melakukan <strong>kuantifikasi warna</strong> pada gambar.
+Kuantisasi warna adalah proses pemetaan ruang warna asli ke set warna terbatas (warna unik yang lebih sedikit).
+Ini berguna untuk mengurangi memori yang diperlukan untuk menyimpan gambar tanpa kehilangan karakteristik utamanya.</p>
+<pre><code class="language-python">def quantize_image(image: Image, kmeans: KMeans) -&gt; np.ndarray:
+    image_np = np.asarray(image) / 255.0
+    h, w, c = image_np.shape
+
+    # Petakan masing-masing pixel ke index cluster terdekat
+    flatten = image_np.reshape(h * w, c)
+    pixel_rgb_clusters = kmeans.predict(flatten)
+
+    # Kemudian kita bisa memetakan balik dari index cluster ke nilai RGB dari centroid
+    image_quantized = kmeans.cluster_centers_[pixel_rgb_clusters]
+
+    return image_quantized.reshape(h, w, c)
+</code></pre>
+<p>Proses kuantisasi menggantikan setiap pixel dalam gambar dengan warna yang paling mendekati dari palet yang telah diekstraksi. Dalam konteks ini, palet diwakili oleh <em>centroid</em> dari model K-Means.
+Hasil dari kuantisasi ini adalah gambar yang warnanya telah direduksi ke jumlah warna yang sudah ditentukan oleh palet.
+Ini menjaga karakteristik visual utama gambar sembari mengurangi kompleksitas warna.</p>
+<p><img src="ghost.png" alt=""></p>
+<p class="caption">Hasil kuantifikasi warna dengan 16, 8, dan 4 warna palet</p>
+<p>Berikut ini hasilnya jika digunakan pada <a href="https://static.vecteezy.com/system/resources/previews/003/623/626/original/sunset-lake-landscape-illustration-free-vector.jpg">gambar lain</a>.</p>
+<p><img src="hasil2.png" alt=""></p>
+<p class="caption">Hasil dengan gambar berbeda</p>
+<p><img src="palet2.png" alt=""></p>
+<p class="caption">Palet warna terekstraksi dengan 8 warna</p>
+<hr>
+<h2>Kode selengkapnya</h2>
+<details>
+  <summary>Show/hide code</summary>
+<pre><code class="language-python">from io import BytesIO
+from typing import Tuple
+
+import matplotlib.pyplot as plt
+import numpy as np
+import requests
+from PIL import Image
+from sklearn.cluster import KMeans
+
+
+def load_image(path: str) -&gt; np.ndarray:
+    if path.startswith((&quot;http://&quot;, &quot;https://&quot;)):
+        response = requests.get(path)
+        img = Image.open(BytesIO(response.content))
+    else:
+        img = Image.open(path)
+    return img
+
+
+def get_palette(
+    img: Image, n_colors: int, resize_shape: Tuple[int, int] = (100, 100)
+) -&gt; Tuple[np.ndarray, KMeans]:
+    img = np.asarray(img.resize(resize_shape)) / 255.0
+    h, w, c = img.shape
+    img_arr = img.reshape(h * w, c)
+
+    kmeans = KMeans(n_clusters=n_colors, n_init=&quot;auto&quot;).fit(img_arr)
+    palette = (kmeans.cluster_centers_ * 255).astype(int)
+
+    return palette, kmeans
+
+
+def quantize_image(image: Image, kmeans: KMeans) -&gt; np.ndarray:
+    image_np = np.asarray(image) / 255.0
+    h, w, c = image_np.shape
+
+    # Petakan masing-masing pixel ke index cluster terdekat
+    flatten = image_np.reshape(h * w, c)
+    pixel_rgb_clusters = kmeans.predict(flatten)
+
+    # Kemudian kita bisa memetakan balik dari index cluster ke nilai RGB dari centroid
+    image_quantized = kmeans.cluster_centers_[pixel_rgb_clusters]
+
+    return image_quantized.reshape(h, w, c)
+
+
+if __name__ == &quot;__main__&quot;:
+    url = &quot;https://assets.mubicdn.net/images/artworks/235968/images-original.png?1621568236&quot;
+    image = load_image(url)
+
+    num_colors = 8
+    color_palette, kmeans = get_palette(image, num_colors)
+
+    print(color_palette)
+    print(color_palette.shape)
+
+    &quot;&quot;&quot;
+    Tampilkan palet warna
+    &quot;&quot;&quot;
+    # Urutkan warna palet dari yang paling &quot;terang&quot; (yaitu warna dengan nilai grayscale tertinggi)
+    color_palette_sorted = np.array(sorted(color_palette, key=lambda x: x.mean())[::-1])
+
+    plt.imshow(color_palette_sorted[np.newaxis, :, :])
+    plt.axis(&quot;off&quot;)
+    plt.show()
+
+    &quot;&quot;&quot;
+    Tampilkan hasil kuantifikasi warna pada gambar
+    &quot;&quot;&quot;
+
+    image_labels = &quot;bcd&quot;
+    num_colors = [16, 8, 4]
+
+    layout = &quot;&quot;&quot;
+    ab
+    cd
+    &quot;&quot;&quot;
+
+    fig, ax = plt.subplot_mosaic(layout, figsize=(12, 7), sharey=True)
+    ax[&quot;a&quot;].imshow(image)
+    ax[&quot;a&quot;].set_title(&quot;original&quot;)
+    ax[&quot;a&quot;].axis(&quot;off&quot;)
+
+    for label, num_color in zip(image_labels, num_colors):
+        color_palette, kmeans = get_palette(image, num_color)
+        image_quantized = quantize_image(image, kmeans)
+
+        ax[label].imshow(image_quantized)
+        ax[label].set_title(f&quot;{num_color} warna&quot;)
+        ax[label].axis(&quot;off&quot;)
+
+    plt.tight_layout()
+    plt.show()
+</code></pre>
+</details>
+<h2>Ide-ide lanjutan</h2>
+<ul>
+<li><strong>Style generator:</strong> Membuat <em>generator</em> tema teks editor atau desktop/window manager berdasarkan palet warna gambar</li>
+<li><strong>Implementasi algoritma kompresi gambar sederhana berbasis kuantifikasi warna:</strong> Bagaimana menyimpan dan memuat gambar hasil kuantifikasi warna menjadi file yang ringkas?</li>
+<li><strong>Analisis sentimen warna:</strong> Menggunakan palet warna dari gambar untuk menganalisis dan menafsirkan emosi atau sentimen yang mungkin terkandung dalam gambar, seperti keceriaan, kegelapan, atau kesedihan</li>
+<li><strong>Algoritma <em>dithering</em>:</strong> Menggabungkan kuantisasi warna dengan teknik dithering untuk menciptakan efek visual yang lebih halus, terutama saat jumlah warna dalam palet sangat terbatas</li>
+<li><strong>Kustomisasi UI otomatis:</strong> Menggunakan palet warna dari gambar profil pengguna untuk mengkustomisasi tampilan antarmuka aplikasi, menciptakan pengalaman yang lebih personal</li>
+<li><strong>Rekomendasi produk berdasarkan warna:</strong> Membuat sistem rekomendasi yang mengusulkan produk dengan warna serupa, seperti pakaian atau dekorasi interior, berdasarkan palet warna yang diekstrak dari gambar favorit pengguna.</li>
+</ul>
+    <p class="footer">
+        Copyright 2014-2023 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+    </p>
+</div>
+
+
+</div>
+
+<script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs'; mermaid.initialize({ startOnLoad: true, htmlLabels: true, securityLevel: 'loose', theme: 'neutral' });
+</script>
+
+</body>
+
+</html>
