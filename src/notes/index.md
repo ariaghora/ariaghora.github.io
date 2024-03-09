@@ -2,7 +2,6 @@
 
 | Date                                              | Title                                                                     |
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
-| [2024/03/09](20240309-c1-ocr)                     | Optical character recognition (OCR) form  |
 | [2023/08/18](20230818-kmeans-ekstraksi-palet)     | K-Means untuk ekstraksi palet warna                                       |
 | [2023/05/04](20230519-property)                   | Tentang dekorator `@property` di Python                                   |
 | [2023/05/04](20230504-llm-pengetahuan-kedaluarsa) | LLM: pengetahuan kedaluarsa dan proses melupakan masa lalu                |
