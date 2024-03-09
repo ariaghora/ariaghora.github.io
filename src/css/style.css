@@ -92,7 +92,7 @@ ul li {
 }
 
 .content {
-    max-width: 640px;
+    max-width: 740px;
     margin: 0 auto;
     background-color: white;
 
@@ -124,13 +124,17 @@ ul li {
     text-transform: none;
 }
 
-.content h2 {
+.content h2, h3 {
     font-weight: normal;
     letter-spacing: 2px;
     font-size: 18px;
     color: #125A71;
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+.content h3 {
+  font-size: 16px;
 }
 
 .content img {

@@ -156,6 +156,10 @@ func CompileWebsite(config *Config) error {
 			return err
 		}
 
+		if info.IsDir() && strings.Contains(info.Name(), "venv") {
+			return filepath.SkipDir
+		}
+
 		if info.IsDir() {
 			return nil
 		}
