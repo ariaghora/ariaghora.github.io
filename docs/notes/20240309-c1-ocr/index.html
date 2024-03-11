@@ -86,15 +86,19 @@ Kendati sudah ada beberapa pihak yang mengupas metodenya melalui proses <em>reve
 <p>Tulisan ini bersifat pedagogis dengan menunjukkan teknik-teknik sederhana dan alat yang umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
 Walau hasil akhirnya akan berkualitas purwarupa (<em>prototype</em>), dengan cukup kreatifitas pembaca dapat mengembangkannya sendiri.
 Misalnya, dengan mengulangi langkah-langkahnya untuk pengembangan di <em>platform</em> mobile.</p>
-<h2>Memahami layout formulir C1-Plano</h2>
+<h2><em>Layout</em> formulir C1-Plano dan permasalahan pengambilan citra</h2>
 <p>Gambar di bawah ini adalah contoh formulir C1-Plano untuk Pemilu 2024.
 Formulir ini menyediakan ruang khusus untuk mencatat perhitungan suara melalui turus dan hasil rekapitulasi.
 Selain mencantumkan angka hasil hitungan, formulir ini juga memiliki area arsiran yang disesuaikan dengan angka hasil perhitungan.</p>
 <img src="img/contoh-c1.jpeg" width=400/>
 <p class="caption">Contoh formulir C1-Plano (<a href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/31/3171/317106/3171061001/3171061001010">sumber</a>) </p>
-<h2>Permasalahan citra formulir C1-Plano</h2>
-<p>Untuk proses OCR, kita hanya perlu area penting saja (<em>region of interest</em> atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom &quot;jumlah suara sah&quot;.
-Idealnya, kita potong saja area angka pada foto formulir tersebut, ambil digit-digitnya sesuai dengan koordinat tertentu, dan lakukan klasifikasi dengan suatu model <em>machine learning</em>.
+<blockquote>
+<p>Sebagai bahan praktik, pembaca dipersilakan untuk mengunduh sendiri contoh formulir C1-Plano di <a href="https://pemilu2024.kpu.go.id/">situs KPU</a> atau <a href="https://kawalpemilu.org">KawalPemilu</a>.
+Saya menyarankan untuk lebih banyak mengambil dari kawalpemilu karena data bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih &quot;menantang&quot;.
+Citra formulir di situs KPU cenderung lebih rapi karena panitia telah mendapatkan pengarahan sebelumnya perihal teknis pengambilan gambar.</p>
+</blockquote>
+<p>Untuk proses OCR, sebetulnya kita hanya perlu area penting saja (<em>region of interest</em> atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom &quot;jumlah suara sah&quot;.
+Idealnya, kita cukup memotong area angka pada foto formulir tersebut, ambil digit-digitnya sesuai dengan koordinat tertentu, dan lakukan klasifikasi dengan suatu model <em>machine learning</em>.
 Namun, sepertinya tidak akan semudah itu.
 Ada beberapa masalah yang akan ditemui di hasil foto C1-Plano, setidaknya, antara lain:</p>
 <ol>

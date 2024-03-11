@@ -7,7 +7,7 @@ Tulisan ini bersifat pedagogis dengan menunjukkan teknik-teknik sederhana dan al
 Walau hasil akhirnya akan berkualitas purwarupa (_prototype_), dengan cukup kreatifitas pembaca dapat mengembangkannya sendiri.
 Misalnya, dengan mengulangi langkah-langkahnya untuk pengembangan di _platform_ mobile.
 
-## Memahami layout formulir C1-Plano
+## _Layout_ formulir C1-Plano dan permasalahan pengambilan citra
 
 Gambar di bawah ini adalah contoh formulir C1-Plano untuk Pemilu 2024.
 Formulir ini menyediakan ruang khusus untuk mencatat perhitungan suara melalui turus dan hasil rekapitulasi.
@@ -17,10 +17,13 @@ Selain mencantumkan angka hasil hitungan, formulir ini juga memiliki area arsira
 
 <p class="caption">Contoh formulir C1-Plano (<a href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/31/3171/317106/3171061001/3171061001010">sumber</a>) </p>
 
+> Sebagai bahan praktik, pembaca dipersilakan untuk mengunduh sendiri contoh formulir C1-Plano di [situs KPU](https://pemilu2024.kpu.go.id/) atau [KawalPemilu](https://kawalpemilu.org).
+> Saya menyarankan untuk lebih banyak mengambil dari kawalpemilu karena data bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih "menantang".
+> Citra formulir di situs KPU cenderung lebih rapi karena panitia telah mendapatkan pengarahan sebelumnya perihal teknis pengambilan gambar.
 
-## Permasalahan citra formulir C1-Plano
-Untuk proses OCR, kita hanya perlu area penting saja (_region of interest_ atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom "jumlah suara sah".
-Idealnya, kita potong saja area angka pada foto formulir tersebut, ambil digit-digitnya sesuai dengan koordinat tertentu, dan lakukan klasifikasi dengan suatu model _machine learning_.
+
+Untuk proses OCR, sebetulnya kita hanya perlu area penting saja (_region of interest_ atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom "jumlah suara sah".
+Idealnya, kita cukup memotong area angka pada foto formulir tersebut, ambil digit-digitnya sesuai dengan koordinat tertentu, dan lakukan klasifikasi dengan suatu model _machine learning_.
 Namun, sepertinya tidak akan semudah itu.
 Ada beberapa masalah yang akan ditemui di hasil foto C1-Plano, setidaknya, antara lain:
 
