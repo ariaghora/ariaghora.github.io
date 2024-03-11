@@ -2,6 +2,7 @@
 
 | Date                                              | Title                                                                     |
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
+| [2024/03/09](20240309-c1-ocr)                     | Pengenalan digit tertulis pada formulir C1-Plano (bagian 1: pra-pemrosesan citra) |
 | [2023/08/18](20230818-kmeans-ekstraksi-palet)     | K-Means untuk ekstraksi palet warna                                       |
 | [2023/05/04](20230519-property)                   | Tentang dekorator `@property` di Python                                   |
 | [2023/05/04](20230504-llm-pengetahuan-kedaluarsa) | LLM: pengetahuan kedaluarsa dan proses melupakan masa lalu                |

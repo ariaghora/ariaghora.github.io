@@ -296,6 +296,8 @@ Berikut ini contoh beberapa hasil ekstraksi RoI, termasuk contoh deskewing yang 
 
 <p class="caption">Beberapa contoh hasil ekstraksi RoI</p>
 
+Karena sudah mendapat hasil yang cukup konsisten, di titik ini seharusnya kita sudah bisa memotong area-area digit tertulis untuk dijadikan data latih model _machine learning_ dan melakukan OCR.
+Desain model _machine learning_ dan proses-proses setelahnya akan dipaparkan di bagian kedua.
 
 
 [^1]:https://id.wikipedia.org/wiki/Perataan_histogram
