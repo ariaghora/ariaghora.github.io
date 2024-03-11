@@ -47,7 +47,7 @@ Hasil akhir yang diharapkan di tahap ini adalah RoI dengan distribusi keabuan da
 
 <p class="caption">Hasil pra-pemrosesan</p>
 
-> Jika ada pertanyaan, "Mengapa tidak langsung saja menggunakan alat OCR terkini?", saya akan bertanya balik, "Mengapa tidak langsung saja menggunakan bom atom untuk menangkap beberapa ekor ikan? Apakah semua nelayan sanggup membeli dan menggunakan bom atom daripada sekadar alat pancing dan umpan?"
+> Jika ada pertanyaan, "Mengapa tidak langsung saja menggunakan alat OCR berbasis deep learning terkini?", saya akan bertanya balik, "Mengapa tidak langsung saja menggunakan bom atom untuk menangkap beberapa ekor ikan? Apakah semua nelayan sanggup membeli dan menggunakan bom atom daripada sekadar alat pancing dan umpan?"
 
 
 ### Perbaikan kontras dengan teknik perataan histogram (_histogram equalization_)
