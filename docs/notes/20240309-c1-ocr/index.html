@@ -247,6 +247,21 @@ Dengan asumsi sumbu $Y$ positif ke arah bawah, maka:</p>
 <li>sudut <em>kiri bawah</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,0)$</li>
 <li>sudut <em>kanan bawah</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,w)$</li>
 </ul>
+<p>Jarak sudut dengan koordinat referensi dihitung dengan <em>euclidean distance</em>:</p>
+<p>$$
+d((x_i, x_j), (x_{ref}, y_{ref})) = \sqrt{(x_i-x_{ref})^2 + (y_i-y_{ref})^2},
+$$
+di mana</p>
+<ul>
+<li>$(x_i, x_j) \in \mathcal{W}$, $i=1,..., h$, $j=1,...,w$</li>
+<li>$\mathcal{W}$ adalah himpunan koordinat piksel <strong>berwarna putih</strong> pada citra komponen utama.</li>
+<li>$(x_{ref}, y_{ref})$ adalah koordinat referensi</li>
+</ul>
+<p>Maka, untuk mencari masing-masing sudut komponen utama, kita perlu menemukan solusi permasalahan minimalisasi ini:</p>
+<p>$$
+\argmin_{(x_i, x_j)} d((x_i, x_j), (x_{ref}, y_{ref}))
+$$</p>
+<p>Sebagai contoh, sudut <em>kiri atas</em> komponen utama dicari dengan mensubstitusikan $(x_{ref}, y_{ref})$ dengan $(0, 0)$. Untuk sudut <em>kanan atas</em>, substitusikan $(x_{ref}, y_{ref})$ dengan $(0, w)$. Begitu seterusnya.</p>
 <p>Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
 Untuk tiap kuadran, cari sudut yang diinginkan.
 Gambar di bawah mengilustrasikan proses ini.</p>

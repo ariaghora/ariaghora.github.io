@@ -202,6 +202,24 @@ Dengan asumsi sumbu $Y$ positif ke arah bawah, maka:
 - sudut _kiri bawah_ komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,0)$
 - sudut _kanan bawah_ komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,w)$
 
+Jarak sudut dengan koordinat referensi dihitung dengan _euclidean distance_:
+
+$$
+d((x_i, x_j), (x_{ref}, y_{ref})) = \sqrt{(x_i-x_{ref})^2 + (y_i-y_{ref})^2},
+$$
+di mana
+- $(x_i, x_j) \in \mathcal{W}$, $i=1,..., h$, $j=1,...,w$
+- $\mathcal{W}$ adalah himpunan koordinat piksel **berwarna putih** pada citra komponen utama.
+- $(x_{ref}, y_{ref})$ adalah koordinat referensi
+
+Maka, untuk mencari masing-masing sudut komponen utama, kita perlu menemukan solusi permasalahan minimalisasi ini:
+
+$$
+\argmin_{(x_i, x_j)} d((x_i, x_j), (x_{ref}, y_{ref}))
+$$
+
+Sebagai contoh, sudut _kiri atas_ komponen utama dicari dengan mensubstitusikan $(x_{ref}, y_{ref})$ dengan $(0, 0)$. Untuk sudut _kanan atas_, substitusikan $(x_{ref}, y_{ref})$ dengan $(0, w)$. Begitu seterusnya.
+
 Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
 Untuk tiap kuadran, cari sudut yang diinginkan.
 Gambar di bawah mengilustrasikan proses ini.
