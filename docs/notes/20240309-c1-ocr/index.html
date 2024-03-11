@@ -87,7 +87,7 @@
         <!-- <a href="/others.html">Others</a> - -->
         <a href="/friends.html">Friends</a>
       </div>
-<h1>Pengenalan digit tertulis pada formulir C1-Plano (bagian 1: pra-pemrosesan citra)</h1>
+<h1>Pengenalan digit tertulis pada formulir C1-Plano Pemilu (bagian 1: pra-pemrosesan citra)</h1>
 <p>Pemilihan umum (pemilu) Indonesia 2024 melibatkan sistem rekapitulasi berbasis mobile yang secara otomatis melakukan pengenalan karakter (digit) tertulis atau <em>optical character recognition</em> (OCR) untuk mempercepat diseminasi hasil hitung.
 Kendati sudah ada beberapa pihak yang mengupas metodenya melalui proses <em>reverse engineering</em> aplikasi sirekap, di tulisan ini saya akan mencoba melakukan OCR dengan sentuhan interpretasi saya pribadi.</p>
 <p>Tulisan ini bersifat pedagogis dengan menunjukkan teknik-teknik sederhana dan alat yang umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
@@ -153,11 +153,11 @@ def preprocess(gray_image: np.ndarray) -&gt; Tuple[np.ndarray, np.ndarray]:
 </code></pre>
 <h3>Pengambangan citra (<em>image thresholding</em>)</h3>
 <p>Pengambangan citra digunakan untuk memisahkan objek dari latar belakangnya<sup id="fnref:3"><a href="#fn:3" class="footnote-ref" role="doc-noteref">3</a></sup>.
-Teknik ini melibatkan konversi citra abu-abu menjadi citra biner, di mana pixel citra dikategorikan menjadi dua nilai intensitas (misalnya, hitam/putih) berdasarkan nilai ambang batas (threshold) tertentu.</p>
+Teknik ini melibatkan konversi citra abu-abu menjadi citra biner, di mana piksel citra dikategorikan menjadi dua nilai intensitas (misalnya, hitam/putih) berdasarkan nilai ambang batas (threshold) tertentu.</p>
 <p>Seperti perataan histogram, pengambangan citra juga bisa bekerja dalam model global dan adaptif.
-Dalam pengambangan citra biasa, nilai ambang batas yang sama diterapkan secara seragam ke seluruh pixel citra.
+Dalam pengambangan citra biasa, nilai ambang batas yang sama diterapkan secara seragam ke seluruh piksel citra.
 Nilai ambang batas ini biasanya adalah nilai konstan yang dipilih berdasarkan analisis histogram citra atau kriteria tertentu.
-Semua pixel dengan intensitas di atas ambang batas diatur ke nilai maksimal (misalnya, putih pada citra biner), dan pixel dengan intensitas di bawah ambang batas diatur ke nilai minimal (misalnya, hitam).
+Semua piksel dengan intensitas di atas ambang batas diatur ke nilai maksimal (misalnya, putih pada citra biner), dan piksel dengan intensitas di bawah ambang batas diatur ke nilai minimal (misalnya, hitam).
 Pengambangan citra adaptif, seperti namanya, melibatkan pemilihan nilai ambang batas yang berbeda-beda untuk setiap wilayah atau piksel citra, berdasarkan karakteristik lokal citra tersebut.</p>
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Example_of_adaptive_thresholding.png/836px-Example_of_adaptive_thresholding.png" width=600/>
 <p class="caption">Pengambangan lokal vs adaptif (<a href="https://en.wikipedia.org/wiki/Thresholding_%28image_processing%29">sumber</a>)</p>
@@ -185,19 +185,19 @@ Kode fungsi <code>preprocess</code> dapat dilengkapi sebagai berikut.</p>
     return thresholded, equalized
 
 </code></pre>
-<p>Pengambagan adaptif yang saya gunakan berbasis <em>mean</em> (dengan argumen <code>cv2.ADAPTIVE_THRESH_MEAN_C</code>), yang berarti bahwa kita menggunakan nilai rerata dari pixel bertetanggaan sebagai nilai ambang batas.
-Argumen <code>cv2.THRESH_BINARY_INV</code> berarti bahwa kita nilai pixel yang lebih besar daripada nilai ambang akan dianggap 0 (hitam), dan jika tidak, akan dianggap 255 (putih).
+<p>Pengambagan adaptif yang saya gunakan berbasis <em>mean</em> (dengan argumen <code>cv2.ADAPTIVE_THRESH_MEAN_C</code>), yang berarti bahwa kita menggunakan nilai rerata dari piksel bertetanggaan sebagai nilai ambang batas.
+Argumen <code>cv2.THRESH_BINARY_INV</code> berarti bahwa kita nilai piksel yang lebih besar daripada nilai ambang akan dianggap 0 (hitam), dan jika tidak, akan dianggap 255 (putih).
 Ini bertujuan untuk menjadikan garis berwarna putih sebagai objek <em>foreground</em>, sekaligus mengikuti konvensi OpenCV yang menganggap putih sebagai <em>foreground</em>.</p>
 <p>Saya akan menggunakan <a href="img/ref.jpeg">contoh citra formulir di tautan ini</a> sebagai contoh yang relatif mudah, tapi agak kurang ideal (sudut pandang agak miring).
 Fungsi di atas jika diterapkan pada citra abu-abu formulir C1-Plano, akan menghasilkan citra terambangkan seperti berikut ini.</p>
 <img src="img/thresholded.jpeg" width=350/>
 <p class="caption">Hasil pengambangan </p>
-<p>Tugas selanjutnya adalah mengambil satu persegi besar di tengah (pixel putih terhubung yang membentuk <em>quadrilateral</em>) yang berisi hasil penghitungan, dan membuang bagian putih selainnya.</p>
+<p>Tugas selanjutnya adalah mengambil satu persegi besar di tengah (piksel putih terhubung yang membentuk <em>quadrilateral</em>) yang berisi hasil penghitungan, dan membuang bagian putih selainnya.</p>
 <h3>Ekstraksi RoI dan digit</h3>
 <p>Pertama, lakukan analisis komponen terhubung.
-Sebuah komponen terhubung dalam citra adalah kumpulan pixel yang terhubung satu sama lain melalui tetangganya dan memiliki properti serupa (misalnya, intensitas yang sama dalam citra biner).
-Misalnya, suatu garis terbentuk dari beberapa pixel yang terhubung.
-Dua pixel dianggap &quot;terhubung&quot; jika mereka berdekatan dan memenuhi kriteria tertentu (biasanya berdasarkan nilai piksel).</p>
+Sebuah komponen terhubung dalam citra adalah kumpulan piksel yang terhubung satu sama lain melalui tetangganya dan memiliki properti serupa (misalnya, intensitas yang sama dalam citra biner).
+Misalnya, suatu garis terbentuk dari beberapa piksel yang terhubung.
+Dua piksel dianggap &quot;terhubung&quot; jika mereka berdekatan dan memenuhi kriteria tertentu (biasanya berdasarkan nilai piksel).</p>
 <p>Ketika sebuah komponen terhubung ditemukan, semua piksel dalam komponen tersebut diberi label yang sama.
 Ini dapat dilakukan menggunakan algoritma seperti <em>flood-fill</em> atau algoritma <em>two-pass</em>.
 Setelah semua komponen terhubung dilabeli, atribut seperti ukuran, bentuk, atau posisi dapat diekstraksi untuk setiap komponen.</p>
@@ -234,10 +234,10 @@ Yang kita butuhkan sekarang adalah sudut-sudut dari komponen utama, yang berguna
 Misal $w$ adalah lebar citra dan $h$ adalah tinggi citra.
 Dengan asumsi sumbu $Y$ positif ke arah bawah, maka:</p>
 <ul>
-<li>sudut <em>kiri atas</em> komponen utama adalah lokasi pixel putih yang terdekat dengan koordinat $(0,0)$</li>
-<li>sudut <em>kanan atas</em> komponen utama adalah lokasi pixel putih yang terdekat dengan koordinat $(0,w)$</li>
-<li>sudut <em>kiri bawah</em> komponen utama adalah lokasi pixel putih yang terdekat dengan koordinat $(h,0)$</li>
-<li>sudut <em>kanan bawah</em> komponen utama adalah lokasi pixel putih yang terdekat dengan koordinat $(h,w)$</li>
+<li>sudut <em>kiri atas</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(0,0)$</li>
+<li>sudut <em>kanan atas</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(0,w)$</li>
+<li>sudut <em>kiri bawah</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,0)$</li>
+<li>sudut <em>kanan bawah</em> komponen utama adalah lokasi piksel putih yang terdekat dengan koordinat $(h,w)$</li>
 </ul>
 <p>Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
 Untuk tiap kuadran, cari sudut yang diinginkan.
@@ -251,9 +251,6 @@ Gambar di bawah mengilustrasikan proses ini.</p>
     return pixel_coordiates[min_idx]
 
 def get_corners(component) -&gt; np.ndarray:
-    &quot;&quot;&quot;
-    Find 4 pixel coordinates closest to each corner
-    &quot;&quot;&quot;
     height, width = component.shape[:2]
 
     # top-left
