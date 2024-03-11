@@ -1,10 +1,10 @@
 # Pengenalan digit tertulis pada formulir C1-Plano Pemilu (bagian 1: pra-pemrosesan citra)
 
 Pemilihan umum (pemilu) Indonesia 2024 melibatkan sistem rekapitulasi berbasis mobile yang secara otomatis melakukan pengenalan karakter (digit) tertulis atau _optical character recognition_ (OCR) untuk mempercepat diseminasi hasil hitung.
-Kendati sudah ada beberapa pihak yang mengupas metodenya melalui proses _reverse engineering_ aplikasi sirekap, di tulisan ini saya akan mencoba melakukan OCR dengan sentuhan interpretasi saya pribadi.
+Di tulisan ini saya akan memaparkan implementasi OCR berdasarkan interpretasi sendiri.
 
-Tulisan ini bersifat pedagogis dengan menunjukkan teknik-teknik sederhana dan alat yang umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
-Walau hasil akhirnya akan berkualitas purwarupa (_prototype_), dengan cukup kreatifitas pembaca dapat mengembangkannya sendiri.
+Tulisan ini bersifat pedagogis dengan menunjukkan teknik sederhana dan alat umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
+Walau hasil akhirnya akan berkualitas purwarupa (_prototype_), dengan cukup kreativitas pembaca dapat mengembangkannya sendiri.
 Misalnya, dengan mengulangi langkah-langkahnya untuk pengembangan di _platform_ mobile.
 
 ## _Layout_ formulir C1-Plano dan permasalahan pengambilan citra
@@ -18,9 +18,8 @@ Selain mencantumkan angka hasil hitungan, formulir ini juga memiliki area arsira
 <p class="caption">Contoh formulir C1-Plano (<a href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/31/3171/317106/3171061001/3171061001010">sumber</a>) </p>
 
 > Sebagai bahan praktik, pembaca dipersilakan untuk mengunduh sendiri contoh formulir C1-Plano di [situs KPU](https://pemilu2024.kpu.go.id/) atau [KawalPemilu](https://kawalpemilu.org).
-> Saya menyarankan untuk lebih banyak mengambil dari kawalpemilu karena data bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih "menantang".
+> Data citra formulir di KawalPemilu salah satunya bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih "menantang".
 > Citra formulir di situs KPU cenderung lebih rapi karena panitia telah mendapatkan pengarahan sebelumnya perihal teknis pengambilan gambar.
-
 
 Untuk proses OCR, sebetulnya kita hanya perlu area penting saja (_region of interest_ atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom "jumlah suara sah".
 Idealnya, kita cukup memotong area angka pada foto formulir tersebut, ambil digit-digitnya sesuai dengan koordinat tertentu, dan lakukan klasifikasi dengan suatu model _machine learning_.
@@ -140,6 +139,12 @@ Tugas selanjutnya adalah mengambil satu persegi besar di tengah (piksel putih te
 
 
 ### Ekstraksi RoI dan digit
+
+> Berdasarkan petunjuk teknis, aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi _marker_, yaitu kotak-kotak hitam di sudut kertas formulir.
+> Saya menduga ini cara mereka untuk melakukan ekstraksi RoI.
+> Ini mungkin akan bekerja dengan baik jika teknis pengambilan citra terstandarisasi, seperti yang banyak ditemui di situs resmi KPU.
+> Namun, kekurangan dari pendekatan ini adalah, terkadang, keempat _marker_ tidak terfoto dengan sempurna, khususnya citra dari relawan yang cenderung fokus pada hasil hitung.
+> Oleh karena itu, saya memilih pendekatan lain: langsung saja kita deteksi _quadrilateral_ yang berisi hasil penghitungan suara.
 
 Pertama, lakukan analisis komponen terhubung.
 Sebuah komponen terhubung dalam citra adalah kumpulan piksel yang terhubung satu sama lain melalui tetangganya dan memiliki properti serupa (misalnya, intensitas yang sama dalam citra biner).

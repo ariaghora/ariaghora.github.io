@@ -89,9 +89,9 @@
       </div>
 <h1>Pengenalan digit tertulis pada formulir C1-Plano Pemilu (bagian 1: pra-pemrosesan citra)</h1>
 <p>Pemilihan umum (pemilu) Indonesia 2024 melibatkan sistem rekapitulasi berbasis mobile yang secara otomatis melakukan pengenalan karakter (digit) tertulis atau <em>optical character recognition</em> (OCR) untuk mempercepat diseminasi hasil hitung.
-Kendati sudah ada beberapa pihak yang mengupas metodenya melalui proses <em>reverse engineering</em> aplikasi sirekap, di tulisan ini saya akan mencoba melakukan OCR dengan sentuhan interpretasi saya pribadi.</p>
-<p>Tulisan ini bersifat pedagogis dengan menunjukkan teknik-teknik sederhana dan alat yang umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
-Walau hasil akhirnya akan berkualitas purwarupa (<em>prototype</em>), dengan cukup kreatifitas pembaca dapat mengembangkannya sendiri.
+Di tulisan ini saya akan memaparkan implementasi OCR berdasarkan interpretasi sendiri.</p>
+<p>Tulisan ini bersifat pedagogis dengan menunjukkan teknik sederhana dan alat umum (Python dengan beberapa pustakanya) yang dapat digunakan untuk permasalahan pengenalan digit.
+Walau hasil akhirnya akan berkualitas purwarupa (<em>prototype</em>), dengan cukup kreativitas pembaca dapat mengembangkannya sendiri.
 Misalnya, dengan mengulangi langkah-langkahnya untuk pengembangan di <em>platform</em> mobile.</p>
 <h2><em>Layout</em> formulir C1-Plano dan permasalahan pengambilan citra</h2>
 <p>Gambar di bawah ini adalah contoh formulir C1-Plano untuk Pemilu 2024.
@@ -101,7 +101,7 @@ Selain mencantumkan angka hasil hitungan, formulir ini juga memiliki area arsira
 <p class="caption">Contoh formulir C1-Plano (<a href="https://pemilu2024.kpu.go.id/pilpres/hitung-suara/31/3171/317106/3171061001/3171061001010">sumber</a>) </p>
 <blockquote>
 <p>Sebagai bahan praktik, pembaca dipersilakan untuk mengunduh sendiri contoh formulir C1-Plano di <a href="https://pemilu2024.kpu.go.id/">situs KPU</a> atau <a href="https://kawalpemilu.org">KawalPemilu</a>.
-Saya menyarankan untuk lebih banyak mengambil dari kawalpemilu karena data bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih &quot;menantang&quot;.
+Data citra formulir di KawalPemilu salah satunya bersumber dari relawan dan lebih merefleksikan keadaan di lapangan, sehingga lebih &quot;menantang&quot;.
 Citra formulir di situs KPU cenderung lebih rapi karena panitia telah mendapatkan pengarahan sebelumnya perihal teknis pengambilan gambar.</p>
 </blockquote>
 <p>Untuk proses OCR, sebetulnya kita hanya perlu area penting saja (<em>region of interest</em> atau RoI), yaitu bagian angka hasil hitung masing-masing paslon sisi pinggir kanan, kolom &quot;jumlah suara sah&quot;.
@@ -194,6 +194,13 @@ Fungsi di atas jika diterapkan pada citra abu-abu formulir C1-Plano, akan mengha
 <p class="caption">Hasil pengambangan </p>
 <p>Tugas selanjutnya adalah mengambil satu persegi besar di tengah (piksel putih terhubung yang membentuk <em>quadrilateral</em>) yang berisi hasil penghitungan, dan membuang bagian putih selainnya.</p>
 <h3>Ekstraksi RoI dan digit</h3>
+<blockquote>
+<p>Berdasarkan petunjuk teknis, aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi <em>marker</em>, yaitu kotak-kotak hitam di sudut kertas formulir.
+Saya menduga ini cara mereka untuk melakukan ekstraksi RoI.
+Ini mungkin akan bekerja dengan baik jika teknis pengambilan citra terstandarisasi, seperti yang banyak ditemui di situs resmi KPU.
+Namun, kekurangan dari pendekatan ini adalah, terkadang, keempat <em>marker</em> tidak terfoto dengan sempurna, khususnya citra dari relawan yang cenderung fokus pada hasil hitung.
+Oleh karena itu, saya memilih pendekatan lain: langsung saja kita deteksi <em>quadrilateral</em> yang berisi hasil penghitungan suara.</p>
+</blockquote>
 <p>Pertama, lakukan analisis komponen terhubung.
 Sebuah komponen terhubung dalam citra adalah kumpulan piksel yang terhubung satu sama lain melalui tetangganya dan memiliki properti serupa (misalnya, intensitas yang sama dalam citra biner).
 Misalnya, suatu garis terbentuk dari beberapa piksel yang terhubung.
