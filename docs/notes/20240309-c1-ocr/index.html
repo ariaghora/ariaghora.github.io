@@ -195,7 +195,8 @@ Fungsi di atas jika diterapkan pada citra abu-abu formulir C1-Plano, akan mengha
 <p>Tugas selanjutnya adalah mengambil satu persegi besar di tengah (piksel putih terhubung yang membentuk <em>quadrilateral</em>) yang berisi hasil penghitungan, dan membuang bagian putih selainnya.</p>
 <h3>Ekstraksi RoI dan digit</h3>
 <blockquote>
-<p>Berdasarkan petunjuk teknis, aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi <em>marker</em>, yaitu kotak-kotak hitam di sudut kertas formulir.
+<p>Berdasarkan <a href="https://mmc.tirto.id/documents/2024/02/12/1839-buku-panduan-kpps-pemilu-2024-v3-11zon-1.pdf?x=2927">petunjuk teknis</a>, aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi <em>marker</em>, yaitu kotak-kotak hitam di sudut kertas formulir.
+<img src="img/juknis.png" width=400/>
 Saya menduga ini cara mereka untuk melakukan ekstraksi RoI.
 Ini mungkin akan bekerja dengan baik jika teknis pengambilan citra terstandarisasi, seperti yang banyak ditemui di situs resmi KPU.
 Namun, kekurangan dari pendekatan ini adalah, terkadang, keempat <em>marker</em> tidak terfoto dengan sempurna, khususnya citra dari relawan yang cenderung fokus pada hasil hitung.
@@ -285,7 +286,7 @@ def get_corners(component) -&gt; np.ndarray:
     corners = np.array([tl_point, bl_point, tr_point, br_point])
     return corners
 </code></pre>
-<h3>Deskewing</h3>
+<h3>Koreksi perspektif (<em>deskewing</em>)</h3>
 <p>Setelah menemukan keempat sudut, kita dapat melakukan koreksi perspektif (<em>deskewing</em>).
 Fungsi ini menggunakan citra asli dan koordinat empat titik yang menggambarkan sudut komponen utama yang terdistorsi.
 Kemudian, fungsi ini menghitung matriks transformasi perspektif yang diperlukan untuk memetakan titik-titik ini ke lokasi baru yang menghasilkan citra dengan orientasi yang benar dan tanpa distorsi perspektif.

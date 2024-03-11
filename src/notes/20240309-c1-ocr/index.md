@@ -140,7 +140,8 @@ Tugas selanjutnya adalah mengambil satu persegi besar di tengah (piksel putih te
 
 ### Ekstraksi RoI dan digit
 
-> Berdasarkan petunjuk teknis, aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi _marker_, yaitu kotak-kotak hitam di sudut kertas formulir.
+> Berdasarkan [petunjuk teknis](https://mmc.tirto.id/documents/2024/02/12/1839-buku-panduan-kpps-pemilu-2024-v3-11zon-1.pdf?x=2927), aplikasi sirekap Komisi Pemilihan Umum (KPU) mengandalkan deteksi _marker_, yaitu kotak-kotak hitam di sudut kertas formulir.
+> <img src="img/juknis.png" width=400/>
 > Saya menduga ini cara mereka untuk melakukan ekstraksi RoI.
 > Ini mungkin akan bekerja dengan baik jika teknis pengambilan citra terstandarisasi, seperti yang banyak ditemui di situs resmi KPU.
 > Namun, kekurangan dari pendekatan ini adalah, terkadang, keempat _marker_ tidak terfoto dengan sempurna, khususnya citra dari relawan yang cenderung fokus pada hasil hitung.
@@ -245,7 +246,7 @@ def get_corners(component) -> np.ndarray:
     return corners
 ```
 
-### Deskewing
+### Koreksi perspektif (_deskewing_)
 
 Setelah menemukan keempat sudut, kita dapat melakukan koreksi perspektif (_deskewing_).
 Fungsi ini menggunakan citra asli dan koordinat empat titik yang menggambarkan sudut komponen utama yang terdistorsi.
