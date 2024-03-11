@@ -220,8 +220,8 @@ $$
 
 Sebagai contoh, sudut _kiri atas_ komponen utama dicari dengan mensubstitusikan $(x_{ref}, y_{ref})$ dengan $(0, 0)$. Untuk sudut _kanan atas_, substitusikan $(x_{ref}, y_{ref})$ dengan $(0, w)$. Begitu seterusnya.
 
-Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
-Untuk tiap kuadran, cari sudut yang diinginkan.
+Agar tetap sederhana, saya memutuskan untuk melakukan brute-force saja: cek satu-persatu jarak piksel putih dengan koordinat referensi.
+Namun, Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
 Gambar di bawah mengilustrasikan proses ini.
 
 <img src="img/annotated.png" width=350/>

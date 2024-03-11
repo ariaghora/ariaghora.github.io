@@ -262,8 +262,8 @@ di mana</p>
 \argmin_{(x_i, x_j)} d((x_i, x_j), (x_{ref}, y_{ref}))
 $$</p>
 <p>Sebagai contoh, sudut <em>kiri atas</em> komponen utama dicari dengan mensubstitusikan $(x_{ref}, y_{ref})$ dengan $(0, 0)$. Untuk sudut <em>kanan atas</em>, substitusikan $(x_{ref}, y_{ref})$ dengan $(0, w)$. Begitu seterusnya.</p>
-<p>Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
-Untuk tiap kuadran, cari sudut yang diinginkan.
+<p>Agar tetap sederhana, saya memutuskan untuk melakukan brute-force saja: cek satu-persatu jarak piksel putih dengan koordinat referensi.
+Namun, Untuk memperkecil ruang pencarian masing-masing sudut, kita dapat membagi citra komponen utama menjadi empat kuadran.
 Gambar di bawah mengilustrasikan proses ini.</p>
 <img src="img/annotated.png" width=350/>
 <p class="caption">Pencarian sudut-sudut <i>quadrilateral</i> komponen utama</p>
