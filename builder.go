@@ -24,6 +24,16 @@ type Config struct {
 	Footer    string `yaml:"footer"`
 }
 
+type TwitterMeta struct {
+	Title       string `yaml:"title,omitempty"`
+	Description string `yaml:"description,omitempty"`
+	Image       string `yaml:"image,omitempty"`
+}
+
+type Meta struct {
+	Twitter *TwitterMeta `yaml:"twitter,omitempty"`
+}
+
 func LoadConfig() (*Config, error) {
 	// Check if config file exists
 
@@ -132,6 +142,24 @@ func CopyFile(src, dst string) error {
 	return nil
 }
 
+func CompileMeta(meta *Meta) string {
+	twitterTitle := ""
+	twitterDesc := ""
+	twitterImage := ""
+	if meta.Twitter != nil {
+		if len(meta.Twitter.Title) > 0 {
+			twitterTitle = fmt.Sprintf("<meta name=\"twitter:title\" content=\"%s\">\n", meta.Twitter.Title)
+		}
+		if len(meta.Twitter.Description) > 0 {
+			twitterDesc = fmt.Sprintf("<meta name=\"twitter:description\" content=\"%s\">\n", meta.Twitter.Description)
+		}
+		if len(meta.Twitter.Image) > 0 {
+			twitterImage = fmt.Sprintf("<meta name=\"twitter:image\" content=\"%s\">\n", meta.Twitter.Image)
+		}
+	}
+	return fmt.Sprintf("%s%s%s", twitterTitle, twitterDesc, twitterImage)
+}
+
 func CompileWebsite(config *Config) error {
 	inputDir := config.InputDir
 	outputDir := config.OutputDir
@@ -194,6 +222,17 @@ func CompileWebsite(config *Config) error {
 				return err
 			}
 
+			metaPath := fmt.Sprintf("%s/%s", filepath.Dir(path), "meta.yaml")
+			metaStr, _ := ReadTextFile(metaPath)
+			metaHtml := ""
+			if len(metaStr) > 0 {
+				meta := &Meta{}
+				err = yaml.Unmarshal([]byte(metaStr), meta)
+				if err == nil {
+					metaHtml = CompileMeta(meta)
+				}
+			}
+
 			// Add header and footer
 			htmlHeader, err := ReadTextFile(headerFile)
 			if err != nil {
@@ -205,6 +244,7 @@ func CompileWebsite(config *Config) error {
 				return err
 			}
 			html = htmlHeader + html + htmlFooter
+			html = strings.Replace(html, "{{social_meta}}", metaHtml, 1)
 
 			// Write HTML file; Replace prefix of input directory with output directory
 			outputPath := filepath.Join(strings.TrimSuffix(path, ".md") + ".html")
