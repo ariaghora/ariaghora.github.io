@@ -25,6 +25,7 @@ type Config struct {
 }
 
 type TwitterMeta struct {
+	Card        string `yaml:"card,omitempty"`
 	Title       string `yaml:"title,omitempty"`
 	Description string `yaml:"description,omitempty"`
 	Image       string `yaml:"image,omitempty"`
@@ -143,10 +144,14 @@ func CopyFile(src, dst string) error {
 }
 
 func CompileMeta(meta *Meta) string {
+	twitterCard := ""
 	twitterTitle := ""
 	twitterDesc := ""
 	twitterImage := ""
 	if meta.Twitter != nil {
+		if len(meta.Twitter.Card) > 0 {
+			twitterCard = fmt.Sprintf("<meta name=\"twitter:card\" content=\"%s\">\n", meta.Twitter.Card)
+		}
 		if len(meta.Twitter.Title) > 0 {
 			twitterTitle = fmt.Sprintf("<meta name=\"twitter:title\" content=\"%s\">\n", meta.Twitter.Title)
 		}
@@ -157,7 +162,7 @@ func CompileMeta(meta *Meta) string {
 			twitterImage = fmt.Sprintf("<meta name=\"twitter:image\" content=\"%s\">\n", meta.Twitter.Image)
 		}
 	}
-	return fmt.Sprintf("%s%s%s", twitterTitle, twitterDesc, twitterImage)
+	return fmt.Sprintf("%s%s%s%s", twitterCard, twitterTitle, twitterDesc, twitterImage)
 }
 
 func CompileWebsite(config *Config) error {

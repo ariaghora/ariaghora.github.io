@@ -1,4 +1,5 @@
 twitter:
+  card: "Pengenalan digit tertulis pada formulir C1-Plano dengan teknik pengolahan citra dan machine learning"
   title: "Pengenalan digit tertulis pada formulir C1-Plano (bagian 1: pra-pemrosesan citra)"
   description: "Pengenalan digit tertulis pada formulir C1-Plano dengan teknik pengolahan citra dan machine learning"
   image: "img/annotated.png"
