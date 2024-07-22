@@ -1,7 +1,6 @@
 # Now
 
 - Building AI product with my friends in my spare time
-- Playing Sun Haven
-- Writing a long article project about machine learning in Bahasa Indonesia
+- Playing Xenoblade Chronicles
 
-> Updated on 2023-08-17
+> Updated on 2024-08-04
