@@ -113,7 +113,10 @@ L_{rand} &amp;= -\log\left(\frac 1 K\right)\\
 <p>I use PyTorch. For some reason, in PyTorch, the cross-entropy is implemented based on the natural logarithm, so we can replace $\log(K)$ in the equations above with $\ln(K)$.
 Quick checking using my calculator app, I got $\ln(5)=1.6094379124341$, which is consistent with the value I obtained before.
 Yeah, it's a random-guess grade model.</p>
-<p><strong>Key takeaway:</strong> when training a neural net classifier, aim for loss values smaller than $\ln(K)$.</p>
+<p><strong>Key takeaway:</strong> when training a neural net classifier, aim for loss values smaller than $\ln(K)$.
+Ideally we want as close as possible to zero, but take $\ln(K)$ as your hard threshold.
+Smaller than that, you're in the right direction.
+Larger than that, there must be something wrong with your training setup.</p>
 <p class="footer">
   Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
 </p>

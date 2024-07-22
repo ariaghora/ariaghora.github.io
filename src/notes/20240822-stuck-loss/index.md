@@ -38,3 +38,6 @@ Quick checking using my calculator app, I got $\ln(5)=1.6094379124341$, which is
 Yeah, it's a random-guess grade model.
 
 **Key takeaway:** when training a neural net classifier, aim for loss values smaller than $\ln(K)$.
+Ideally we want as close as possible to zero, but take $\ln(K)$ as your hard threshold.
+Smaller than that, you're in the right direction.
+Larger than that, there must be something wrong with your training setup.
