@@ -83,73 +83,37 @@
         <!-- <a href="/others.html">Others</a> - -->
         <a href="/friends.html">Friends</a>
       </div>
-<h1>Notes</h1>
-<table>
-<thead>
-<tr>
-<th>Date</th>
-<th>Title</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="20240822-stuck-loss">2024/08/22</a></td>
-<td>Diagnosing stuck loss in neural networks: cross-entropy and random guessing [🇬🇧]</td>
-</tr>
-<tr>
-<td><a href="20230818-kmeans-ekstraksi-palet">2023/08/18</a></td>
-<td>K-Means untuk ekstraksi palet warna</td>
-</tr>
-<tr>
-<td><a href="20230519-property">2023/05/04</a></td>
-<td>Tentang dekorator <code>@property</code> di Python</td>
-</tr>
-<tr>
-<td><a href="20230504-llm-pengetahuan-kedaluarsa">2023/05/04</a></td>
-<td>LLM: pengetahuan kedaluarsa dan proses melupakan masa lalu</td>
-</tr>
-<tr>
-<td><a href="20230427-representation-learning">2023/04/27</a></td>
-<td>Tentang <em>representation learning</em> pada <em>neural network classifier</em></td>
-</tr>
-<tr>
-<td><a href="20230113-markov-chebyshev">2023/01/13</a></td>
-<td>On Markov's and Chebyshev's inequality [🇬🇧]</td>
-</tr>
-<tr>
-<td><a href="20230108-ipc-named-pipe">2023/01/08</a></td>
-<td>Communication between programs (in any languages) with named pipes [🇬🇧]</td>
-</tr>
-<tr>
-<td><a href="20221016-dt-in-c">2022/10/16</a></td>
-<td>Programming decision tree classifier in C (and wrapping it in golang) [🇬🇧]</td>
-</tr>
-<tr>
-<td><a href="20220120-np-vs-pd">2022/01/20</a></td>
-<td>Sudah ada NumPy, kenapa pakai Pandas?</td>
-</tr>
-<tr>
-<td><a href="20211228-chatterjee">2021/12/28</a></td>
-<td>Chatterjee's rank correlation [🇬🇧]</td>
-</tr>
-<tr>
-<td><a href="20211201-wirths-law">2021/12/01</a></td>
-<td>Wirth's Law</td>
-</tr>
-<tr>
-<td><a href="20211027-biasa-biasa-saja">2021/10/27</a></td>
-<td>Menjadi biasa-biasa saja di zona nyaman</td>
-</tr>
-<tr>
-<td><a href="20200311-diri-sendiri">2020/03/11</a></td>
-<td>Menjadi diri sendiri</td>
-</tr>
-<tr>
-<td><a href="20200121-dl-is-not-the-future">2020/01/21</a></td>
-<td>Deep learning is not really the future of AI [🇬🇧]</td>
-</tr>
-</tbody>
-</table>
+<h1>Diagnosing stuck loss in neural networks: cross-entropy and random guessing</h1>
+<p>I recently trained a custom neural net model and wondered why the loss was stuck at a certain value.
+For more context, I trained the model to predict 5 classes, and the loss value where it got stuck was around $1.6$.
+Upon inspecting the model thoroughly, I noticed that the model was only slightly better than (if not equal to) a random guess.</p>
+<p>Apparently, we can diagnose this behavior early during training just by inspecting the loss value and the number of classes, provided that we use the standard cross-entropy loss function.
+The cross-entropy loss for a single sample is defined as</p>
+<p>\begin{equation}
+L = -\sum_{i=1}^{K} y_i\log(p_i)
+\end{equation}</p>
+<p>where $y_i$ is the true distribution and one-hot encoded in most cases ($y_i=1$ for the correct class and $y_i=0$ for the other classes) and $p_i$ is the predicted probability for class $i$.
+Suppose the <strong>true</strong> class is $j$. Since $y_i$ is 1 for the correct class $j$ (i.e., when $y_i=y_j$) and 0 for all other classes, then</p>
+<p>\begin{equation}
+\begin{aligned}
+L &amp;= -(0+\dots+0+y_j\cdot\log(p_j)+0+\dots+0) \\
+&amp;= -y_j \cdot \log(p_j) \\
+&amp;= -\log(p_j).
+\end{aligned}
+\end{equation}</p>
+<p>Since the model is guessing randomly, then the probability for it to give correct predicted class (the $p_j$) over $K$ classes is $\frac 1 K$.
+Now, substituting $p_j$ with $\frac 1 5$, we have the so-called $L_{rand}$ to denote loss for random guess.</p>
+<p>\begin{equation}
+\begin{aligned}
+L_{rand} &amp;= -\log\left(\frac 1 K\right)\\
+&amp;= -(\log(1)-\log(K))\\
+&amp;= \log(K).
+\end{aligned}
+\end{equation}</p>
+<p>I use PyTorch. For some reason, in PyTorch, the cross-entropy is implemented based on the natural logarithm, so we can replace $\log(K)$ in the equations above with $\ln(K)$.
+Quick checking using my calculator app, I got $\ln(5)=1.6094379124341$, which is consistent with the value I obtained before.
+Yeah, it's a random-guess grade model.</p>
+<p><strong>Key takeaway:</strong> when training a neural net classifier, aim for loss values smaller than $\ln(K)$.</p>
 <p class="footer">
   Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
 </p>

@@ -2,7 +2,7 @@
 
 | Date                                              | Title                                                                     |
 | ------------------------------------------------- | ------------------------------------------------------------------------- |
-| [2024/03/09](20240309-c1-ocr)                     | Pengenalan digit tertulis pada formulir C1-Plano (bagian 1: pra-pemrosesan citra) |
+| [2024/08/22](20240822-stuck-loss)                 | Diagnosing stuck loss in neural networks: cross-entropy and random guessing [🇬🇧] |
 | [2023/08/18](20230818-kmeans-ekstraksi-palet)     | K-Means untuk ekstraksi palet warna                                       |
 | [2023/05/04](20230519-property)                   | Tentang dekorator `@property` di Python                                   |
 | [2023/05/04](20230504-llm-pengetahuan-kedaluarsa) | LLM: pengetahuan kedaluarsa dan proses melupakan masa lalu                |
@@ -16,3 +16,4 @@
 | [2021/10/27](20211027-biasa-biasa-saja)           | Menjadi biasa-biasa saja di zona nyaman                                   |
 | [2020/03/11](20200311-diri-sendiri)               | Menjadi diri sendiri                                                      |
 | [2020/01/21](20200121-dl-is-not-the-future)       | Deep learning is not really the future of AI [🇬🇧]                          |
+
