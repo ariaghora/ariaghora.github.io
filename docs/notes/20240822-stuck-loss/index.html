@@ -101,7 +101,7 @@ L &amp;= -(0+\dots+0+y_j\cdot\log(p_j)+0+\dots+0) \\
 &amp;= -\log(p_j).
 \end{aligned}
 \end{equation}</p>
-<p>Since the model is guessing randomly, then the probability for it to give correct predicted class (the $p_j$) over $K$ classes is $\frac 1 K$.
+<p>Since the model is guessing randomly, also assuming that the class is well-balanced, then the probability for it to give correct predicted class (the $p_j$) over $K$ classes is uniform, i.e., $\frac 1 K$.
 Now, substituting $p_j$ with $\frac 1 K$, we have the so-called $L_{rand}$ to denote loss for random guess.</p>
 <p>\begin{equation}
 \begin{aligned}
@@ -110,6 +110,9 @@ L_{rand} &amp;= -\log\left(\frac 1 K\right)\\
 &amp;= \log(K).
 \end{aligned}
 \end{equation}</p>
+<blockquote>
+<p>You may consider another probability mass function when the class is imbalanced for a better assumption.</p>
+</blockquote>
 <p>I use PyTorch. For some reason, in PyTorch, the cross-entropy is implemented based on the natural logarithm, so we can replace $\log(K)$ in the equations above with $\ln(K)$.
 Quick checking using my calculator app, I got $\ln(5)=1.6094379124341$, which is consistent with the value I obtained before.
 Yeah, it's a random-guess grade model.</p>
