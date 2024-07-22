@@ -23,7 +23,7 @@ L &= -(0+\dots+0+y_j\cdot\log(p_j)+0+\dots+0) \\\\
 \end{equation}
 
 Since the model is guessing randomly, then the probability for it to give correct predicted class (the $p_j$) over $K$ classes is $\frac 1 K$.
-Now, substituting $p_j$ with $\frac 1 5$, we have the so-called $L_{rand}$ to denote loss for random guess.
+Now, substituting $p_j$ with $\frac 1 K$, we have the so-called $L_{rand}$ to denote loss for random guess.
 
 \begin{equation}
 \begin{aligned}
