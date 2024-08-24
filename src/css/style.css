@@ -1,180 +1,56 @@
-:root {
-    --font-size-normal: 16px;
-}
-
-html {
-    height: 100%;
-    --s: 100px;
-    /* control the size */
-    --c1: #ffffff;
-    --c2: #f7f7f7;
-
-    --_g: #0000, rgba(0, 0, 0, 0.03) 5%,
-        var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%, var(--c1) 36% 44%,
-        var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%, var(--c1) 76% 84%,
-        var(--c2) 86% 94%, rgba(0, 0, 0, 0.036) 95%, #0000;
-    background:
-        radial-gradient(100% 50% at 100% 0, var(--_g)),
-        radial-gradient(100% 50% at 0 50%, var(--_g)),
-        radial-gradient(100% 50% at 100% 100%, var(--_g));
-    background-size: var(--s) calc(2*var(--s));
-    height: 100%;
-}
-
 body {
-    font-family: 'Rubik', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: var(--font-size-normal);
+    font-family: "Noto Sans Mono", "Courier New", Courier, monospace;
+    font-size: 1rem;
+    width: 100vw;
+    font-variant-ligatures: common-ligatures;
+    font-weight: 200;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin-top: 3ch;
+    font-size: 1rem;
+}
+
+h1::before {
+    content: "# ";
+}
+h2::before {
+    content: "## ";
+}
+h3::before {
+    content: "### ";
+}
+h4::before {
+    content: "### ";
 }
 
 a {
-    color: #ea7087;
+    color: #dc143c;
+    font-weight: 500;
 }
 
-blockquote {
-    margin: 20px 0px;
-    padding: 5px;
-    padding-left: 20px;
-}
-
-blockquote p {
-    color: gray;
-    font-style: italic;
-}
-
-hr {
-    margin: 30px 0px;
-}
-
-p {
-    /* text-align: justify; */
-    font-size: var(--font-size-normal);
-    margin-bottom: 10px;
-}
-
-.content details {
-    margin: 40px 0px;
-    margin-top: 10px;
-}
-
-.content details summary {
-    text-align: right;
-    font-weight: bold;
-    font-size: 12px;
-    color: #ea7087;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-}
-
-table tr td {
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding: 4px 10px;
-}
-
-table {
-    font-size: var(--font-size-normal);
-}
-
-td,
-th {
-    border: none;
-    font-size: var(--font-size-normal);
-}
-
-ul li, ol li {
-    margin-bottom: 0px;
-    font-size: var(--font-size-normal);
-}
-
-.container {
-    padding-top: 40px;
-    padding-bottom: 40px;
-}
-
-.content {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: white;
-
-    border-radius: 10px;
-    border-width: 1.5px;
-    border-color: rgb(85, 85, 85);
-    border-style: solid;
-    box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.2);
-
-    padding: 40px;
-}
-
-.content h1::before {
-    content: "⌘ ";
-    margin-left: -30px;
-}
-
-.content h1 {
-    font-weight: normal;
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-size: 22px;
-    color: #899AA7;
-    margin-bottom: 40px;
-    padding-left: 30px;
-}
-
-.content h1 code {
-    text-transform: none;
-}
-
-.content h2, h3 {
-    font-weight: normal;
-    letter-spacing: 2px;
-    font-size: 18px;
-    color: #125A71;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
-.content h3 {
-  font-size: 16px;
-}
-
-.content img {
+img {
+    width: 100%;
     display: block;
     margin: 0 auto;
 }
 
-.content .caption {
-    text-align: center;
-    margin-bottom: 40px;
-    color: #899AA7;
+.container,
+.footnotes {
+    margin: 0 auto;
+    display: block;
+    width: 70ch;
+}
+.footnotes {
+    line-break: strict;
 }
 
-.navbar {
-    color: #899AA7;
-    text-transform: uppercase;
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.navbar a {
-    color: #ea7087;
-}
-
-.footnotes ol li p {
-    font-size: 16px;
-    color: #899AA7;
-}
-
-.footnotes ol li::marker {
-    font-size: 16px;
-}
-
-.footer {
-    margin-top: 100px;
-    font-size: 14px;
-    color: #899AA7;
-}
-
-.portrait {
+/* .portrait {
     display: block;
     width: 150px;
     height: 150px;
@@ -186,23 +62,7 @@ ul li, ol li {
     background-size: cover;
     background-position: center;
 }
-
-code, kbd {
-    padding: 2px 5px;
-}
-
+ */
 pre {
-    background: white;
-}
-
-pre code.hljs {
-    margin: 30px 0px;
-    padding: 20px;
-    line-height: 20px;
-
-    border-radius: 10px;
-    border-width: 1.5px;
-    border-color: rgb(0, 0, 0);
-    border-style: solid;
-    box-shadow: 3px 3px 1px 1px rgba(0, 0, 0, 0.2);
+    font-weight: 200;!important;
 }

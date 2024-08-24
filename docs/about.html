@@ -1,88 +1,116 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Aria Ghora Prabono</title>
 
-<head>
+        
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aria Ghora Prabono</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet"
+        />
 
-  
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-    rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.2/pico.min.css"
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.2/pico.min.css"
     integrity="sha512-3gFq2IXMVlAQaUyahzhjDRivv0yqyXTb7xiy6ivTaG5Uz4hKI54uYxpQefdomgDVQ11eJVUbXG0YdPMDISiGgg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
-  <!-- Syntax highlighting -->
-  <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>
-    hljs.highlightAll();
-  </script>
+        <!-- Syntax highlighting -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css"
+        />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>
+            hljs.highlightAll();
+        </script>
 
-  <script src="/js/asciinema-player.min.js"></script>
-  <link rel="stylesheet" href="/css/asciinema-player.css">
+        <script src="/js/asciinema-player.min.js"></script>
+        <link rel="stylesheet" href="/css/asciinema-player.css" />
 
-  <!-- The loading of KaTeX is deferred to speed up page rendering -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
-    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
-    crossorigin="anonymous"></script>
-  <!-- To automatically render math in text elements, include the auto-render extension: -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
-    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
-    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      renderMathInElement(document.body, {
-        // customised options
-        // • auto-render specific keys, e.g.:
-        delimiters: [{
-          left: '$$',
-          right: '$$',
-          display: true
-        }, {
-          left: '$',
-          right: '$',
-          display: false
-        }, {
-          left: '\\(',
-          right: '\\)',
-          display: false
-        }, {
-          left: '\\[',
-          right: '\\]',
-          display: true
-        }],
-        // • rendering keys, e.g.:
-        throwOnError: false,
-      });
-    });
-  </script>
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+            integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+            crossorigin="anonymous"
+        ></script>
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+            integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+            crossorigin="anonymous"
+        />
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                renderMathInElement(document.body, {
+                    // customised options
+                    // • auto-render specific keys, e.g.:
+                    delimiters: [
+                        {
+                            left: "$$",
+                            right: "$$",
+                            display: true,
+                        },
+                        {
+                            left: "$",
+                            right: "$",
+                            display: false,
+                        },
+                        {
+                            left: "\\(",
+                            right: "\\)",
+                            display: false,
+                        },
+                        {
+                            left: "\\[",
+                            right: "\\]",
+                            display: true,
+                        },
+                    ],
+                    // • rendering keys, e.g.:
+                    throwOnError: false,
+                });
+            });
+        </script>
 
-  <!-- Custom CSS and JS -->
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/main.js"></script>
+        <!-- Custom CSS and JS -->
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="/js/main.js"></script>
+    </head>
 
-</head>
-
-<body>
-  <div class="container">
-    <div class="content">
-      <div class="navbar">
-        <a href="/index.html">Home</a> /
-        <a href="/now.html">Now</a> /
-        <a href="/notes/">Notes</a> /
-        <a href="/about.html">About</a> /
-        <!-- <a href="/others.html">Others</a> - -->
-        <a href="/friends.html">Friends</a>
-      </div>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="navbar">
+                    <a href="/index.html">Home</a> /
+                    <a href="/about.html">About</a> /
+                    <a href="/now.html">Now</a> / 
+                    <a href="/notes/">Notes</a> /
+                    <a href="/til/">TIL</a> /
+                    <a href="/snippets/">Snippets</a> /
+                    <!-- <a href="/others.html">Others</a> - -->
+                    <a href="/friends.html">Friends</a>
+                </div>
+            </div>
 <h1>About me</h1>
 <p>My name is <strong>Aria</strong> Ghora Prabono, Tokyo-based AI engineer. While I'm immersed in the world of AI research and engineering, I also enjoy exploring other specialities like algorithms, systems programming, and software development in general.</p>
 <h2>Experience</h2>
@@ -91,39 +119,39 @@
 <tr>
 <th></th>
 <th></th>
+<th></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>AI Research Engineer @ <a href="//eaglys.co.jp">EAGLYS株式会社</a></td>
+<td>AI Research Engineer</td>
+<td><a href="//eaglys.co.jp">EAGLYS株式会社</a></td>
 <td>2022 - now</td>
 </tr>
 <tr>
-<td>ML Engineer @ <a href="//nri.co.id">NRI Indonesia</a></td>
+<td>ML Engineer</td>
+<td><a href="//nri.co.id">NRI Indonesia</a></td>
 <td>2021 - 2022</td>
 </tr>
 <tr>
-<td>Ph.D. Research Fellow @ <a href="//hufs.ac.kr">한국외국어대학교</a></td>
+<td>Ph.D. Research Fellow</td>
+<td><a href="//hufs.ac.kr">한국외국어대학교</a></td>
 <td>2016 - 2021</td>
 </tr>
 </tbody>
 </table>
 <h2>Other online presence</h2>
 <p><a href="//github.com/ariaghora">Github</a> / <a href="//twitter.com/aria_ghora">Twitter</a> / <a href="https://scholar.google.com/citations?user=1K4ynvMAAAAJ&amp;hl=en&amp;oi=ao">Google Scholar</a></p>
-<hr>
 <h1>About this website</h1>
 <p>This website is my personal website, where I write about my projects, my thoughts, and sometimes my life.
 Though I wish this website can be useful for others, I mostly write to express myself as the priority.</p>
 <h2>Errata policy</h2>
-<p>I am trying my best to make this website as error-free as possible, and filling it with timeless content.
-If you find any errors (typographical, code, math equation, anything), please let me know by one of the following ways:</p>
+<p>If you find any errors (typographical, code, math equation, anything), please let me know by one of the following ways:</p>
 <ul>
 <li>Open an issue on <a href="//github.com/ariaghora/ariaghora.github.io/issues">GitHub</a></li>
 <li>Send me an email at <a href="mailto:hello@ghora.net">hello@ghora.net</a></li>
 <li>Send me a message on <a href="//twitter.com/aria_ghora">Twitter</a></li>
 </ul>
-<p>It doesn't matter whether the typo is in very old articles or not.
-I appreciate any help in making this website better.</p>
 <h2>Language</h2>
 <p>This website is written mostly in English, but I also write articles in Indonesian (Bahasa Indonesia).
 Articles written in English are marked with [🇬🇧] sign.
@@ -135,7 +163,17 @@ Let me know if you are interested in the source code.
 But if you are smart enough, you can probably figure out how it works by looking at the source code of this website.
 It is not that complicated, anyway.</p>
 <p class="footer">
-  Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+<pre>
+
+
+
+■────────────────────────────────────────────────────────────────────■
+│                                                                    │
+│ Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions       │
+│ listed here are personal unless stated otherwise.                  │
+│                                                                    │
+■────────────────────────────────────────────────────────────────────■
+</pre>
 </p>
 </div>
 

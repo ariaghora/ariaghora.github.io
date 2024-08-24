@@ -1,9 +1,7 @@
 # Friends
 
-This page lists my friends' websites (in alphabetical order). 
+This page lists my friends' websites (in alphabetical order).
 Feel free to visit them and say hi!
-
----
 
 - [Adith Widya Pradipta ](https://adith.vercel.app), frontend engineer
 - [Naufaldi Rafif S](https://www.faldi.xyz/), software engineer

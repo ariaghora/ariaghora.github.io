@@ -1,93 +1,131 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Aria Ghora Prabono</title>
 
-<head>
+        
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aria Ghora Prabono</title>
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+            rel="stylesheet"
+        />
 
-  
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@100..900&display=swap"
+            rel="stylesheet"
+        />
 
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,400;0,700;1,400;1,700&display=swap"
-    rel="stylesheet">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.2/pico.min.css"
+        <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/picocss/1.5.2/pico.min.css"
     integrity="sha512-3gFq2IXMVlAQaUyahzhjDRivv0yqyXTb7xiy6ivTaG5Uz4hKI54uYxpQefdomgDVQ11eJVUbXG0YdPMDISiGgg=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    crossorigin="anonymous" referrerpolicy="no-referrer" /> -->
 
-  <!-- Syntax highlighting -->
-  <link rel="stylesheet" href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css">
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
-  <script>
-    hljs.highlightAll();
-  </script>
+        <!-- Syntax highlighting -->
+        <link
+            rel="stylesheet"
+            href="https://unpkg.com/highlightjs@9.16.2/styles/a11y-light.css"
+        />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+        <script>
+            hljs.highlightAll();
+        </script>
 
-  <script src="/js/asciinema-player.min.js"></script>
-  <link rel="stylesheet" href="/css/asciinema-player.css">
+        <script src="/js/asciinema-player.min.js"></script>
+        <link rel="stylesheet" href="/css/asciinema-player.css" />
 
-  <!-- The loading of KaTeX is deferred to speed up page rendering -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
-    integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
-    crossorigin="anonymous"></script>
-  <!-- To automatically render math in text elements, include the auto-render extension: -->
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
-    integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
-    integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0" crossorigin="anonymous">
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      renderMathInElement(document.body, {
-        // customised options
-        // • auto-render specific keys, e.g.:
-        delimiters: [{
-          left: '$$',
-          right: '$$',
-          display: true
-        }, {
-          left: '$',
-          right: '$',
-          display: false
-        }, {
-          left: '\\(',
-          right: '\\)',
-          display: false
-        }, {
-          left: '\\[',
-          right: '\\]',
-          display: true
-        }],
-        // • rendering keys, e.g.:
-        throwOnError: false,
-      });
-    });
-  </script>
+        <!-- The loading of KaTeX is deferred to speed up page rendering -->
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js"
+            integrity="sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4"
+            crossorigin="anonymous"
+        ></script>
+        <!-- To automatically render math in text elements, include the auto-render extension: -->
+        <script
+            defer
+            src="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js"
+            integrity="sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05"
+            crossorigin="anonymous"
+            onload="renderMathInElement(document.body);"
+        ></script>
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css"
+            integrity="sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0"
+            crossorigin="anonymous"
+        />
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                renderMathInElement(document.body, {
+                    // customised options
+                    // • auto-render specific keys, e.g.:
+                    delimiters: [
+                        {
+                            left: "$$",
+                            right: "$$",
+                            display: true,
+                        },
+                        {
+                            left: "$",
+                            right: "$",
+                            display: false,
+                        },
+                        {
+                            left: "\\(",
+                            right: "\\)",
+                            display: false,
+                        },
+                        {
+                            left: "\\[",
+                            right: "\\]",
+                            display: true,
+                        },
+                    ],
+                    // • rendering keys, e.g.:
+                    throwOnError: false,
+                });
+            });
+        </script>
 
-  <!-- Custom CSS and JS -->
-  <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/main.js"></script>
+        <!-- Custom CSS and JS -->
+        <link rel="stylesheet" href="/css/style.css" />
+        <script src="/js/main.js"></script>
+    </head>
 
-</head>
-
-<body>
-  <div class="container">
-    <div class="content">
-      <div class="navbar">
-        <a href="/index.html">Home</a> /
-        <a href="/now.html">Now</a> /
-        <a href="/notes/">Notes</a> /
-        <a href="/about.html">About</a> /
-        <!-- <a href="/others.html">Others</a> - -->
-        <a href="/friends.html">Friends</a>
-      </div>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="navbar">
+                    <a href="/index.html">Home</a> /
+                    <a href="/about.html">About</a> /
+                    <a href="/now.html">Now</a> / 
+                    <a href="/notes/">Notes</a> /
+                    <a href="/til/">TIL</a> /
+                    <a href="/snippets/">Snippets</a> /
+                    <!-- <a href="/others.html">Others</a> - -->
+                    <a href="/friends.html">Friends</a>
+                </div>
+            </div>
 <h1>Others</h1>
 <h2>Photography</h2>
 <h2>Music</h2>
 <p class="footer">
-  Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions listed here are personal unless stated otherwise.
+<pre>
+
+
+
+■────────────────────────────────────────────────────────────────────■
+│                                                                    │
+│ Copyright 2014-2024 Aria Ghora Prabono. Any and all opinions       │
+│ listed here are personal unless stated otherwise.                  │
+│                                                                    │
+■────────────────────────────────────────────────────────────────────■
+</pre>
 </p>
 </div>
 
