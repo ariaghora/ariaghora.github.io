@@ -66,3 +66,12 @@ img {
 pre {
     font-weight: 200;!important;
 }
+
+ul {
+    padding: 0px;
+}
+
+.caption {
+    text-align: center;
+    font-style: italic;
+}

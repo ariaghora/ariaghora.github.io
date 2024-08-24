@@ -112,61 +112,46 @@
                     <a href="/friends.html">Friends</a>
                 </div>
             </div>
-<h1>Generic array list</h1>
-<pre><code class="language-C">#include &lt;stddef.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;stdlib.h&gt;
-#include &lt;string.h&gt;
-
-#define HSZ        (2 * sizeof(size_t))
-#define arr_cap(a) ((size_t *)(a))[-2]
-#define arr_len(a) ((size_t *)(a))[-1]
-#define arr_free(a)                                                            \
-    do {                                                                       \
-        if (a) {                                                               \
-            if (sizeof(*(a)) == sizeof(char *))                                \
-                for (size_t i = 0; i &lt; arr_len(a); i++)                        \
-                    free((a)[i]);                                              \
-            free((size_t *)(a)-2);                                             \
-            (a) = NULL;                                                        \
-        }                                                                      \
-    } while (0)
-#define arr_push(a, v)                                                         \
-    do {                                                                       \
-        if (!(a)) {                                                            \
-            size_t *h = malloc(HSZ + 4 * sizeof(*(a)));                        \
-            *h        = 4;                                                     \
-            h[1]      = 0;                                                     \
-            (a)       = (void *)(h + 2);                                       \
-        }                                                                      \
-        if (arr_len(a) == arr_cap(a)) {                                        \
-            size_t c   = arr_cap(a) ? arr_cap(a) * 2 : 4,                      \
-                   *h  = realloc((size_t *)(a)-2, HSZ + c * sizeof(*(a)));     \
-            (a)        = (void *)(h + 2);                                      \
-            arr_cap(a) = c;                                                    \
-        }                                                                      \
-        (a)[arr_len(a)] = sizeof(*(a)) == sizeof(char *) ? strdup(v) : (v);    \
-        arr_len(a)++;                                                          \
-    } while (0)
-
-
-int main() {
-    int *arr = NULL;
-    arr_push(arr, 1);
-    arr_push(arr, 2);
-    arr_push(arr, 3);
-    arr_push(arr, 4);
-
-    printf(&quot;%d\n&quot;, arr[0]);
-    arr_free(arr);
-
-    return 0;
-}
-</code></pre>
-<h2>Notes</h2>
-<ul>
-<li>Probably will only work well with primitive types</li>
-</ul>
+<h1>Notable projects I built</h1>
+<h2>Mint</h2>
+<p>A single-header file only library, minimalist tensor library in pure C
+from scratch with no dependency other than C standard libs. Optionally
+it can be linked with BLAS, OpenMP, and NEON for further acceleration.
+With the help of model export/importer, it can run a few of neural net
+models, such as ResNet, style transfer, and YOLOv7.</p>
+<p><a href="https://github.com/ariaghora/mint">[Project link]</a></p>
+<p>
+<img src="img/style-transfer.png">
+</p>
+<p class="caption">
+A single and small executable app for neural style transfer, built with Mint and Raylib
+</p>
+<h2>Arnab</h2>
+<p>Arnab aims to provide simple yet portable solutions to organize and to
+execute data models. This is inspired by DBT but is with subset of DBT
+features, jinja-less (except the macros), theoretically more portable.</p>
+<p>Its main purpose is simple: give it a directory with SQL files, it can
+scan the directory recursively, and then determine the execution order
+of all queries. The execution backend is the blazingly fast™ DuckDB.</p>
+<p><a href="https://github.com/ariaghora/arnab">[Project link]</a></p>
+<iframe width="100%" height="420px" src="https://www.youtube.com/embed/CwmvRuyRLy8" title="Arnab demo 1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<p class="caption">
+Arnab demo for simple data transformation pipeline
+</p>
+<h2>Tensoria</h2>
+<p>Experimental WGPU-accelerated ndarray written in rust. Tensoria offers
+as easy API as possible. It provides automatic gradient computation or
+autograd. It also allows creation of tensors with arbitrary dimensions
+at runtime with ergonomic API.</p>
+<p><a href="https://github.com/ariaghora/tensoria">[Project link]</a></p>
+<p>
+<img src="img/tensoria.png">
+<p class="caption">
+Tensoria example
+</p>
+</p>
+<h2>More projects</h2>
+<p>Please check <a href="https://github.com/ariaghora?tab=repositories&amp;q=&amp;type=&amp;language=&amp;sort=stargazers">my github</a> to see more of my public projects.</p>
 <p class="footer">
 <pre>
 

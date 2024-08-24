@@ -1,14 +1,20 @@
 # About me
 
-My name is **Aria** Ghora Prabono, Tokyo-based AI engineer. While I'm immersed in the world of AI research and engineering, I also enjoy exploring other specialities like algorithms, systems programming, and software development in general.
+- I have been working professionally with various clients across a wide range of machine learning domains, including demand forecasting, fraud detection, and computer vision tasks.
+- I have been conducting research and publishing papers since my MS and PhD years, continuing through my career in industry.
+- I am passionate about exploring the internal mechanisms of systems, especially in the machine learning field. This includes investigating the inner workings of algorithms, tensor implementations, autograd systems, and GPU pipelines.
+- I enjoy programming in high-performance languages such as Rust and C for various purposes, from extending Python and writing faster programs to developing my own libraries.
+- I love exploring other domains as well, such as systems programming, high-performance computing, and graphics programming.
+
+## Technical skills and tools
+
+**In alphabetical order:** AWS, C, Computer Vision, Compute Shader, CUDA, Data Analytics, Docker, Domain Adaptation, Git, Image Processing, LaTeX, Linux, Machine Learning, Python, PyTorch, Research Methods, Rust, SQL, Systems Programming, Technical Writing, Vim, WGPU
 
 ## Experience
 
-|                       |                                  |             |
-| --------------------- | -------------------------------- | ----------- |
-| AI Research Engineer  | [EAGLYS株式会社](//eaglys.co.jp) | 2022 - now  |
-| ML Engineer           | [NRI Indonesia](//nri.co.id)     | 2021 - 2022 |
-| Ph.D. Research Fellow | [한국외국어대학교](//hufs.ac.kr) | 2016 - 2021 |
+- 2022 - .... : AI Researcher & Engineer, [EAGLYS株式会社](//eaglys.co.jp), Tokyo, Japan
+- 2021 - 2022 : ML Engineer, [NRI](//nri.co.id), Jakarta, Indonesia
+- 2016 - 2021 : Ph.D. Research Fellow, [한국외국어대학교](//hufs.ac.kr), Yongin, South Korea
 
 ## Other online presence
 
