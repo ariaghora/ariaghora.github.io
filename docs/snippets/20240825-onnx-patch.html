@@ -112,12 +112,22 @@
                     <a href="/friends.html">Friends</a>
                 </div>
             </div>
-<h1>Snippets</h1>
-<p>Some of probably useful snippets</p>
-<ul>
-<li><a href="20240825-onnx-patch.html">2024/08/25</a> [Python] Patching ONNX to expose intermediate output</li>
-<li><a href="20240824-generic-array-list.html">2024/08/24</a> [C] Generic array list</li>
-</ul>
+<h1>Patching ONNX to expose intermediate output</h1>
+<pre><code class="language-python">def patch_onnx(input_filename: str, output_filename: str, inter_layer_names: List[str])-&gt;None:
+    &quot;&quot;&quot;
+    Main idea: append value_info_proto with name included in inter_layer_names to the
+    graph output list
+    &quot;&quot;&quot;
+    model = onnx.load(input_filename)
+    value_info_protos = []
+    for node in model.graph.value_info:
+        if node.name in inter_layer_names:
+            value_info_protos.append(node)
+    assert len(value_info_protos) == len(inter_layer_names)
+    model.graph.output.extend(value_info_protos)  
+    onnx.checker.check_model(model)
+    onnx.save(model, output_filename)
+</code></pre>
 <p class="footer">
 <pre>
 

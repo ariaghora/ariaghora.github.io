@@ -43,6 +43,5 @@ I am not a native English speaker, but I will try my best.
 
 This website is statically generated using a custom golang program and hosted on GitHub Pages.
 It simply reads the markdown files and generates the html files and provides required assets.
-Let me know if you are interested in the source code.
-But if you are smart enough, you can probably figure out how it works by looking at the source code of this website.
 It is not that complicated, anyway.
+If you are smart enough, you can probably figure out how it works by looking at the source code of this website.
